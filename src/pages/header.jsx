@@ -1,21 +1,54 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser, removeUser } from "../redux/slices/auth";
+import "../style/header.css";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { name, email } = useSelector((state) => state.user);
+  const { name, isLoggedIn } = useSelector((state) => state.user);
+  const [showModal, setShowModal] = useState(false);
+  const [typedText, setTypedText] = useState("");
+
+  useEffect(() => {
+    if (isLoggedIn) {
+      // Check if the modal has been shown before
+      const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
+
+      if (!hasModalBeenShown) {
+        setShowModal(true);
+
+        localStorage.setItem("hasModalBeenShown", "true");
+
+        const welcomeMessage = `elcome to the website,  ${name}!!`;
+        let index = 0;
+
+        const typingInterval = setInterval(() => {
+          if (index < welcomeMessage.length -1 ) {
+            setTypedText((prevText) => prevText + welcomeMessage[index-1]);
+            index++;
+          } else {
+            clearInterval(typingInterval);
+
+            // Hide the modal after 2 seconds
+            setTimeout(() => {
+              setShowModal(false);
+            }, 2500);
+          }
+        }, 150); // Adjust the interval speed as needed
+      }
+    }
+  }, [isLoggedIn, name]);
 
   function onLogout() {
     dispatch(removeUser());
     localStorage.removeItem("userId");
+    localStorage.removeItem("hasModalBeenShown");
+
     dispatch(loginUser(null));
     navigate("/login");
   }
-  console.log(name);
-  console.log(email);
 
   return (
     <header>
@@ -41,6 +74,13 @@ const Header = ({}) => {
       <div className="logout-button" onClick={onLogout}>
         Logout
       </div>
+      {showModal && (
+        <div className="modal-container">
+          <div className="modal">
+            <p>W{typedText}</p>
+          </div>
+        </div>
+      )}
     </header>
   );
 };

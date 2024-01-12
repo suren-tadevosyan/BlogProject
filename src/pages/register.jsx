@@ -2,6 +2,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setUser } from "../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
 import { useState, useEffect } from "react";
+import ErrorModal from "../utils/errorModal";
 import { setPassword, validatePassword } from "../redux/slices/password";
 import {
   getAuth,
@@ -33,9 +34,15 @@ const Register = () => {
   const [passwordMatch, setPasswordMatch] = useState(true);
   const [passwordStrength, setPasswordStrength] = useState(0);
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [name, setName] = useState("");
+
+  const closeErrorModal = () => {
+    setErrorModalVisible(false);
+  };
 
   const handleFocus = () => {
     setIsPasswordFocused(true);
@@ -130,13 +137,27 @@ const Register = () => {
                   name,
                 })
               );
+              window.localStorage.setItem("userId", 1);
+              dispatch(
+                loginUser({ username: "username", password: "password" })
+              );
+              navigate("/summary");
             })
             .catch(console.error);
         })
-        .catch(console.error);
-      window.localStorage.setItem("userId", 1);
-      dispatch(loginUser({ username: "username", password: "password" }));
-      navigate("/summary");
+        .catch((error) => {
+          // Handle registration errors, including the case where the user already exists
+          if (error.code === "auth/email-already-in-use") {
+            const message = "User with this email already exists";
+            setErrorMessage(message);
+            setErrorModalVisible(true);
+            console.log("User with this email already exists");
+            // You may want to show an error message to the user or take appropriate action
+            // For now, we'll just log the message and not navigate anywhere
+          } else {
+            console.error(error.message);
+          }
+        });
     } else {
       console.log("edrer");
     }
@@ -144,6 +165,12 @@ const Register = () => {
 
   return (
     <div className="login-container">
+      <div className={errorModalVisible ? "backdrop" : ""}></div>
+      <ErrorModal
+        message={errorMessage}
+        onClose={closeErrorModal}
+        visible={errorModalVisible}
+      />
       <h2>Creating Account</h2>
       <form className="login-form" action="#" onSubmit={submitHandler}>
         <div className="form-group">

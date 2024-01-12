@@ -1,7 +1,6 @@
 import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
 
 import React from "react";
-import { LoginRouteWrapper } from "./LoginRouteWrapper";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Login from "../pages/Login";
 import { useSelector } from "react-redux";

@@ -1,5 +1,5 @@
 import { useEffect } from "react";
-import AppRoutes from "./routes";
+import AppRoutes from "./routes/mainRoutes";
 import { useDispatch } from "react-redux";
 import { loginUser } from "./redux/slices/auth";
 import Main from "./pages/mainPage";

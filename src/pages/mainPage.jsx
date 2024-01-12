@@ -1,9 +1,8 @@
-import AppRoutes from "../routes";
+import AppRoutes from "../routes/mainRoutes";
 import Header from "./header";
 const Main = () => {
   return (
     <div>
-     
       <AppRoutes />
     </div>
   );
