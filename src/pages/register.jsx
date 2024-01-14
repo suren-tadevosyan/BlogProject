@@ -1,9 +1,12 @@
 import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setUser } from "../redux/slices/auth";
 import { useNavigate } from "react-router-dom";
-import { useState, useEffect } from "react";
-import ErrorModal from "../utils/errorModal";
+import { useState } from "react";
+import { ErrorModal, ErrorMessage } from "../utils/errorModal";
 import { setPassword, validatePassword } from "../redux/slices/password";
+import PasswordStrengthIndicator from "../utils/passwordStrength";
+import { calculatePasswordStrength } from "../utils/passwordUtils";
+import Form from "../utils/form";
 import {
   getAuth,
   createUserWithEmailAndPassword,
@@ -13,6 +16,12 @@ import {
 const Register = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  const [passwordMatch, setPasswordMatch] = useState(true);
+  const [passwordStrength, setPasswordStrength] = useState(0);
+  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
+  const [errorModalVisible, setErrorModalVisible] = useState(false);
+  const [errorMessage, setErrorMessage] = useState("");
 
   const {
     password: {
@@ -30,15 +39,6 @@ const Register = () => {
     password: "",
     confirmPassword: "",
   });
-
-  const [passwordMatch, setPasswordMatch] = useState(true);
-  const [passwordStrength, setPasswordStrength] = useState(0);
-  const [isPasswordFocused, setIsPasswordFocused] = useState(false);
-  const [errorModalVisible, setErrorModalVisible] = useState(false);
-  const [errorMessage, setErrorMessage] = useState("");
-  const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [name, setName] = useState("");
 
   const closeErrorModal = () => {
     setErrorModalVisible(false);
@@ -60,20 +60,12 @@ const Register = () => {
       [name]: value,
     }));
 
-    if (name === "email") {
-      setEmail(e.target.value);
-      console.log(email);
-    }
-
-    if (name === "name") {
-      setName(e.target.value);
-    }
-
     if (name === "password") {
       const strength = calculatePasswordStrength(value);
       setPasswordStrength(strength);
-      setPass(e.target.value);
+      console.log(isUppercasePresent);
     }
+
     if (name === "confirmPassword" || name === "password") {
       setPasswordMatch(
         value ===
@@ -83,37 +75,9 @@ const Register = () => {
       );
     }
 
-    dispatch(setPassword(e.target.value));
+    dispatch(setPassword(value));
     dispatch(validatePassword());
   };
-
-  const calculatePasswordStrength = (password) => {
-    const length = password.length;
-    if (length < 6) {
-      return 0;
-    } else if (length < 10) {
-      return 1;
-    } else {
-      return 2;
-    }
-  };
-  const getStrengthText = (strength) => {
-    switch (strength) {
-      case 0:
-        return "Weak";
-      case 1:
-        return "Medium";
-      case 2:
-        return "Strong";
-      default:
-        return "";
-    }
-  };
-  const getStrengthColor = (strength) => {
-    const colors = ["red", "orange", "green"];
-    return colors[strength];
-  };
-
   const submitHandler = (e) => {
     e.preventDefault();
     if (
@@ -124,9 +88,9 @@ const Register = () => {
       isSpecialCharPresent
     ) {
       const auth = getAuth();
-      createUserWithEmailAndPassword(auth, email, password)
+      createUserWithEmailAndPassword(auth, formData.email, formData.password)
         .then(({ user }) => {
-          updateProfile(user, { displayName: name })
+          updateProfile(user, { displayName: formData.name })
             .then(() => {
               const { email, uid: id, accessToken: token } = user;
               dispatch(
@@ -134,7 +98,7 @@ const Register = () => {
                   email,
                   id,
                   token,
-                  name,
+                  name: formData.name,
                 })
               );
               window.localStorage.setItem("userId", 1);
@@ -146,14 +110,11 @@ const Register = () => {
             .catch(console.error);
         })
         .catch((error) => {
-          // Handle registration errors, including the case where the user already exists
           if (error.code === "auth/email-already-in-use") {
             const message = "User with this email already exists";
             setErrorMessage(message);
             setErrorModalVisible(true);
             console.log("User with this email already exists");
-            // You may want to show an error message to the user or take appropriate action
-            // For now, we'll just log the message and not navigate anywhere
           } else {
             console.error(error.message);
           }
@@ -164,18 +125,12 @@ const Register = () => {
   };
 
   return (
-    <div className="login-container">
-      <div className={errorModalVisible ? "backdrop" : ""}></div>
-      <ErrorModal
-        message={errorMessage}
-        onClose={closeErrorModal}
-        visible={errorModalVisible}
-      />
-      <h2>Creating Account</h2>
-      <form className="login-form" action="#" onSubmit={submitHandler}>
-        <div className="form-group">
-          <label htmlFor="email">Name:</label>
-          <input
+    <div>
+      <div className="login-container">
+        <h2>Creating Account</h2>
+        <form className="login-form" action="#" onSubmit={submitHandler}>
+          <Form
+            label="Name"
             type="text"
             id="name"
             name="name"
@@ -183,10 +138,9 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
+
+          <Form
+            label="Email"
             type="email"
             id="email"
             name="email"
@@ -194,84 +148,32 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <div className="password-input-container">
-            <input
-              type="password"
-              id="password"
-              name="password"
-              value={formData.password}
-              onChange={handleChange}
-              onFocus={handleFocus}
-              onBlur={handleBlur}
-              required
+
+          <Form
+            label="Password"
+            type="password"
+            id="password"
+            name="password"
+            value={formData.password}
+            onChange={handleChange}
+            onFocus={handleFocus}
+            onBlur={handleBlur}
+            required
+          />
+
+          {isPasswordFocused && (
+            <PasswordStrengthIndicator
+              passwordStrength={passwordStrength}
+              isUppercasePresent={isUppercasePresent}
+              isLowercasePresent={isLowercasePresent}
+              isNumberPresent={isNumberPresent}
+              isSpecialCharPresent={isSpecialCharPresent}
+              className={isPasswordFocused ? "visible" : ""}
             />
+          )}
 
-            {isPasswordFocused && (
-              <div className="password-feedback-popup">
-                <div className="password-strength-indicator">
-                  <div
-                    className="strength-bar"
-                    style={{
-                      width: `${(passwordStrength + 1) * 33.33}%`,
-                      backgroundColor: getStrengthColor(passwordStrength),
-                    }}
-                  ></div>
-                </div>
-                <p className="password-feedback">
-                  <span
-                    style={{
-                      fontWeight: "bold",
-                      color: getStrengthColor(passwordStrength),
-                    }}
-                  >
-                    Password Strength: {getStrengthText(passwordStrength)}
-                  </span>
-                  <br />
-                  Password must contain at least 8 characters, including one
-                  uppercase letter, one lowercase letter, one number, and one
-                  special character.
-                </p>
-
-                <ul className="password-requirements">
-                  <li>
-                    <input
-                      type="checkbox"
-                      checked={isUppercasePresent}
-                      readOnly
-                    />
-                    Contains at least one uppercase letter
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      checked={isLowercasePresent}
-                      readOnly
-                    />
-                    Contains at least one lowercase letter
-                  </li>
-                  <li>
-                    <input type="checkbox" checked={isNumberPresent} readOnly />
-                    Contains at least one number
-                  </li>
-                  <li>
-                    <input
-                      type="checkbox"
-                      checked={isSpecialCharPresent}
-                      readOnly
-                    />
-                    Contains at least one special character
-                  </li>
-                </ul>
-              </div>
-            )}
-          </div>
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Confirm Password:</label>
-          <input
+          <Form
+            label="Confirm Password"
             type="password"
             id="confirmPassword"
             name="confirmPassword"
@@ -279,16 +181,20 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-          {!passwordMatch && (
-            <p style={{ color: "red", margin: "5px 0" }}>
-              Passwords do not match
-            </p>
-          )}
-        </div>
-        <div className="form-group">
-          <input type="submit" value="Register" />
-        </div>
-      </form>
+
+          <div className="form-group">
+            <input type="submit" value="Register" />
+          </div>
+        </form>
+        {!passwordMatch && <ErrorMessage message="Passwords do not match" />}
+      </div>
+      <div className={errorModalVisible ? "backdrop" : ""}>
+        <ErrorModal
+          message={errorMessage}
+          onClose={closeErrorModal}
+          visible={errorModalVisible}
+        />
+      </div>
     </div>
   );
 };

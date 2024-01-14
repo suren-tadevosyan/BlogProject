@@ -4,15 +4,13 @@ import { useDispatch } from "react-redux";
 import { loginUser, setUser } from "../redux/slices/auth";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import "../style/login.css";
-import password from "../redux/slices/password";
-import { useAuth } from "../hooks/useAuth";
+import Form from "../utils/form";
 
 const Login = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
-  const { isAuth, email1 } = useAuth();
   const [error, setError] = useState(null);
 
   const handleChange = (e) => {
@@ -64,26 +62,24 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       <form className="login-form" action="#" onSubmit={submitHandler}>
-        <div className="form-group">
-          <label htmlFor="email">Email:</label>
-          <input
-            type="email"
-            id="email"
-            name="email"
-            onChange={handleChange}
-            required
-          />
-        </div>
-        <div className="form-group">
-          <label htmlFor="password">Password:</label>
-          <input
-            type="password"
-            id="password"
-            name="password"
-            onChange={handleChange}
-            required
-          />
-        </div>
+      <Form
+          label="Email"
+          type="email"
+          id="email"
+          name="email"
+          value={email}
+          onChange={handleChange}
+          required
+        />
+        <Form
+          label="Password"
+          type="password"
+          id="password"
+          name="password"
+          value={pass}
+          onChange={handleChange}
+          required
+        />
 
 
         {error && <p className="error-message">{error}</p>}

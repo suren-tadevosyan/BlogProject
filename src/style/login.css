@@ -1,15 +1,21 @@
-body {
-  font-family: "Arial", sans-serif;
-  background-color: #f4f4f4;
+* {
   margin: 0;
   padding: 0;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  height: 100vh;
+}
+
+body {
+  font-family: "Arial", sans-serif;
+  margin: 0;
+  padding: 0;
+
+  /* height: 100vh; */
 }
 
 .login-container {
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  position: fixed;
   background-color: #fff;
   border-radius: 8px;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
@@ -71,6 +77,15 @@ body {
 .password-input-container {
   position: relative;
 }
+.toggle-button {
+  position: absolute;
+  right: 5px; /* Adjust the right position as needed */
+  top: 50%;
+  transform: translateY(-50%);
+  background-color: transparent;
+  border: none;
+  cursor: pointer;
+}
 
 .password-strength-indicator {
   height: 10px;
@@ -87,13 +102,12 @@ body {
 
 .password-feedback-popup {
   text-align: left;
-  margin-top: 5px;
+
   width: 100%;
-  position: absolute;
-  top: 100%;
-  left: 0;
+  /* position: absolute; */
+
   background-color: #00b9d2; /* Medium grey for medium */
-  border: 1px solid #5a6268;
+
   color: white;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
@@ -102,6 +116,7 @@ body {
   opacity: 1;
   transition: visibility 0.2s, opacity 0.2s;
 }
+
 
 .password-feedback-popup p {
   margin: 10px;
@@ -129,20 +144,17 @@ body {
   padding-top: 10px;
 }
 
-.password-requirements input {
+.password-requirements input[type="checkbox"] {
   appearance: none;
   -webkit-appearance: none;
   -moz-appearance: none;
   margin-right: 8px;
-  width: 5px;
-  height: 5px;
-  border: 3px solid #00ab72; /* Border color */
+  width: 15px;
+  height: 15px;
+  border: 1px solid #00ab72; /* Border color */
+  color: white;
   border-radius: 50%; /* Make it round */
-  display: flex;
-  align-items: center;
-  justify-content: center;
 }
-
 .password-requirements input:checked {
   content: "\2713";
   background-color: #00ab72; /* Background color when checked */
@@ -155,6 +167,10 @@ body {
 /* Add your styles for the modal here */
 .error-modal {
   position: fixed;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-direction: column;
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
@@ -192,7 +208,11 @@ body {
   width: 100%;
   height: 100%;
   z-index: 999; /* Place the backdrop behind the modal */
-  background: linear-gradient(45deg, rgba(0, 128, 0, 0.2), rgba(0, 255, 0, 0.4)); /* Green gradient with transparency */
+  background: linear-gradient(
+    45deg,
+    rgba(0, 128, 0, 0.2),
+    rgba(0, 255, 0, 0.4)
+  ); /* Green gradient with transparency */
   backdrop-filter: blur(5px); /* Apply a blur effect to the backdrop */
 }
 
@@ -205,6 +225,7 @@ body {
 /* Style the close button */
 .error-modal button {
   margin-top: 10px;
+  margin-right: 20px;
   padding: 8px 12px;
   background-color: #3498db;
   color: #fff;

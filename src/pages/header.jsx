@@ -3,6 +3,7 @@ import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
 import { loginUser, removeUser } from "../redux/slices/auth";
 import "../style/header.css";
+import { toggleTheme } from "../redux/slices/theme";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
@@ -10,6 +11,7 @@ const Header = ({}) => {
   const { name, isLoggedIn } = useSelector((state) => state.user);
   const [showModal, setShowModal] = useState(false);
   const [typedText, setTypedText] = useState("");
+  const {mode} = useSelector((state) => state.theme)
 
   useEffect(() => {
     if (isLoggedIn) {
@@ -51,12 +53,15 @@ const Header = ({}) => {
   }
 
   return (
-    <header>
+    <header className={mode === "dark" ? "dark mode" : "mode"}>
       <div>
         <h2>Hello, {name}!</h2>
       </div>
       <div className="logo">
         <Link to="/">Your Blog</Link>
+      </div>
+      <div className="theme-toggle-button" onClick={() => dispatch(toggleTheme())}>
+        {mode === "light" ? "Dark Mode" : "Light Mode"}
       </div>
       <nav>
         <ul>

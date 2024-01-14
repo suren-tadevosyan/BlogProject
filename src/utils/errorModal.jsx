@@ -1,15 +1,29 @@
 import React from "react";
+import { useNavigate } from "react-router-dom";
 
-const ErrorModal = ({ message, onClose, visible }) => {
+export const ErrorModal = ({ message, onClose, visible }) => {
+  const navigate = useNavigate();
   if (!visible) {
     return null;
+  }
+
+  const login  = 
+  () => {
+    navigate("/login")
   }
   return (
     <div className="error-modal">
       <p>{message}</p>
-      <button onClick={onClose}>Close</button>
+     <div>
+     <button onClick={onClose}>Close</button>
+      <button onClick={login}>Login</button>
+     </div>
+
     </div>
   );
 };
 
-export default ErrorModal;
+export const ErrorMessage = ({ message }) => (
+  <p style={{ color: "red", margin: "5px 0" }}>{message}</p>
+);
+
