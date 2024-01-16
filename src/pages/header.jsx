@@ -4,6 +4,7 @@ import { Link, useNavigate } from "react-router-dom";
 import { loginUser, removeUser } from "../redux/slices/auth";
 import "../style/header.css";
 import { toggleTheme } from "../redux/slices/theme";
+import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
@@ -11,11 +12,22 @@ const Header = ({}) => {
   const { name, isLoggedIn } = useSelector((state) => state.user);
   const [showModal, setShowModal] = useState(false);
   const [typedText, setTypedText] = useState("");
-  const {mode} = useSelector((state) => state.theme)
+  const { mode } = useSelector((state) => state.theme);
+  const [scrolling, setScrolling] = useState(false);
+
+  useEffect(() => {
+    const handleScroll = () => {
+      setScrolling(window.scrollY > 0);
+    };
+
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, []);
 
   useEffect(() => {
     if (isLoggedIn) {
-      // Check if the modal has been shown before
       const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
 
       if (!hasModalBeenShown) {
@@ -27,18 +39,16 @@ const Header = ({}) => {
         let index = 0;
 
         const typingInterval = setInterval(() => {
-          if (index < welcomeMessage.length -1 ) {
-            setTypedText((prevText) => prevText + welcomeMessage[index-1]);
+          if (index < welcomeMessage.length - 1) {
+            setTypedText((prevText) => prevText + welcomeMessage[index - 1]);
             index++;
           } else {
             clearInterval(typingInterval);
-
-            // Hide the modal after 2 seconds
             setTimeout(() => {
               setShowModal(false);
             }, 2500);
           }
-        }, 150); // Adjust the interval speed as needed
+        }, 150);
       }
     }
   }, [isLoggedIn, name]);
@@ -53,23 +63,31 @@ const Header = ({}) => {
   }
 
   return (
-    <header className={mode === "dark" ? "dark mode" : "mode"}>
+    <header
+      className={`${mode === "dark" ? "dark mode" : "mode"} `}
+    >
       <div>
         <h2>Hello, {name}!</h2>
       </div>
-      <div className="logo">
-        <Link to="/">Your Blog</Link>
-      </div>
-      <div className="theme-toggle-button" onClick={() => dispatch(toggleTheme())}>
-        {mode === "light" ? "Dark Mode" : "Light Mode"}
+
+      <div
+        className="theme-toggle-button"
+        onClick={() => dispatch(toggleTheme())}
+      >
+        {" "}
+        {mode === "light" ? (
+          <MdBrightness2 size={24} />
+        ) : (
+          <MdWbSunny size={24} />
+        )}
       </div>
       <nav>
         <ul>
           <li>
-            <Link to="/home">Home</Link>
+            <Link to="/post">Post</Link>
           </li>
           <li>
-            <Link to="/about">About</Link>
+            <Link to="/blog">Blog</Link>
           </li>
           <li>
             <Link to="/contact">Contact</Link>
@@ -78,6 +96,7 @@ const Header = ({}) => {
       </nav>
       <div className="logout-button" onClick={onLogout}>
         Logout
+        <MdExitToApp size={24} />
       </div>
       {showModal && (
         <div className="modal-container">

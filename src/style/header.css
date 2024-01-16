@@ -1,11 +1,14 @@
-
 .modal-container {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  background: linear-gradient(to bottom, rgba(0, 0, 70, 0.9), rgba(28, 181, 224, 0.9));
+  background: linear-gradient(
+    to bottom,
+    rgba(0, 0, 70, 0.9),
+    rgba(28, 181, 224, 0.9)
+  );
 
   display: flex;
   justify-content: center;
@@ -23,15 +26,14 @@
   transform: translate(-50%, -50%);
   padding: 20px;
 
-
-  z-index: 1001; 
-  border-radius: 8px; 
-  max-width: 300px; 
-  width: 100%; 
+  z-index: 1001;
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
   overflow: hidden;
-  animation: fadeIn 1.5s forwards; 
-  opacity: 0; 
-  transition: opacity 0.5s ease; 
+  animation: fadeIn 1.5s forwards;
+  opacity: 0;
+  transition: opacity 0.5s ease;
 }
 @keyframes fadeIn {
   from {
@@ -49,43 +51,82 @@
   color: white;
 }
 
-/* In your style/header.css */
-
-/* Default light mode styles */
 .summary {
   background-color: white;
   width: 100%;
-  height: 100vh;
-  /* Add other light mode styles as needed */
+  height: 200vh;
 }
 
-/* Dark mode styles for the summary */
+.summary div {
+  height: 200vh;
+  background-color: green;
+}
 .summary.dark {
   background-color: #011627;
-  color: #ffffff; /* Text color in dark mode */
-  /* Add other dark mode styles as needed */
+  color: #ffffff;
 }
 
-/* In your style/header.css */
-
-/* Default light mode styles */
 header {
   display: flex;
   justify-content: space-around;
+  align-items: center;
   border-bottom: 1px solid black;
   /* ... existing styles ... */
-  --background-color: #ffffff;
+  --background-color: grey;
   --text-color: #000000;
 }
 
-/* Dark mode styles */
 header.dark {
   --background-color: #011627;
   --text-color: #ffffff;
 }
 
-/* Apply styles using variables */
 header {
   background-color: var(--background-color);
   color: var(--text-color);
+}
+
+header h2{
+  font-family: "Dancing Script", cursive;
+
+}
+
+header .logout-button{
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.header-transparent {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  opacity: 0.5; /* Adjust the initial opacity as needed */
+  transition: opacity 0.5s ease;
+  /* pointer-events: none; This ensures that the header does not capture mouse events initially */
+}
+
+.header-transparent:hover {
+  opacity: 1; /* Full opacity on hover */
+}
+
+/* Add these styles for the opaque header */
+.header-opaque {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  background-color: var(--background-color);
+  color: var(--text-color);
+  opacity: 1; /* Full opacity initially */
+  transition: opacity 0.5s ease;
+}
+
+
+.theme-toggle-button{
+  cursor: pointer;
 }

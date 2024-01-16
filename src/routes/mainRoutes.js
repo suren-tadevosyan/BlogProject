@@ -8,6 +8,8 @@ import Header from "../pages/header";
 import Register from "../pages/register";
 import Summary from "../pages/summary";
 import NotFound from "../pages/notFound";
+import Blog from "../pages/blog";
+import Post from "../pages/post";
 
 const AppRoutes = () => {
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -28,6 +30,9 @@ const AppRoutes = () => {
           <Route path="/summary" element={<Summary />} />
           <Route path="/services" element={"services"} />
           <Route path="/home" element={"home"} />
+          <Route path="/post" element={<Post />} />
+
+          <Route path="/blog" element={<Blog />} />
           <Route path="/*" element={<NotFound />} />
         </Route>
       </Routes>

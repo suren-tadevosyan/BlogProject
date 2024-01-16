@@ -5,6 +5,7 @@ import storage from "redux-persist/lib/storage";
 import passwordReducer from "./slices/password";
 import userReducer from "./slices/auth";
 import themeReducer from "./slices/theme"
+import postReducer from "./slices/postSlices"
 
 const authPersistConfig = {
   key: "user",
@@ -17,9 +18,12 @@ const themePersistConfig = {
 };
 
 
+
+
 const rootReducer = {
   user: persistReducer(authPersistConfig, userReducer),
   password: passwordReducer,
+  posts: postReducer,
   theme: persistReducer(themePersistConfig, themeReducer),
 };
 

@@ -1,8 +1,8 @@
 export const calculatePasswordStrength = (password) => {
   const length = password.length;
-  if (length < 6) {
+  if (length < 8) {
     return 0;
-  } else if (length < 10) {
+  } else if (length < 12) {
     return 1;
   } else {
     return 2;

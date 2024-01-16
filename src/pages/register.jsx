@@ -22,6 +22,9 @@ const Register = () => {
   const [isPasswordFocused, setIsPasswordFocused] = useState(false);
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
+  const [email, setEmail] = useState("");
+  const [pass, setPass] = useState("");
+  const [name, setName] = useState("");
 
   const {
     password: {
@@ -60,12 +63,22 @@ const Register = () => {
       [name]: value,
     }));
 
+    if (name === "email") {
+      setEmail(e.target.value);
+      console.log(email);
+    }
+
+    if (name === "name") {
+      setName(e.target.value);
+    }
+
     if (name === "password") {
       const strength = calculatePasswordStrength(value);
       setPasswordStrength(strength);
-      console.log(isUppercasePresent);
+      setPass(e.target.value);
+      dispatch(setPassword(e.target.value));
+      dispatch(validatePassword());
     }
-
     if (name === "confirmPassword" || name === "password") {
       setPasswordMatch(
         value ===
@@ -74,10 +87,8 @@ const Register = () => {
             : formData.confirmPassword)
       );
     }
-
-    dispatch(setPassword(value));
-    dispatch(validatePassword());
   };
+
   const submitHandler = (e) => {
     e.preventDefault();
     if (
@@ -122,6 +133,10 @@ const Register = () => {
     } else {
       console.log("edrer");
     }
+  };
+
+  const getBack = () => {
+    navigate("/login");
   };
 
   return (
@@ -181,12 +196,14 @@ const Register = () => {
             onChange={handleChange}
             required
           />
-
+          {!passwordMatch && <ErrorMessage message="Passwords do not match" />}
           <div className="form-group">
             <input type="submit" value="Register" />
           </div>
+          <div className="form-group">
+            <input type="button" value="Go back to Login" onClick={getBack} />
+          </div>
         </form>
-        {!passwordMatch && <ErrorMessage message="Passwords do not match" />}
       </div>
       <div className={errorModalVisible ? "backdrop" : ""}>
         <ErrorModal

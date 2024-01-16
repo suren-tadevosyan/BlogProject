@@ -6,7 +6,8 @@ const Summary = () => {
 
   return (
     <div className={`summary ${mode === "dark" ? "dark" : ""}`}>
-Hello    </div>
+      <div></div>
+    </div>
   );
 };
 
