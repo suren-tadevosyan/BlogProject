@@ -1,11 +1,13 @@
 // components/PostList.js
 import React, { useEffect, useState } from "react";
 import { getUserPostsFromFirestore } from "../services/postServices";
+import PostCard from "../utils/postCard";
+import "../style/postCard.css";
 
-const PostList = () => {
+const PostList = ({ isDataUpdated, currentUserID , currentUserIDForDelete }) => {
   const [userPosts, setUserPosts] = useState([]);
 
-  useEffect(() => {
+
     const fetchUserPosts = async () => {
       try {
         // Get user posts from localStorage
@@ -22,7 +24,7 @@ const PostList = () => {
 
         // Update state only if there are new posts or if localStorage is empty
         if (
-          latestPosts?.userPosts?.length > 0 ||
+          latestPosts?.allUserPosts?.length > 0 ||
           storedUserPosts.length === 0
         ) {
           const sortedPosts = latestPosts.allUserPosts.sort(
@@ -43,16 +45,29 @@ const PostList = () => {
       }
     };
 
+  
+
+  useEffect(() => {
     fetchUserPosts();
-  }, []);
+  }, [isDataUpdated]);
+
+  const filteredPosts = currentUserID
+    ? userPosts.filter((post) => post.userID === currentUserID)
+    : userPosts;
+
+  const sortedPosts = filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
   return (
     <div>
       <ul>
-        {userPosts &&
-          userPosts.map((post) => (
-            <li key={post.id || `${post.username}-${post.content}`}>
-              <strong>{post.username}</strong>: {post.content}
-            </li>
+        {sortedPosts &&
+          sortedPosts.map((post) => (
+            <PostCard
+              key={post.id || `${post.username}-${post.content}`}
+              post={post}
+              currentUserID={currentUserID}
+              currentUserIDForDelete ={currentUserIDForDelete }
+              onDataUpdated={() => fetchUserPosts()}
+            />
           ))}
       </ul>
     </div>

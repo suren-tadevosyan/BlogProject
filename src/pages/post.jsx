@@ -1,56 +1,42 @@
-// Post.js
-// import React from "react";
-// import firestore from "../fireStore"; // Import the Firestore setup
-// import { collection, addDoc } from "firebase/firestore";
-
-// const Post = () => {
-//   const addDataToCollection = async (data) => {
-//     try {
-//       const docRef = await addDoc(collection(firestore, "posts"), data);
-//       console.log("Document written with ID: ", docRef.id);
-//     } catch (error) {
-//       console.error("Error adding data to Firestore:", error);
-//     }
-//   };
-
-//   const dataToAdd = {
-//     field1: "value1",
-//     field2: "value2",
-//     // ... other fields
-//   };
-
-//   addDataToCollection(dataToAdd);
-
-//   return <div>Posts</div>;
-// };
-
-// export default Post;
-
-// components/UserPosts.js
-import React, { useEffect } from "react";
-import { useDispatch, useSelector } from "react-redux";
-import { getUserPosts } from "../redux/actions/postActions";
-import { selectUserPosts } from "../redux/slices/postSlices";
+import React, { useEffect, useState } from "react";
 import PostForm from "./postForm";
+import PostList from "./postList";
+import { auth } from "../firebase";
 
 const Post = () => {
-  const dispatch = useDispatch();
-  const userPosts = useSelector(selectUserPosts);
+  const [isDataUpdated, setIsDataUpdated] = useState(false);
+  const [user, setUser] = useState(null);
+  const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    dispatch(getUserPosts());
-  }, [dispatch]);
-  
+    // Assuming you have some authentication logic here to set the user
+    // For example, using Firebase authentication:
+    const unsubscribe = auth.onAuthStateChanged((user) => {
+      setUser(user);
+      setIsLoading(false);
+    });
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleDataUpdate = () => {
+    console.log("Data updated");
+    setIsDataUpdated((prev) => !prev);
+  };
+
+  if (isLoading) {
+    return <p>Loading...</p>; // You can replace this with a spinner or any loading indicator
+  }
 
   return (
     <div>
-      
-      <PostForm />
-      <ul>
-        {/* {posts.map((post) => (
-          <li key={post.id}>{post.content}</li>
-        ))} */}
-      </ul>
+      <PostForm onDataUpdated={handleDataUpdate} />
+      <PostList
+        isDataUpdated={isDataUpdated}
+        currentUserID={user?.uid}
+        currentUserIDForDelete={user?.uid}
+      />
+      ;
     </div>
   );
 };

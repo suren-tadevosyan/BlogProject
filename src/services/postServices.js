@@ -6,10 +6,15 @@ import {
   query,
   where,
   serverTimestamp,
+  doc,
+  deleteDoc,
 } from "firebase/firestore";
 import { auth } from "../firebase"; // Assuming you have a separate file for your Firebase configuration
 import firestore from "../fireStore";
 
+const convertTimestampToDate = (timestamp) => {
+  return timestamp ? timestamp.toDate() : null;
+};
 export const addPostToFirestore = async (content) => {
   // Get the currently authenticated user
   const user = auth.currentUser;
@@ -43,6 +48,8 @@ export const getUserPostsFromFirestore = async () => {
     const userPosts = [];
     querySnapshot.forEach((doc) => {
       const post = doc.data();
+      post.timestamp = convertTimestampToDate(post.timestamp);
+
       userPosts.push(post);
     });
 
@@ -50,13 +57,25 @@ export const getUserPostsFromFirestore = async () => {
     const allPostsQuerySnapshot = await getDocs(postsCollection);
     allPostsQuerySnapshot.forEach((doc) => {
       const post = { id: doc.id, ...doc.data() };
+      post.timestamp = convertTimestampToDate(post.timestamp);
+
       allUserPosts.push(post);
     });
-   
 
     return { userPosts, allUserPosts };
   } else {
     // Handle case where user is not authenticated
     return [];
+  }
+};
+
+export const deletePostFromFirestore = async (postId) => {
+  try {
+    const postRef = doc(collection(firestore, "posts"), postId);
+    await deleteDoc(postRef);
+    console.log("Post deleted successfully!");
+  } catch (error) {
+    console.error("Error deleting post:", error);
+    throw error;
   }
 };

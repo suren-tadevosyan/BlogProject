@@ -3,7 +3,7 @@ import {
   getUserPostsFromFirestore,
 } from "../../services/postServices";
 import {
-  setUserPosts,
+
   getUserPostsStart,
   getUserPostsSuccess,
   getUserPostsFailure,
@@ -18,7 +18,14 @@ export const getUserPosts = () => async (dispatch) => {
   try {
     dispatch(getUserPostsStart());
     const { userPosts, allUserPosts } = await getUserPostsFromFirestore();
-    dispatch(getUserPostsSuccess(allUserPosts));
+    const serializablePosts = allUserPosts.map(post => ({
+      ...post,
+      timestamp: post.timestamp.toISOString(), // Convert to string or use getTime() for number
+    }));
+    dispatch(getUserPostsSuccess(serializablePosts));
+
     // Dispatching allUserPosts to the state
-  } catch (error) {}
+  } catch (error) {
+    dispatch(getUserPostsFailure(error.message));
+  }
 };

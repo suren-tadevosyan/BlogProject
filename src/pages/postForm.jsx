@@ -1,15 +1,16 @@
-import React, { useState } from 'react';
-import { useDispatch } from 'react-redux';
-import { addPost } from '../redux/actions/postActions';
+import React, { useState } from "react";
+import { useDispatch } from "react-redux";
+import { addPost } from "../redux/actions/postActions";
 
-const PostForm = () => {
+const PostForm = ({ onDataUpdated }) => {
   const dispatch = useDispatch();
-  const [content, setContent] = useState('');
+  const [content, setContent] = useState("");
 
   const handleSubmit = (e) => {
     e.preventDefault();
     dispatch(addPost(content));
-    setContent('');
+    setContent("");
+    onDataUpdated();
   };
 
   return (
@@ -20,5 +21,4 @@ const PostForm = () => {
   );
 };
 
-
-export default PostForm
+export default PostForm;

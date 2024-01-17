@@ -1,0 +1,34 @@
+/* components/PostCard.css */
+.post-card {
+  border: 1px solid #ccc;
+  padding: 10px;
+  margin: 10px;
+  border-radius: 5px;
+  background-color: #fff;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  width: 30%; /* Set the width to occupy 30% of the container */
+  box-sizing: border-box; /* Include padding and border in the element's total width and height */
+  display: inline-block; /* Make the cards display in a line */
+  vertical-align: top; /* Align the cards to the top of the container */
+}
+
+.post-card strong {
+  color: #333;
+}
+
+.post-user {
+  display: flex;
+  justify-content: space-between;
+}
+
+.delete-button button {
+  cursor: pointer;
+  background-color: grey;
+  display: none;
+  border-radius: 30px;
+  padding: 5px;
+}
+
+.post-card:hover .delete-button button {
+display: block;
+}

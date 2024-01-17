@@ -19,7 +19,12 @@ const postSlice = createSlice({
     },
     getUserPostsSuccess: (state, action) => {
       state.loading = false;
-      state.userPosts = action.payload;
+      const serializedUserPosts = action.payload.map((post) => ({
+        ...post,
+        timestamp: post.timestamp.toISOString(), // or convert to another format if needed
+      }));
+
+      state.userPosts = serializedUserPosts;
     },
     getUserPostsFailure: (state, action) => {
       state.loading = false;
