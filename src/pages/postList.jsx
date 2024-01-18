@@ -1,27 +1,23 @@
-// components/PostList.js
 import React, { useEffect, useState } from "react";
 import { getUserPostsFromFirestore } from "../services/postServices";
 import PostCard from "../utils/postCard";
 import "../style/postCard.css";
+import { formatTimestamp } from "../utils/formatDate";
 
 const PostList = ({ isDataUpdated, currentUserID, currentUserIDForDelete }) => {
   const [userPosts, setUserPosts] = useState([]);
 
   const fetchUserPosts = async () => {
     try {
-      // Get user posts from localStorage
       const storedUserPosts =
         JSON.parse(localStorage.getItem("userPosts")) || [];
 
       if (storedUserPosts.length > 0) {
-        // Use stored posts as the initial state
         setUserPosts(storedUserPosts);
       }
 
-      // Fetch the latest user posts from Firestore
       const latestPosts = await getUserPostsFromFirestore();
 
-      // Update state only if there are new posts or if localStorage is empty
       if (
         latestPosts?.allUserPosts?.length > 0 ||
         storedUserPosts.length === 0
@@ -31,7 +27,6 @@ const PostList = ({ isDataUpdated, currentUserID, currentUserIDForDelete }) => {
         );
         setUserPosts(latestPosts.allUserPosts);
 
-        // Save the latest user posts in localStorage
         if (latestPosts?.allUserPosts) {
           localStorage.setItem(
             "userPosts",
@@ -53,32 +48,6 @@ const PostList = ({ isDataUpdated, currentUserID, currentUserIDForDelete }) => {
     ? userPosts.filter((post) => post.userID === currentUserID)
     : userPosts;
   const sortedPosts = filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
-
-  const formatTimestamp = (timestamp) => {
-    const postDate = new Date(timestamp);
-    const currentDate = new Date();
-
-    const postDay = postDate.getDate();
-    const postMonth = postDate.getMonth() + 1;
-    const postYear = postDate.getFullYear();
-
-    const postHour = postDate.getHours();
-    const postMinute = postDate.getMinutes();
-
-    if (
-      postDay === currentDate.getDate() &&
-      postMonth === currentDate.getMonth() + 1 &&
-      postYear === currentDate.getFullYear()
-    ) {
-      const formattedTime = `${postHour}:${
-        postMinute < 10 ? "0" : ""
-      }${postMinute}`;
-      return formattedTime;
-    } else {
-      const formattedDate = `${postDay}/${postMonth}/${postYear}`;
-      return formattedDate;
-    }
-  };
 
   return (
     <div>

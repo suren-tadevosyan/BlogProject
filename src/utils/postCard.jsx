@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useState } from "react";
 import { deletePostFromFirestore } from "../services/postServices";
 
 const getRandomColor = (str) => {
@@ -15,13 +15,15 @@ const PostCard = ({
   currentUserIDForDelete,
   date,
 }) => {
+  
+  const [isDeleting, setIsDeleting] = useState(false);
   const backgroundColor = getRandomColor(post.userID);
 
   const handleDelete = async () => {
     try {
       if (post.userID === currentUserID) {
+        setIsDeleting(true);
         await deletePostFromFirestore(post.id);
-
         onDataUpdated();
       } else {
         console.log("You can only delete your own posts.");
@@ -32,7 +34,10 @@ const PostCard = ({
   };
 
   return (
-    <div className="post-card" style={{ backgroundColor }}>
+    <div
+      className={isDeleting ? "post-card deleting" : "post-card"}
+      style={{ backgroundColor }}
+    >
       <div className="post-user">
         <div className="post-content">
           <strong>{post.username}</strong>
@@ -46,7 +51,9 @@ const PostCard = ({
 
         <div className="delete-button">
           {post.userID === currentUserIDForDelete && (
-            <button onClick={handleDelete}>Delete</button>
+            <button onClick={handleDelete} disabled={isDeleting}>
+              {isDeleting ? "Deleting..." : "Delete"}
+            </button>
           )}
         </div>
       </div>

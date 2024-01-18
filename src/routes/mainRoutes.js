@@ -10,6 +10,8 @@ import Summary from "../pages/summary";
 import NotFound from "../pages/notFound";
 import Blog from "../pages/blog";
 import Post from "../pages/post";
+import HomePage from "../pages/homePage";
+import MyPosts from "../pages/myPosts";
 
 const AppRoutes = () => {
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -20,18 +22,18 @@ const AppRoutes = () => {
       <Routes>
         <Route
           path="/login"
-          element={isLoggedIn ? <Navigate to="/summary" /> : <Login />}
+          element={isLoggedIn ? <Navigate to="/home" /> : <Login />}
         />
         <Route
           path="/registration"
-          element={isLoggedIn ? <Navigate to="/summary" /> : <Register />}
+          element={isLoggedIn ? <Navigate to="/home" /> : <Register />}
         />
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/summary" element={<Summary />} />
           <Route path="/services" element={"services"} />
-          <Route path="/home" element={"home"} />
+          <Route path="/home" element={<HomePage />} />
           <Route path="/post" element={<Post />} />
-
+          <Route path="/myposts" element={<MyPosts/>} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/*" element={<NotFound />} />
         </Route>

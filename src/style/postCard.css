@@ -4,7 +4,6 @@
   padding: 10px;
   margin: 10px;
   border-radius: 5px;
-  background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
   width: 30%;
   box-sizing: border-box;
@@ -20,6 +19,11 @@
   height: auto;
 }
 
+.deleting {
+  filter: grayscale(100%);
+  transition: filter 0.5s ease;
+}
+
 .post-card .post-user {
   display: flex;
   justify-content: space-between;
@@ -29,7 +33,7 @@
 .post-card .post-content {
   overflow: hidden;
   text-overflow: ellipsis;
-  white-space: nowrap; /* Change this to normal */
+  white-space: nowrap;
   transition: white-space 0.5s, height 0.5s;
 }
 

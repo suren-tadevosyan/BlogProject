@@ -1,0 +1,57 @@
+.post-area {
+  background-image: url(../images/light1.jpg);
+  display: flex;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 50px 150px;
+  transition: background-image 0.5s ease;
+
+}
+
+.idea {
+  background-image: url(../images/light2.jpg) !important;
+  display: flex;
+  background-size: cover;
+  flex-direction: column;
+  justify-content: center;
+  height: 100vh;
+  padding: 50px 150px;
+  transition: background-image 0.5s ease;
+}
+
+.post-area textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 16px;
+  border-radius: 4px;
+  color: white;
+  background-color: rgba(204, 204, 204, 0.2);
+  border: 1px solid #ccc;
+  height: 100px;
+}
+
+.post-area form {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+}
+
+.post-area p {
+  width: 100%;
+  display: flex;
+  margin-top: 10px;
+  color: red;
+  justify-content: center;
+}
+
+.post-area form button {
+  background-color: #4caf50;
+  color: white;
+  padding: 10px;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+}

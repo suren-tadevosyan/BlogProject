@@ -63,10 +63,8 @@ const Header = ({}) => {
   }
 
   return (
-    <header
-      className={`${mode === "dark" ? "dark mode" : "mode"} `}
-    >
-      <div>
+    <header className={`${mode === "dark" ? "dark mode" : "mode"} `}>
+      <div onClick={() => navigate("/home")} className="user-name">
         <h2>Hello, {name}!</h2>
       </div>
 

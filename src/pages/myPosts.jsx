@@ -6,10 +6,11 @@ import { auth } from "../firebase";
 
 import LoadingSpinner from "../utils/loading";
 
-const Post = () => {
+const MyPosts = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  
   
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -31,14 +32,13 @@ const Post = () => {
 
   return (
     <div className="post-div">
-      <PostForm onDataUpdated={handleDataUpdate} />
-      {/* <PostList
-        isDataUpdated={isDataUpdated}
+      <PostList
+        // isDataUpdated={isDataUpdated}
         currentUserID={user?.uid}
         currentUserIDForDelete={user?.uid}
-      /> */}
+      />
     </div>
   );
 };
 
-export default Post;
+export default MyPosts;

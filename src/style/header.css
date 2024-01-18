@@ -105,16 +105,16 @@ header .logout-button{
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
-  opacity: 0.5; /* Adjust the initial opacity as needed */
+  opacity: 0.5; 
   transition: opacity 0.5s ease;
-  /* pointer-events: none; This ensures that the header does not capture mouse events initially */
+ 
 }
 
 .header-transparent:hover {
-  opacity: 1; /* Full opacity on hover */
+  opacity: 1; 
 }
 
-/* Add these styles for the opaque header */
+
 .header-opaque {
   position: fixed;
   top: 0;
@@ -122,11 +122,23 @@ header .logout-button{
   width: 100%;
   background-color: var(--background-color);
   color: var(--text-color);
-  opacity: 1; /* Full opacity initially */
+  opacity: 1; 
   transition: opacity 0.5s ease;
 }
 
 
 .theme-toggle-button{
   cursor: pointer;
+}
+
+
+.user-name{
+  cursor: pointer;
+  transition: 1s;
+}
+
+
+.user-name:hover{
+  scale: 1.5;
+  transition: 1s;
 }

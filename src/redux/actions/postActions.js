@@ -20,11 +20,11 @@ export const getUserPosts = () => async (dispatch) => {
     const { userPosts, allUserPosts } = await getUserPostsFromFirestore();
     const serializablePosts = allUserPosts.map(post => ({
       ...post,
-      timestamp: post.timestamp.toISOString(), // Convert to string or use getTime() for number
+      timestamp: post.timestamp.toISOString(), 
     }));
     dispatch(getUserPostsSuccess(serializablePosts));
 
-    // Dispatching allUserPosts to the state
+
   } catch (error) {
     dispatch(getUserPostsFailure(error.message));
   }
