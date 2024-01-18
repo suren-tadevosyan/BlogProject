@@ -6,29 +6,54 @@
   border-radius: 5px;
   background-color: #fff;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 30%; /* Set the width to occupy 30% of the container */
-  box-sizing: border-box; /* Include padding and border in the element's total width and height */
-  display: inline-block; /* Make the cards display in a line */
-  vertical-align: top; /* Align the cards to the top of the container */
+  width: 30%;
+  box-sizing: border-box;
+  display: inline-block;
+  vertical-align: top;
+  overflow: hidden;
+  position: relative;
+
+  transition: height 0.5s;
 }
 
-.post-card strong {
-  color: #333;
+.post-card:hover {
+  height: auto;
 }
 
-.post-user {
+.post-card .post-user {
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.post-card .post-content {
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap; /* Change this to normal */
+  transition: white-space 0.5s, height 0.5s;
+}
+
+.post-card:hover .post-content {
+  white-space: normal;
 }
 
 .delete-button button {
   cursor: pointer;
   background-color: grey;
-  display: none;
+  visibility: hidden;
   border-radius: 30px;
-  padding: 5px;
+  padding: 2px;
+  position: absolute;
+  top: 10px;
+  right: 10px;
 }
 
 .post-card:hover .delete-button button {
-display: block;
+  visibility: visible;
+}
+
+.post-date {
+  font-size: 12px;
+  color: black;
+  opacity: 0.8;
 }
