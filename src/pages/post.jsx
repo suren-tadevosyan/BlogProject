@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import PostForm from "./postForm";
 import PostList from "./postList";
 import { auth } from "../firebase";
+import "../style/post.css"
 
 
 import LoadingSpinner from "../utils/loading";

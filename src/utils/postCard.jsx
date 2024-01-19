@@ -15,13 +15,13 @@ const PostCard = ({
   currentUserIDForDelete,
   date,
 }) => {
-  
   const [isDeleting, setIsDeleting] = useState(false);
-  const backgroundColor = getRandomColor(post.userID);
+  const backgroundColor = getRandomColor(post.userID); 
 
   const handleDelete = async () => {
     try {
-      if (post.userID === currentUserID) {
+      console.log(123);
+      if (post.userID === currentUserIDForDelete) {
         setIsDeleting(true);
         await deletePostFromFirestore(post.id);
         onDataUpdated();

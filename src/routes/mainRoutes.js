@@ -33,9 +33,10 @@ const AppRoutes = () => {
           <Route path="/services" element={"services"} />
           <Route path="/home" element={<HomePage />} />
           <Route path="/post" element={<Post />} />
-          <Route path="/myposts" element={<MyPosts/>} />
+          <Route path="/myposts" element={<MyPosts />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/*" element={<NotFound />} />
+          <Route path="" element={<Navigate to="/home" />} />
         </Route>
       </Routes>
     </>

@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import { useDispatch,useSelector } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/actions/postActions";
 import "../style/post.css";
 import { toggleTheme } from "../redux/slices/theme";
@@ -24,21 +24,24 @@ const PostForm = ({ onDataUpdated }) => {
     setErrorMessage("");
   };
 
+  const contentClass = content ? "idea" : "";
+
+  // Construct the class string
+  const postAreaClasses = `post-area ${contentClass} ${
+    mode === "dark" ? content ? "ligth-mode" : "dark-mode" : ""
+  }`;
+
   return (
-    <div className={content ?"post-area idea" : "post-area"}>
+    <div
+      className={postAreaClasses}
+    >
       <form onSubmit={handleSubmit}>
         <textarea
           value={content}
           onChange={(e) => setContent(e.target.value)}
-        
         />
         {errorMessage && <p>{errorMessage}</p>}
-        <button
-          type="submit"
-    
-        >
-          Add Post
-        </button>
+        <button type="submit">Add Post</button>
       </form>
     </div>
   );

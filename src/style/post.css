@@ -7,8 +7,9 @@
   height: 100vh;
   padding: 50px 150px;
   transition: background-image 0.5s ease;
-
 }
+
+
 
 .idea {
   background-image: url(../images/light2.jpg) !important;
@@ -21,12 +22,22 @@
   transition: background-image 0.5s ease;
 }
 
+.ligth-mode{
+  background-image: url(../images/lightday.jpg) !important;
+}
+
+.dark-mode{
+    background-image: url(../images/lightday2.jpg) !important;
+}
+
+
+
 .post-area textarea {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
-  color: white;
+  color: rgb(228, 6, 6);
   background-color: rgba(204, 204, 204, 0.2);
   border: 1px solid #ccc;
   height: 100px;

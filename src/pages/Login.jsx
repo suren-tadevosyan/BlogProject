@@ -82,7 +82,7 @@ const Login = () => {
         />
 
 
-        {error && <p className="error-message">{error}</p>}
+        {error && <p className="error-message" >{error}</p>}
         <div className="form-group">
           <input type="submit" value="Login" />
         </div>

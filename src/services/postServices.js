@@ -1,4 +1,4 @@
-// services/postService.js
+
 import {
   addDoc,
   collection,
@@ -9,18 +9,18 @@ import {
   doc,
   deleteDoc,
 } from "firebase/firestore";
-import { auth } from "../firebase"; // Assuming you have a separate file for your Firebase configuration
+import { auth } from "../firebase"; 
 import firestore from "../fireStore";
 
 const convertTimestampToDate = (timestamp) => {
   return timestamp ? timestamp.toDate() : null;
 };
 export const addPostToFirestore = async (content) => {
-  // Get the currently authenticated user
+
   const user = auth.currentUser;
 
   if (user) {
-    // Add a new post to the Firestore collection
+   
     const username = user.displayName;
     const postsCollection = collection(firestore, "posts");
     await addDoc(postsCollection, {
@@ -30,7 +30,7 @@ export const addPostToFirestore = async (content) => {
       username: username,
     });
   } else {
-    // Handle case where user is not authenticated
+   
   }
 };
 
@@ -38,13 +38,13 @@ export const getUserPostsFromFirestore = async () => {
   const user = auth.currentUser;
 
   if (user) {
-    // Query Firestore to get posts for the current user
+    
     const postsCollection = collection(firestore, "posts");
     const querySnapshot = await getDocs(
       query(postsCollection, where("userID", "==", user.uid))
     );
 
-    // Extract user-specific posts
+    
     const userPosts = [];
     querySnapshot.forEach((doc) => {
       const post = doc.data();
@@ -64,7 +64,7 @@ export const getUserPostsFromFirestore = async () => {
 
     return { userPosts, allUserPosts };
   } else {
-    // Handle case where user is not authenticated
+   
     return [];
   }
 };
