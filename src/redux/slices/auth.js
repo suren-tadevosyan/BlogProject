@@ -6,6 +6,7 @@ const initialState = {
   token: null,
   id: null,
   name: null,
+  photo: null,
 };
 
 const authSlice = createSlice({
@@ -21,16 +22,21 @@ const authSlice = createSlice({
       state.token = action.payload.token;
       state.id = action.payload.id;
       state.name = action.payload.name;
+      state.photo = action.payload;
     },
     removeUser(state) {
       state.email = null;
       state.token = null;
       state.id = null;
       state.name = null;
+      state.photo = null;
+    },
+    updatePhoto(state, action) {
+      state.photo = action.payload;
     },
   },
 });
 
 const { actions, reducer } = authSlice;
-export const { loginUser, setUser, removeUser } = actions;
+export const { loginUser, setUser, removeUser, updatePhoto } = actions;
 export default reducer;

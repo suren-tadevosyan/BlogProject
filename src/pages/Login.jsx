@@ -3,8 +3,10 @@ import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { loginUser, setUser } from "../redux/slices/auth";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
+import userMale from "../images/userMale.png";
 import "../style/login.css";
 import Form from "../utils/form";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
 
 const Login = () => {
   const dispatch = useDispatch();
@@ -31,19 +33,56 @@ const Login = () => {
 
     signInWithEmailAndPassword(auth, email, pass)
       .then(({ user }) => {
-       
-        dispatch(
-          setUser({
-            email: user.email,
-            id: user.uid,
-            token: user.accesToken,
-            name: user.displayName,
-          })
+        const storage = getStorage();
+        const storageRef = ref(
+          storage,
+          `user_photos/${user.uid}/user-photo.jpg`
         );
-        setError(null); 
-        window.localStorage.setItem("userId", 1);
-        dispatch(loginUser({ username: "username", password: "password" }));
-        navigate("/summary");
+
+        getDownloadURL(storageRef)
+          .then((downloadURL) => {
+            const photo = downloadURL || userMale;
+            console.log(downloadURL);
+            dispatch(
+              setUser({
+                email: user.email,
+                id: user.uid,
+                token: user.accessToken,
+                name: user.displayName,
+                photo: photo,
+              })
+            );
+            setError(null);
+            window.localStorage.setItem("userId", 1);
+            dispatch(loginUser({ username: "username", password: "password" }));
+            navigate("/summary");
+          })
+          .catch((error) => {
+            if (error.code === "storage/object-not-found") {
+              // Handle case where user's photo doesn't exist
+              const photo = userMale; // Use a default photo
+              dispatch(
+                setUser({
+                  email: user.email,
+                  id: user.uid,
+                  token: user.accessToken,
+                  name: user.displayName,
+                  photo: photo,
+                })
+              );
+              setError(null);
+              window.localStorage.setItem("userId", 1);
+              dispatch(
+                loginUser({ username: "username", password: "password" })
+              );
+              navigate("/summary");
+            } else {
+              console.error(
+                "Error fetching user's photo from Firebase storage:",
+                error
+              );
+            }
+          });
       })
       .catch((error) => {
         console.error(
@@ -62,7 +101,7 @@ const Login = () => {
     <div className="login-container">
       <h2>Login</h2>
       <form className="login-form" action="#" onSubmit={submitHandler}>
-      <Form
+        <Form
           label="Email"
           type="email"
           id="email"
@@ -81,8 +120,7 @@ const Login = () => {
           required
         />
 
-
-        {error && <p className="error-message" >{error}</p>}
+        {error && <p className="error-message">{error}</p>}
         <div className="form-group">
           <input type="submit" value="Login" />
         </div>

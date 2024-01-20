@@ -1,6 +1,8 @@
 import React, { useEffect, useRef, useState } from "react";
 import { deletePostFromFirestore } from "../services/postServices";
 import userPhoto from "../images/lamp.jpg";
+import { getStorage, ref, getDownloadURL } from "firebase/storage";
+
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
   const color = `hsl(${hash % 300}, 50%, 50%)`;
@@ -19,13 +21,38 @@ const PostCard = ({
   const backgroundColor = getRandomColor(post.userID);
   const [isOpen, setIsOpen] = useState(false);
   const [showReadMoreButton, setShowReadMoreButton] = useState(false);
-  const ref = useRef(null);
+  const [authorImage, setAuthorImage] = useState(null);
+  const refer = useRef(null);
 
   useEffect(() => {
     setShowReadMoreButton(
-      ref.current.scrollHeight !== ref.current.clientHeight
+      refer.current.scrollHeight !== refer.current.clientHeight
     );
   }, []);
+
+  useEffect(() => {
+    const fetchAuthorImage = async () => {
+      try {
+        const storage = getStorage();
+        const storageRef = ref(
+          storage,
+          `user_photos/${post.userID}/user-photo.jpg`
+        );
+        const downloadURL = await getDownloadURL(storageRef);
+        console.log("Download URL:", downloadURL);
+        setAuthorImage(downloadURL);
+      } catch (error) {
+        console.error(
+          "Error fetching author's image from Firebase storage:",
+          error
+        );
+        // Use a default image if fetching the author's image fails
+        setAuthorImage(userPhoto);
+      }
+    };
+
+    fetchAuthorImage();
+  }, [post.userID]);
 
   const paragraphsStyles = {
     WebkitLineClamp: 3,
@@ -36,7 +63,6 @@ const PostCard = ({
 
   const handleDelete = async () => {
     try {
-     
       if (post.userID === currentUserIDForDelete) {
         setIsDeleting(true);
         await deletePostFromFirestore(post.id);
@@ -57,7 +83,11 @@ const PostCard = ({
       <div className="post-user">
         <div className="post-content">
           <div className="post-author">
-            <img src={userPhoto} alt="User" className="user-photo" />
+            <img
+              src={authorImage || userPhoto}
+              alt="User"
+              className="user-photo"
+            />
             <div>
               {" "}
               <strong>{post.username}</strong>
@@ -68,7 +98,7 @@ const PostCard = ({
               </span>
             </div>
           </div>
-          <p style={isOpen ? null : paragraphsStyles} ref={ref}>
+          <p style={isOpen ? null : paragraphsStyles} ref={refer}>
             {post.content}
           </p>
         </div>
