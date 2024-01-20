@@ -16,7 +16,13 @@ const PostCard = ({
   date,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
-  const backgroundColor = getRandomColor(post.userID); 
+  const backgroundColor = getRandomColor(post.userID);
+  const paragraphsStyles = {
+    WebkitLineClamp: 3,
+    WebkitBoxOrient: 'vertical',
+    overflow: 'hidden',
+    display: '-webkit-box',
+  } 
 
   const handleDelete = async () => {
     try {
@@ -46,7 +52,7 @@ const PostCard = ({
               <strong>Date:{date}</strong>
             </div>
           </span>
-          {post.content}
+          <p>{post.content}</p>
         </div>
 
         <div className="delete-button">
