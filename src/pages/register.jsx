@@ -140,7 +140,7 @@ const Register = () => {
   };
 
   return (
-    <div>
+    <div className="login-register">
       <div className="login-container">
         <h2>Creating Account</h2>
         <form className="login-form" action="#" onSubmit={submitHandler}>

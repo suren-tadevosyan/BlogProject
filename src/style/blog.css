@@ -1,0 +1,13 @@
+.post-count {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+
+}
+
+
+.post-count p{
+    font-size: 27px;
+    font-weight: bold;
+}

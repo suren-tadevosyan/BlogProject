@@ -98,36 +98,38 @@ const Login = () => {
     navigate("/registration");
   };
   return (
-    <div className="login-container">
-      <h2>Login</h2>
-      <form className="login-form" action="#" onSubmit={submitHandler}>
-        <Form
-          label="Email"
-          type="email"
-          id="email"
-          name="email"
-          value={email}
-          onChange={handleChange}
-          required
-        />
-        <Form
-          label="Password"
-          type="password"
-          id="password"
-          name="password"
-          value={pass}
-          onChange={handleChange}
-          required
-        />
+    <div className="login-register">
+      <div className="login-container">
+        <h2>Login</h2>
+        <form className="login-form" action="#" onSubmit={submitHandler}>
+          <Form
+            label="Email"
+            type="email"
+            id="email"
+            name="email"
+            value={email}
+            onChange={handleChange}
+            required
+          />
+          <Form
+            label="Password"
+            type="password"
+            id="password"
+            name="password"
+            value={pass}
+            onChange={handleChange}
+            required
+          />
 
-        {error && <p className="error-message">{error}</p>}
-        <div className="form-group">
-          <input type="submit" value="Login" />
-        </div>
-        <div className="form-group">
-          <input type="button" value="Register" onClick={registerPage} />
-        </div>
-      </form>
+          {error && <p className="error-message">{error}</p>}
+          <div className="form-group">
+            <input type="submit" value="Login" />
+          </div>
+          <div className="form-group">
+            <input type="button" value="Register" onClick={registerPage} />
+          </div>
+        </form>
+      </div>
     </div>
   );
 };

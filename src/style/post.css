@@ -7,9 +7,8 @@
   height: 100vh;
   padding: 50px 150px;
   transition: background-image 0.5s ease;
+  position: relative;
 }
-
-
 
 .idea {
   background-image: url(../images/light2.jpg) !important;
@@ -22,25 +21,28 @@
   transition: background-image 0.5s ease;
 }
 
-.ligth-mode{
+.ligth-mode {
   background-image: url(../images/lightday.jpg) !important;
 }
 
-.dark-mode{
-    background-image: url(../images/lightday2.jpg) !important;
+.dark-mode {
+  background-image: url(../images/lightday2.jpg) !important;
 }
 
-
-
-.post-area textarea {
+.post-area .text {
   width: 100%;
   padding: 10px;
   font-size: 16px;
   border-radius: 4px;
-  color: rgb(228, 6, 6);
-  background-color: rgba(204, 204, 204, 0.2);
+  color: white;
+  background-color: rgba(5, 5, 5, 0.5);
   border: 1px solid #ccc;
   height: 100px;
+}
+
+.dtext {
+  color: black !important;
+  background-color: rgba(5, 5, 5, 0.5);
 }
 
 .post-area form {
@@ -65,4 +67,30 @@
   border: none;
   cursor: pointer;
   margin-top: 20px;
+}
+
+.success-modal {
+  position: absolute;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background-color: #4caf50;
+  color: #fff;
+  padding: 10px;
+  border-radius: 5px;
+  display: inline-block;
+  animation: fadeOut 3s forwards; 
+}
+
+
+@keyframes fadeOut {
+  0% {
+    opacity: 1;
+  }
+  50%{
+    opacity: 0.7;
+  }
+  100% {
+    opacity: 0;
+  }
 }

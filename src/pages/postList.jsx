@@ -4,7 +4,12 @@ import PostCard from "../utils/postCard";
 import "../style/postCard.css";
 import { formatTimestamp } from "../utils/formatDate";
 
-const PostList = ({ isDataUpdated, currentUserID, currentUserIDForDelete }) => {
+const PostList = ({
+  isDataUpdated,
+  currentUserID,
+  currentUserIDForDelete,
+  setPostCount,
+}) => {
   const [userPosts, setUserPosts] = useState([]);
 
   const fetchUserPosts = async () => {
@@ -28,6 +33,7 @@ const PostList = ({ isDataUpdated, currentUserID, currentUserIDForDelete }) => {
         setUserPosts(latestPosts.allUserPosts);
 
         if (latestPosts?.allUserPosts) {
+          setPostCount(latestPosts.allUserPosts.length);
           localStorage.setItem(
             "userPosts",
             JSON.stringify(latestPosts.allUserPosts)
