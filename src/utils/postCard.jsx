@@ -46,7 +46,6 @@ const PostCard = ({
           "Error fetching author's image from Firebase storage:",
           error
         );
-        // Use a default image if fetching the author's image fails
         setAuthorImage(userPhoto);
       }
     };
