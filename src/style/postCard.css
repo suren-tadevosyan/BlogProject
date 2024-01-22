@@ -2,7 +2,10 @@
 .profile {
   padding: 30px 20px;
 }
-
+.post-cards-container{
+  display: flex;
+  flex-direction: column;
+}
 .post-card {
   /* border: 1px solid #ccc;
   padding: 10px;
@@ -17,6 +20,8 @@
   position: relative;
 
   transition: height 0.5s; */
+  width: 80%;
+  
   position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -27,6 +32,12 @@
   transition: box-shadow 0.3s ease-in-out;
 }
 
+.post-cards-container .post-card:nth-child(even){
+
+  align-self: flex-end;
+}
+
+
 .post-card:hover {
   height: auto;
 }
@@ -35,8 +46,6 @@
   filter: blur(20px);
   transition: filter 0.5s ease;
 }
-
-
 
 .delete-animation-container {
   position: absolute;

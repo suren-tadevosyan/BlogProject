@@ -56,10 +56,10 @@ const PostList = ({
   const sortedPosts = filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
 
   return (
-    <div>
-      <ul>
+    <div className="post-cards-container">
+      
         {sortedPosts &&
-          sortedPosts.map((post) => (
+          sortedPosts.map((post ,index) => (
             <PostCard
               key={post.id || `${post.username}-${post.content}`}
               post={post}
@@ -67,9 +67,10 @@ const PostList = ({
               currentUserID={currentUserID}
               currentUserIDForDelete={currentUserIDForDelete}
               onDataUpdated={() => fetchUserPosts()}
+              index ={ index}
             />
           ))}
-      </ul>
+      
     </div>
   );
 };

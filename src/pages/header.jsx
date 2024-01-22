@@ -5,6 +5,7 @@ import { loginUser, removeUser } from "../redux/slices/auth";
 import "../style/header.css";
 import { toggleTheme } from "../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
+import Welcome from "../utils/welcome";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
@@ -14,6 +15,20 @@ const Header = ({}) => {
   const [typedText, setTypedText] = useState("");
   const { mode } = useSelector((state) => state.theme);
   const [scrolling, setScrolling] = useState(false);
+
+  function getRandomColor() {
+    // Generate random values for red, green, and blue channels
+    const red = Math.floor(Math.random() * 256);
+    const green = Math.floor(Math.random() * 256);
+    const blue = Math.floor(Math.random() * 256);
+
+    // Combine the values to create a CSS color string
+    const color = `rgb(${red}, ${green}, ${blue})`;
+
+    return color;
+  }
+
+  // Example usage:
 
   useEffect(() => {
     const handleScroll = () => {
@@ -35,23 +50,34 @@ const Header = ({}) => {
 
         localStorage.setItem("hasModalBeenShown", "true");
 
-        const welcomeMessage = `elcome to the website,  ${name}!!`;
-        let index = 0;
-
-        const typingInterval = setInterval(() => {
-          if (index < welcomeMessage.length - 1) {
-            setTypedText((prevText) => prevText + welcomeMessage[index - 1]);
-            index++;
-          } else {
-            clearInterval(typingInterval);
-            setTimeout(() => {
-              setShowModal(false);
-            }, 2500);
-          }
-        }, 150);
+        setTimeout(() => {
+          setShowModal(false);
+        }, 5000);
       }
     }
   }, [isLoggedIn, name]);
+
+  const supportedLanguages = [
+    "english",
+    "spanish",
+    "russian",
+    "armenian",
+    "french",
+    "german",
+    "italian",
+    "chinese",
+    "japanese",
+    "korean",
+  ];
+
+  const modalComponents = supportedLanguages.map((lang, index) => {
+    const randomColor = getRandomColor();
+    return (
+      <div key={index} className={`modal-item`} style={{ color: randomColor }}>
+        <Welcome name={name} language={lang} />
+      </div>
+    );
+  });
 
   function onLogout() {
     dispatch(removeUser());
@@ -63,47 +89,43 @@ const Header = ({}) => {
   }
 
   return (
-    <header className={`${mode === "dark" ? "dark mode" : "mode"} `}>
-      <div onClick={() => navigate("/home")} className="user-name">
-        <h2>Hello, {name}!</h2>
-      </div>
-
-      <div
-        className="theme-toggle-button"
-        onClick={() => dispatch(toggleTheme())}
-      >
-        {" "}
-        {mode === "light" ? (
-          <MdBrightness2 size={24} />
-        ) : (
-          <MdWbSunny size={24} />
-        )}
-      </div>
-      <nav>
-        <ul>
-          <li>
-            <Link to="/post">Post</Link>
-          </li>
-          <li>
-            <Link to="/blog">Blog</Link>
-          </li>
-          <li>
-            <Link to="/contact">Contact</Link>
-          </li>
-        </ul>
-      </nav>
-      <div className="logout-button" onClick={onLogout}>
-        Logout
-        <MdExitToApp size={24} />
-      </div>
-      {showModal && (
-        <div className="modal-container">
-          <div className="modal">
-            <p>W{typedText}</p>
-          </div>
+    <>
+      <header className={`${mode === "dark" ? "dark mode" : "mode"} `}>
+        <div onClick={() => navigate("/home")} className="user-name">
+          <h2>Hello, {name}!</h2>
         </div>
-      )}
-    </header>
+
+        <div
+          className="theme-toggle-button"
+          onClick={() => dispatch(toggleTheme())}
+        >
+          {" "}
+          {mode === "light" ? (
+            <MdBrightness2 size={24} />
+          ) : (
+            <MdWbSunny size={24} />
+          )}
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <Link to="/post">Post</Link>
+            </li>
+            <li>
+              <Link to="/blog">Blog</Link>
+            </li>
+            <li>
+              <Link to="/contact">Contact</Link>
+            </li>
+          </ul>
+        </nav>
+        <div className="logout-button" onClick={onLogout}>
+          Logout
+          <MdExitToApp size={24} />
+        </div>
+      </header>
+      {showModal && <div className="modal-container">{modalComponents}</div>}
+    </>
   );
 };
 

@@ -1,4 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
+import { motion } from "framer-motion";
 import { deletePostFromFirestore } from "../services/postServices";
 import userPhoto from "../images/userMale.png";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
@@ -17,6 +18,7 @@ const PostCard = ({
   onDataUpdated,
   currentUserIDForDelete,
   date,
+  index
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const backgroundColor = getRandomColor(post.userID);
@@ -78,18 +80,28 @@ const PostCard = ({
   };
 
   return (
-    <div
+    <motion.div
       className={isDeleting ? "post-card deleting" : "post-card"}
       style={{ backgroundColor }}
+      initial={{ opacity: 0,  x: index % 2 === 0 ? 50 : -50 }}
+      animate={{ opacity: 1, x: 0 }}
+      exit={{ opacity: 0, x: 0 }}
+      whileHover={{ scale: 1.02 }}
     >
-      <div className={`post-user ${isDeleting ? "blur" : ""}`}>
+      <motion.div
+        className={`post-user ${isDeleting ? "blur" : ""}`}
+        initial={{ opacity: 0 }}
+        animate={{ opacity: 1 }}
+      >
         <div className="post-user">
           <div className="post-content">
             <div className="post-author">
-              <img
+              <motion.img
                 src={authorImage || userPhoto}
                 alt="User"
                 className="user-photo"
+                initial={{ scale: 0.8 }}
+                animate={{ scale: 1 }}
               />
               <div>
                 {" "}
@@ -106,28 +118,33 @@ const PostCard = ({
             </p>
           </div>
           {showReadMoreButton && (
-            <button
+            <motion.button
               className="read-more-button"
               onClick={() => setIsOpen(!isOpen)}
+              whileHover={{ scale: 1.1 }}
             >
               {isOpen ? "read less..." : "read more..."}
-            </button>
+            </motion.button>
           )}
           <div className="delete-button">
             {post.userID === currentUserIDForDelete && (
-              <button onClick={handleDelete} disabled={isDeleting}>
+              <motion.button
+                onClick={handleDelete}
+                disabled={isDeleting}
+                whileHover={{ scale: 1.1 }}
+              >
                 {isDeleting ? "Deleting..." : "Delete"}
-              </button>
+              </motion.button>
             )}
           </div>
         </div>
-      </div>
+      </motion.div>
       {isDeleting && (
         <div className="delete-animation-container">
           <DeleteAnimation />
         </div>
       )}
-    </div>
+    </motion.div>
   );
 };
 

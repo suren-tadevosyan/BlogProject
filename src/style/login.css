@@ -12,7 +12,7 @@ body {
 }
 
 .login-register {
-  background-image: url(../images/loginBack.gif);
+  background-image: url(../images/typing.gif);
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -25,12 +25,12 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  background-color: #3800c4;
+  background-color: #ddbeaa;
   border-radius: 8px;
   opacity: 0.9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
-  width: 300px;
+  width: 400px;
   text-align: center;
 }
 
@@ -65,25 +65,24 @@ body {
 }
 
 .form-group input[type="submit"] {
-  background: linear-gradient(to right, #9e12d6, #6f0c99);
+  background-color: #242734;
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
 .form-group input[type="button"] {
-  background: linear-gradient(to right, #9e12d6, #6f0c99);
+  background-color: #242734;
   color: #fff;
   cursor: pointer;
   transition: background 0.3s ease-in-out;
 }
 
-.form-group input[type="button"]:hover {
-  background: linear-gradient(to right, #6f0c99, #9e12d6);
+.form-group input[type="button"]:hover { background-color: #1b1f26;
 }
 
 .form-group input[type="submit"]:hover {
-  background: linear-gradient(to right, #6f0c99, #9e12d6);
+  background-color: #1b1f26;
 }
 
 .password-input-container {
