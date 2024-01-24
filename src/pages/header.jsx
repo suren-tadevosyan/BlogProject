@@ -12,23 +12,19 @@ const Header = ({}) => {
   const navigate = useNavigate();
   const { name, isLoggedIn } = useSelector((state) => state.user);
   const [showModal, setShowModal] = useState(false);
-  const [typedText, setTypedText] = useState("");
   const { mode } = useSelector((state) => state.theme);
   const [scrolling, setScrolling] = useState(false);
 
   function getRandomColor() {
-    // Generate random values for red, green, and blue channels
+    
     const red = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
     const blue = Math.floor(Math.random() * 256);
 
-    // Combine the values to create a CSS color string
     const color = `rgb(${red}, ${green}, ${blue})`;
 
     return color;
   }
-
-  // Example usage:
 
   useEffect(() => {
     const handleScroll = () => {

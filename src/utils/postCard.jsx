@@ -18,7 +18,7 @@ const PostCard = ({
   onDataUpdated,
   currentUserIDForDelete,
   date,
-  index
+  index,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const backgroundColor = getRandomColor(post.userID);
@@ -43,7 +43,7 @@ const PostCard = ({
           `user_photos/${post.userID}/user-photo.jpg`
         );
         const downloadURL = await getDownloadURL(storageRef);
-        console.log("Download URL:", downloadURL);
+        // console.log("Download URL:", downloadURL);
         setAuthorImage(downloadURL);
       } catch (error) {
         console.error(
@@ -83,7 +83,7 @@ const PostCard = ({
     <motion.div
       className={isDeleting ? "post-card deleting" : "post-card"}
       style={{ backgroundColor }}
-      initial={{ opacity: 0,  x: index % 2 === 0 ? 50 : -50 }}
+      initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 0 }}
       whileHover={{ scale: 1.02 }}

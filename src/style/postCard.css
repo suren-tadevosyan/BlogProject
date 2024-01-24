@@ -1,27 +1,21 @@
 /* components/PostCard.css */
 .profile {
   padding: 30px 20px;
-}
-.post-cards-container{
   display: flex;
   flex-direction: column;
+  align-items: center;
+  justify-content: center;
+}
+.post-cards-container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  width: 80%;
+  align-items: center;
 }
 .post-card {
-  /* border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 5px;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-  width: 30%;
-  box-sizing: border-box;
-  display: inline-block;
-  vertical-align: top;
-  overflow: hidden;
-  position: relative;
-
-  transition: height 0.5s; */
   width: 80%;
-  
+
   position: relative;
   border: 1px solid #ddd;
   border-radius: 8px;
@@ -32,11 +26,9 @@
   transition: box-shadow 0.3s ease-in-out;
 }
 
-.post-cards-container .post-card:nth-child(even){
-
+.post-cards-container .post-card:nth-child(even) {
   align-self: flex-end;
 }
-
 
 .post-card:hover {
   height: auto;
@@ -52,15 +44,8 @@
   top: 50%;
   left: 50%;
   transform: translate(-50%, -50%);
-  z-index: 999; /* Make sure the delete animation is on top of other content */
+  z-index: 999;
 }
-
-/* .post-card .post-user {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-  flex-direction: column;
-} */
 
 .post-card .post-content {
   overflow: hidden;
@@ -134,4 +119,8 @@
   display: flex;
   gap: 1rem;
   align-items: flex-start;
+}
+
+.user-photo {
+  object-fit: cover;
 }
