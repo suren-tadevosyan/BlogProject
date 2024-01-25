@@ -11,10 +11,13 @@
     "@testing-library/jest-dom": "^5.14.1",
     "@testing-library/react": "^13.0.0",
     "@testing-library/user-event": "^13.2.1",
+    "axios": "^1.6.6",
+    "cors": "^2.8.5",
     "firebase": "^10.7.1",
     "framer-motion": "^10.18.0",
     "install": "^0.13.0",
     "npm": "^10.3.0",
+    "openai": "^4.25.0",
     "react": "^18.2.0",
     "react-dom": "^18.2.0",
     "react-icons": "^5.0.1",
@@ -25,6 +28,7 @@
     "react-scripts": "5.0.1",
     "react-spring": "^9.7.3",
     "redux-persist": "^6.0.0",
+    "txtgen": "^3.0.6",
     "web-vitals": "^2.1.0"
   },
   "scripts": {

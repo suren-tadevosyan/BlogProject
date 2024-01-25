@@ -2,16 +2,14 @@ import React, { useEffect, useState } from "react";
 import PostForm from "./postForm";
 import PostList from "./postList";
 import { auth } from "../firebase";
-import "../style/post.css"
-
-
+import "../style/post.css";
 import LoadingSpinner from "../utils/loading";
 
 const Post = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  
+
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
       setUser(user);
