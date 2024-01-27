@@ -48,7 +48,6 @@ const PostList = ({
       console.error("Error fetching or storing user posts:", error);
     }
   };
-
   useEffect(() => {
     fetchUserPosts();
     formatTimestamp();
@@ -60,11 +59,11 @@ const PostList = ({
       isSameDay(new Date(post.timestamp), today)
     );
    
-    setTodayPosts(postsFromCurrentDay.length);
+    {setTodayPosts && setTodayPosts(postsFromCurrentDay.length);}
     const postsFromCurrentWeek = filterPostsByWeek(userPosts);
-    setThisWeekPosts(postsFromCurrentWeek.length);
-    setPostCount(userPosts.length);
-  }, [userPosts]);
+{  setThisWeekPosts &&   setThisWeekPosts(postsFromCurrentWeek.length);} 
+{ setPostCount &&   setPostCount(userPosts.length);
+}  }, [userPosts]);
 
   const filteredPosts = currentUserID
     ? userPosts.filter((post) => post.userID === currentUserID)

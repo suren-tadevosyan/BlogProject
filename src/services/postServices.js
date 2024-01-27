@@ -79,3 +79,21 @@ export const deletePostFromFirestore = async (postId) => {
     throw error;
   }
 };
+
+export const deleteAllPostsForUser = async (userID) => {
+  try {
+    const postsRef = collection(firestore, "posts");
+    const userPostsQuery = query(postsRef, where("userID", "==", userID));
+    const userPostsSnapshot = await getDocs(userPostsQuery);
+
+    // Iterate through user's posts and delete each post
+    userPostsSnapshot.forEach(async (doc) => {
+      await deleteDoc(doc.ref);
+    });
+
+    console.log("All posts deleted successfully!");
+  } catch (error) {
+    console.error("Error deleting all posts for user:", error);
+    throw error;
+  }
+};

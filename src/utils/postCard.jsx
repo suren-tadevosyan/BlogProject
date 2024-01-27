@@ -4,6 +4,8 @@ import { deletePostFromFirestore } from "../services/postServices";
 import userPhoto from "../images/userMale.png";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DeleteAnimation } from "./successAnim";
+import { Trash2 } from "react-feather";
+
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
@@ -133,8 +135,7 @@ const PostCard = ({
                 disabled={isDeleting}
                 whileHover={{ scale: 1.1 }}
               >
-                {isDeleting ? "Deleting..." : "Delete"}
-              </motion.button>
+              {isDeleting ? "Deleting..." : <Trash2 />}              </motion.button>
             )}
           </div>
         </div>

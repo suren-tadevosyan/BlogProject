@@ -37,6 +37,7 @@ const Form = ({
             type="button"
             className="toggle-button"
             onClick={handleToggleVisibility}
+            onFocus={onFocus}
           >
             <FontAwesomeIcon icon={isPasswordVisible ? faEye : faEyeSlash} />
           </button>

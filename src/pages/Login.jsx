@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { loginUser, setUser } from "../redux/slices/auth";
 import { getAuth, signInWithEmailAndPassword } from "firebase/auth";
 import userMale from "../images/userMale.png";
@@ -14,7 +14,8 @@ const Login = () => {
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState(null);
-
+  const [attempts,setAttempts] = useState(1)
+  const {name} = useSelector(state => state.user)
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -90,8 +91,9 @@ const Login = () => {
           error.code,
           error.message
         );
-        setError("Invalid email or password. Please try again.");
-      });
+          setAttempts(attempts +1 )
+          setError(<div>Invalid  password for user {name}. Please try again.<br/>Wrong attempts {attempts}</div>);
+        });
   };
 
   const registerPage = () => {
