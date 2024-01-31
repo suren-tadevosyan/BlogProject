@@ -7,15 +7,18 @@ import userMale from "../images/userMale.png";
 import "../style/login.css";
 import Form from "../utils/form";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import vdeobBack from "../images/typing.mp4";
+import VideoPlayer from "../utils/videoPlayer";
 
 const Login = () => {
+  const videoSource = vdeobBack;
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
   const [error, setError] = useState(null);
-  const [attempts,setAttempts] = useState(1)
-  const {name} = useSelector(state => state.user)
+  const [attempts, setAttempts] = useState(1);
+  const { name } = useSelector((state) => state.user);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -60,8 +63,8 @@ const Login = () => {
           })
           .catch((error) => {
             if (error.code === "storage/object-not-found") {
-              // Handle case where user's photo doesn't exist
-              const photo = userMale; // Use a default photo
+            
+              const photo = userMale; 
               dispatch(
                 setUser({
                   email: user.email,
@@ -91,9 +94,15 @@ const Login = () => {
           error.code,
           error.message
         );
-          setAttempts(attempts +1 )
-          setError(<div>Invalid  password for user {name}. Please try again.<br/>Wrong attempts {attempts}</div>);
-        });
+        setAttempts(attempts + 1);
+        setError(
+          <div>
+            Invalid password for user {name}. Please try again.
+            <br />
+            Wrong attempts {attempts}
+          </div>
+        );
+      });
   };
 
   const registerPage = () => {
@@ -101,6 +110,7 @@ const Login = () => {
   };
   return (
     <div className="login-register">
+      <VideoPlayer videoSource={videoSource} />
       <div className="login-container">
         <h2>Login</h2>
         <form className="login-form" action="#" onSubmit={submitHandler}>

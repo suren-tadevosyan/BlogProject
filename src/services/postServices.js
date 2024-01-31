@@ -1,4 +1,3 @@
-
 import {
   addDoc,
   collection,
@@ -7,20 +6,21 @@ import {
   where,
   serverTimestamp,
   doc,
+  updateDoc,
   deleteDoc,
+  getDoc,
+  getFirestore,
 } from "firebase/firestore";
-import { auth } from "../firebase"; 
+import { auth } from "../firebase";
 import firestore from "../fireStore";
 
 const convertTimestampToDate = (timestamp) => {
   return timestamp ? timestamp.toDate() : null;
 };
 export const addPostToFirestore = async (content) => {
-
   const user = auth.currentUser;
 
   if (user) {
-   
     const username = user.displayName;
     const postsCollection = collection(firestore, "posts");
     await addDoc(postsCollection, {
@@ -28,23 +28,72 @@ export const addPostToFirestore = async (content) => {
       timestamp: serverTimestamp(),
       userID: user.uid,
       username: username,
+      likes: 0,
+      likedBy: [],
+      comments: [],
     });
   } else {
-   
   }
 };
+
+export const likePostInFirestore = async (postId, userId) => {
+  const postRef = doc(firestore, "posts", postId);
+
+  try {
+    // Get the current post data
+    const postSnapshot = await getDoc(postRef);
+    const postData = postSnapshot.data();
+
+    console.log(postData.likedBy);
+    console.log(userId);
+    // Ensure postData is defined
+    if (postData && userId) {
+      // Ensure likedBy is initialized as an array
+
+      // Update the document
+      await updateDoc(postRef, {
+        likes: (postData.likes || 0) + 1,
+        likedBy: [...postData.likedBy, userId],
+      });
+
+      console.log("Post liked successfully!");
+    } else {
+      console.error("Invalid post data.");
+    }
+  } catch (error) {
+    console.error("Error liking post:", error);
+    throw error;
+  }
+};
+
+const fetchUsernamesForLikedBy = async (likedByUserIds) => {
+  const db = getFirestore();
+  const likedByUsernamesData = [];
+
+  for (const likedByUserID of likedByUserIds) {
+    const userQuery = query(collection(db, "users"), where("userID", "==", likedByUserID));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.size > 0) {
+      const userData = userSnapshot.docs[0].data();
+      likedByUsernamesData.push(userData.username);
+      
+    }
+  }
+
+  return likedByUsernamesData;
+};
+
 
 export const getUserPostsFromFirestore = async () => {
   const user = auth.currentUser;
 
   if (user) {
-    
     const postsCollection = collection(firestore, "posts");
     const querySnapshot = await getDocs(
       query(postsCollection, where("userID", "==", user.uid))
     );
 
-    
     const userPosts = [];
     querySnapshot.forEach((doc) => {
       const post = doc.data();
@@ -64,7 +113,6 @@ export const getUserPostsFromFirestore = async () => {
 
     return { userPosts, allUserPosts };
   } else {
-   
     return [];
   }
 };

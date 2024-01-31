@@ -5,6 +5,7 @@ import { addPost } from "../redux/actions/postActions";
 import "../style/post.css";
 import SuccessAnimation from "../utils/successAnim";
 import TextGenerator from "./textGenerator";
+import AutoCompleteTextarea from "../utils/autoComplete";
 
 const PostForm = ({ onDataUpdated }) => {
   const dispatch = useDispatch();
@@ -55,14 +56,19 @@ const PostForm = ({ onDataUpdated }) => {
   return (
     <div className={postAreaClasses}>
       <form onSubmit={handleSubmit}>
-        <textarea
+        <AutoCompleteTextarea
+          className={mode === "dark" ? "text dtext" : "text"}
+          text={content || generatedText}
+          onTextChange={updateContent}
+        />
+        {/* <textarea
           className={mode === "dark" ? "text dtext" : "text"}
           value={content || generatedText}
           onChange={(e) => {
             setContent(e.target.value);
             updateContent(e.target.value);
           }}
-        />
+        /> */}
         {errorMessage && <p>{errorMessage}</p>}
         <button type="submit">Add Post</button>
         <TextGenerator

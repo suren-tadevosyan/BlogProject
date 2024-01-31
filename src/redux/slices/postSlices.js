@@ -1,14 +1,19 @@
-
 import { createSlice } from "@reduxjs/toolkit";
+
+const initialState = {
+  userPosts: [],
+  loading: false,
+  error: null,
+  postCounts: {
+    today: 0,
+    thisWeek: 0,
+    total: 0,
+  },
+};
 
 const postSlice = createSlice({
   name: "posts",
-  initialState: {
-    userPosts: [],
-    loading: false,
-    error: null,
- 
-  },
+  initialState,
   reducers: {
     setUserPosts: (state, action) => {
       state.userPosts = action.payload;
@@ -21,16 +26,32 @@ const postSlice = createSlice({
       state.loading = false;
       const serializedUserPosts = action.payload.map((post) => ({
         ...post,
-        timestamp: post.timestamp.toISOString(),
+        timestamp:
+          post.timestamp instanceof Date
+            ? post.timestamp.toISOString()
+            : post.timestamp,
       }));
 
       state.userPosts = serializedUserPosts;
+      localStorage.setItem("userPosts", JSON.stringify(serializedUserPosts));
     },
     getUserPostsFailure: (state, action) => {
       state.loading = false;
       state.error = action.payload;
     },
- 
+
+    setPostCounts(state, action) {
+      state.postCounts = action.payload;
+    },
+    likePost: (state, action) => {
+      const { postId, userId } = action.payload;
+
+      // Find the post in state and update the likes
+      const postToUpdate = state.userPosts.find((post) => post.id === postId);
+      if (postToUpdate) {
+        postToUpdate.likes++;
+      }
+    },
   },
 });
 
@@ -39,6 +60,8 @@ export const {
   getUserPostsStart,
   getUserPostsSuccess,
   getUserPostsFailure,
+  setPostCounts,
+  likePost,
 } = postSlice.actions;
 export const selectUserPosts = (state) => state.posts.userPosts;
 export default postSlice.reducer;

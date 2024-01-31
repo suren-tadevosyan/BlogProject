@@ -6,7 +6,6 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DeleteAnimation } from "./successAnim";
 import { Trash2 } from "react-feather";
 
-
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
   const color = `hsl(${hash % 300}, 50%, 50%)`;
@@ -21,6 +20,7 @@ const PostCard = ({
   currentUserIDForDelete,
   date,
   index,
+  onLike,
 }) => {
   const [isDeleting, setIsDeleting] = useState(false);
   const backgroundColor = getRandomColor(post.userID);
@@ -29,6 +29,13 @@ const PostCard = ({
   const [authorImage, setAuthorImage] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const refer = useRef(null);
+
+  const handleLike = () => {
+    onLike();
+    onDataUpdated();
+    
+  };
+  
 
   useEffect(() => {
     setShowReadMoreButton(
@@ -119,6 +126,10 @@ const PostCard = ({
               {post.content}
             </p>
           </div>
+          <button onClick={handleLike} disabled={isDeleting}>
+            Like ({post.likes})
+          </button>
+          <div>({post.likedBy})</div>
           {showReadMoreButton && (
             <motion.button
               className="read-more-button"
@@ -135,7 +146,8 @@ const PostCard = ({
                 disabled={isDeleting}
                 whileHover={{ scale: 1.1 }}
               >
-              {isDeleting ? "Deleting..." : <Trash2 />}              </motion.button>
+                {isDeleting ? "Deleting..." : <Trash2 />}{" "}
+              </motion.button>
             )}
           </div>
         </div>

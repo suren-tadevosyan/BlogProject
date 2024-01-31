@@ -7,9 +7,26 @@ import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import "../style/blog.css";
 import ScrollToTopButton from "../utils/scrollTop";
 
+function Motion({ postCount }) {
+  const count = useMotionValue(0);
+  const rounded = useTransform(count, Math.round);
+
+  useEffect(() => {
+    const animation = animate(count, postCount, {
+      duration: 3,
+    });
+
+    return () => animation.pause();
+  }, [postCount]);
+
+  return <motion.h1>{rounded}</motion.h1>;
+}
+
 const Blog = () => {
+  const { id } = useSelector((state) => state.user);
   const [user, setUser] = useState(null);
   const { mode } = useSelector((state) => state.theme);
+  const { postCounts } = useSelector((state) => state.posts);
   const [isLoading, setIsLoading] = useState(true);
   const [postCount, setPostCount] = useState(0);
   const [todayPosts, setTodayPosts] = useState(0);
@@ -28,40 +45,20 @@ const Blog = () => {
     return <LoadingSpinner />;
   }
 
-  function Motion({ postCount }) {
-    const count = useMotionValue(0);
-    const rounded = useTransform(count, Math.round);
-
-    useEffect(() => {
-      const animation = animate(count, postCount, {
-        duration: 3,
-      });
-
-      return () => animation.pause();
-    }, [postCount]);
-
-    return <motion.h1>{rounded}</motion.h1>;
-  }
-
   return (
     <div className={mode === "dark" ? "profile dark" : "profile"}>
       <div className="post-count">
         <div>
-          <p>Today Posts- </p> <Motion postCount={todayPosts} />
+          <p>Today Posts- </p> <Motion postCount={postCounts.today} />
         </div>
         <div>
-          <p>This Week Posts- </p> <Motion postCount={thisWeekPosts} />
+          <p>This Week Posts- </p> <Motion postCount={postCounts.thisWeek} />
         </div>
         <div>
-          <p>Total Posts- </p> <Motion postCount={postCount} />
+          <p>Total Posts- </p> <Motion postCount={postCounts.total} />
         </div>
       </div>
-      <PostList
-        currentUserIDForDelete={user?.uid}
-        setPostCount={setPostCount}
-        setTodayPosts={setTodayPosts}
-        setThisWeekPosts={setThisWeekPosts}
-      />
+      <PostList likeID={id} currentUserIDForDelete={user?.uid} />
       <ScrollToTopButton />
     </div>
   );

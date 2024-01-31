@@ -5,11 +5,13 @@ import PostList from "./postList";
 import { auth } from "../firebase";
 import LoadingSpinner from "../utils/loading";
 import { deleteAllPostsForUser } from "../services/postServices"; // Import the new function
+import { useSelector } from "react-redux";
 
 const MyPosts = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
   const [user, setUser] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const {id} = useSelector((state) => state.user)
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {
@@ -20,6 +22,11 @@ const MyPosts = () => {
     return () => unsubscribe();
   }, []);
 
+
+  // console.log(user?.uid);
+  // console.log(id);
+
+
   const handleDataUpdate = () => {
     console.log("Data updated");
     setIsDataUpdated((prev) => !prev);
@@ -27,7 +34,7 @@ const MyPosts = () => {
 
   const handleDeleteAll = async () => {
     try {
-      await deleteAllPostsForUser(user?.uid);
+      await deleteAllPostsForUser(id);
       handleDataUpdate();
     } catch (error) {
       console.error("Error deleting all posts:", error);
@@ -42,8 +49,8 @@ const MyPosts = () => {
     <div className="post-div">
       <button onClick={handleDeleteAll}>Delete All Posts</button>
       <PostList
-        currentUserID={user?.uid}
-        currentUserIDForDelete={user?.uid}
+        currentUserID={id}
+        currentUserIDForDelete={id}
         isDataUpdated={isDataUpdated}
       />
     </div>
