@@ -1,10 +1,14 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
-import { deletePostFromFirestore } from "../services/postServices";
+import {
+  deletePostFromFirestore,
+  getUserNameById,
+} from "../services/postServices";
 import userPhoto from "../images/userMale.png";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DeleteAnimation } from "./successAnim";
 import { Trash2 } from "react-feather";
+import { useSelector } from "react-redux";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
@@ -29,13 +33,29 @@ const PostCard = ({
   const [authorImage, setAuthorImage] = useState(null);
   const [deleteModal, setDeleteModal] = useState(false);
   const refer = useRef(null);
+  const [likedByNames, setLikedByNames] = useState([]);
+  const { id } = useSelector((state) => state.user);
 
   const handleLike = () => {
     onLike();
     onDataUpdated();
-    
   };
-  
+
+  const fetchLikedByNames = async () => {
+    const names = [];
+
+    if (Array.isArray(post.likedBy)) {
+      console.log(post.likedBy);
+      for (const userId of post.likedBy) {
+        const userData = await getUserNameById(userId);
+        if (userData) {
+          names.push(userData);
+        }
+      }
+      setLikedByNames(names);
+    }
+    setLikedByNames(names);
+  };
 
   useEffect(() => {
     setShowReadMoreButton(
@@ -64,6 +84,7 @@ const PostCard = ({
     };
 
     fetchAuthorImage();
+    fetchLikedByNames();
   }, [post.userID]);
 
   const paragraphsStyles = {
@@ -129,7 +150,7 @@ const PostCard = ({
           <button onClick={handleLike} disabled={isDeleting}>
             Like ({post.likes})
           </button>
-          <div>({post.likedBy})</div>
+          <div>({likedByNames.join(", ")})</div>
           {showReadMoreButton && (
             <motion.button
               className="read-more-button"

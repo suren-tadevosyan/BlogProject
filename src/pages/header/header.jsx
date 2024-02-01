@@ -1,11 +1,11 @@
 import React, { useEffect, useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { loginUser, removeUser } from "../redux/slices/auth";
-import "../style/header.css";
-import { toggleTheme } from "../redux/slices/theme";
+import { loginUser, removeUser } from "../../redux/slices/auth";
+import "./header.css";
+import { toggleTheme } from "../../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
-import Welcome from "../utils/welcome";
+import Welcome from "../../utils/welcome";
 
 const Header = ({}) => {
   const dispatch = useDispatch();

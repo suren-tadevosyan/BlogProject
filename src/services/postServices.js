@@ -13,6 +13,7 @@ import {
 } from "firebase/firestore";
 import { auth } from "../firebase";
 import firestore from "../fireStore";
+import { getAuth, getUser, onAuthStateChanged } from "firebase/auth";
 
 const convertTimestampToDate = (timestamp) => {
   return timestamp ? timestamp.toDate() : null;
@@ -36,21 +37,45 @@ export const addPostToFirestore = async (content) => {
   }
 };
 
+export const getUserNameById = async (userId) => {
+  const firestore = getFirestore();
+  console.log(userId);
+  try {
+    const querySnapshot = await getDocs(
+      collection(firestore, "posts"),
+      where("userID", "==", userId)
+    );
+
+    const userPosts = querySnapshot.docs.map((doc) => doc.data());
+
+    console.log("User Posts:", userPosts);
+
+    if (!querySnapshot.empty) {
+      const filteredPosts = userPosts.filter((elem) => elem.userID === userId);
+      console.log(filteredPosts);
+      const postDoc = querySnapshot.docs[0];
+      const username = filteredPosts[0].username;
+
+      return username;
+    } else {
+      return null;
+    }
+  } catch (error) {
+    console.error("Error getting user name from posts:", error);
+    throw error;
+  }
+};
+
 export const likePostInFirestore = async (postId, userId) => {
   const postRef = doc(firestore, "posts", postId);
 
   try {
-    // Get the current post data
     const postSnapshot = await getDoc(postRef);
     const postData = postSnapshot.data();
 
     console.log(postData.likedBy);
     console.log(userId);
-    // Ensure postData is defined
     if (postData && userId) {
-      // Ensure likedBy is initialized as an array
-
-      // Update the document
       await updateDoc(postRef, {
         likes: (postData.likes || 0) + 1,
         likedBy: [...postData.likedBy, userId],
@@ -65,25 +90,6 @@ export const likePostInFirestore = async (postId, userId) => {
     throw error;
   }
 };
-
-const fetchUsernamesForLikedBy = async (likedByUserIds) => {
-  const db = getFirestore();
-  const likedByUsernamesData = [];
-
-  for (const likedByUserID of likedByUserIds) {
-    const userQuery = query(collection(db, "users"), where("userID", "==", likedByUserID));
-    const userSnapshot = await getDocs(userQuery);
-
-    if (userSnapshot.size > 0) {
-      const userData = userSnapshot.docs[0].data();
-      likedByUsernamesData.push(userData.username);
-      
-    }
-  }
-
-  return likedByUsernamesData;
-};
-
 
 export const getUserPostsFromFirestore = async () => {
   const user = auth.currentUser;

@@ -1,11 +1,11 @@
 import { useEffect, useState } from "react";
-import PostList from "./postList";
-import { auth } from "../firebase";
-import LoadingSpinner from "../utils/loading";
+import PostList from "../postList";
+import { auth } from "../../firebase";
+import LoadingSpinner from "../../utils/loading";
 import { useSelector } from "react-redux";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
-import "../style/blog.css";
-import ScrollToTopButton from "../utils/scrollTop";
+import "./blog.css";
+import ScrollToTopButton from "../../utils/scrollTop";
 
 function Motion({ postCount }) {
   const count = useMotionValue(0);
@@ -28,9 +28,6 @@ const Blog = () => {
   const { mode } = useSelector((state) => state.theme);
   const { postCounts } = useSelector((state) => state.posts);
   const [isLoading, setIsLoading] = useState(true);
-  const [postCount, setPostCount] = useState(0);
-  const [todayPosts, setTodayPosts] = useState(0);
-  const [thisWeekPosts, setThisWeekPosts] = useState(0);
 
   useEffect(() => {
     const unsubscribe = auth.onAuthStateChanged((user) => {

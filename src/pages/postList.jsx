@@ -25,14 +25,11 @@ const PostList = ({
 
   const handleLike = async (postId) => {
     try {
-      // Perform logic to like the post in Firestore
       await likePostInFirestore(postId, likeID);
 
-      // Dispatch an action to update the state
       dispatch(likePost({ postId, userId: currentUserID }));
     } catch (error) {
       console.error("Error handling like:", error);
-      // Handle error appropriately, e.g., show a notification to the user.
     }
   };
 
