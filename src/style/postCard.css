@@ -19,7 +19,7 @@
 
   position: relative;
 
-   padding: 16px;
+  padding: 16px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -40,11 +40,8 @@
   border-bottom: 2px solid #000;
 }
 
-
-
 .post-cards-container .post-card:nth-child(even) {
   align-self: flex-end;
-
 }
 
 .post-card:hover {
@@ -99,7 +96,6 @@
 .post-card:hover .delete-button button {
   visibility: visible;
 }
-
 
 .post-date {
   font-size: 12px;

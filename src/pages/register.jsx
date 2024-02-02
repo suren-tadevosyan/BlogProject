@@ -12,6 +12,7 @@ import {
   createUserWithEmailAndPassword,
   updateProfile,
 } from "firebase/auth";
+import { addNewUserToFirestore } from "../services/userServices";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -98,38 +99,13 @@ const Register = () => {
       isNumberPresent &&
       isSpecialCharPresent
     ) {
-      const auth = getAuth();
-      createUserWithEmailAndPassword(auth, formData.email, formData.password)
-        .then(({ user }) => {
-          updateProfile(user, { displayName: formData.name })
-            .then(() => {
-              const { email, uid: id, accessToken: token } = user;
-              dispatch(
-                setUser({
-                  email,
-                  id,
-                  token,
-                  name: formData.name,
-                })
-              );
-              window.localStorage.setItem("userId", 1);
-              dispatch(
-                loginUser({ username: "username", password: "password" })
-              );
-              navigate("/summary");
-            })
-            .catch(console.error);
-        })
-        .catch((error) => {
-          if (error.code === "auth/email-already-in-use") {
-            const message = "User with this email already exists";
-            setErrorMessage(message);
-            setErrorModalVisible(true);
-            console.log("User with this email already exists");
-          } else {
-            console.error(error.message);
-          }
-        });
+      addNewUserToFirestore(
+        formData,
+        dispatch,
+        setErrorMessage,
+        setErrorModalVisible,
+        navigate
+      );
     } else {
       console.log("edrer");
     }

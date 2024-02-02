@@ -35,27 +35,31 @@ const PostCard = ({
   const refer = useRef(null);
   const [likedByNames, setLikedByNames] = useState([]);
   const { id } = useSelector((state) => state.user);
+  const [fetchLikes, setFetchLikes] = useState(false);
 
   const handleLike = () => {
     onLike();
     onDataUpdated();
+    setFetchLikes((prevFetchLikes) => !prevFetchLikes);
   };
 
-  const fetchLikedByNames = async () => {
-    const names = [];
+  useEffect(() => {
+    const fetchLikedByNames = async () => {
+      const names = [];
 
-    if (Array.isArray(post.likedBy)) {
-      console.log(post.likedBy);
-      for (const userId of post.likedBy) {
-        const userData = await getUserNameById(userId);
-        if (userData) {
-          names.push(userData);
+      if (Array.isArray(post.likedBy)) {
+        for (const userId of post.likedBy) {
+          const userData = await getUserNameById(userId);
+          if (userData) {
+            names.push(userData);
+          }
         }
+        setLikedByNames(names);
       }
-      setLikedByNames(names);
-    }
-    setLikedByNames(names);
-  };
+    };
+
+    fetchLikedByNames();
+  }, [fetchLikes, post.likedBy]);
 
   useEffect(() => {
     setShowReadMoreButton(
@@ -84,7 +88,6 @@ const PostCard = ({
     };
 
     fetchAuthorImage();
-    fetchLikedByNames();
   }, [post.userID]);
 
   const paragraphsStyles = {

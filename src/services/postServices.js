@@ -39,22 +39,22 @@ export const addPostToFirestore = async (content) => {
 
 export const getUserNameById = async (userId) => {
   const firestore = getFirestore();
-  console.log(userId);
+  // console.log(userId);
   try {
     const querySnapshot = await getDocs(
-      collection(firestore, "posts"),
-      where("userID", "==", userId)
+      collection(firestore, "users"),
+      where("userId", "==", userId)
     );
 
     const userPosts = querySnapshot.docs.map((doc) => doc.data());
 
-    console.log("User Posts:", userPosts);
+    // console.log("User Posts:", userPosts);
 
     if (!querySnapshot.empty) {
-      const filteredPosts = userPosts.filter((elem) => elem.userID === userId);
-      console.log(filteredPosts);
+      const filteredPosts = userPosts.filter((elem) => elem.userId === userId);
+      // console.log(filteredPosts);
       const postDoc = querySnapshot.docs[0];
-      const username = filteredPosts[0].username;
+      const username = filteredPosts[0].name;
 
       return username;
     } else {
@@ -73,8 +73,8 @@ export const likePostInFirestore = async (postId, userId) => {
     const postSnapshot = await getDoc(postRef);
     const postData = postSnapshot.data();
 
-    console.log(postData.likedBy);
-    console.log(userId);
+    // console.log(postData.likedBy);
+    // console.log(userId);
     if (postData && userId) {
       await updateDoc(postRef, {
         likes: (postData.likes || 0) + 1,
