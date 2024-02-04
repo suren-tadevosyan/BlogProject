@@ -19,7 +19,6 @@ const getRandomColor = (str) => {
 
 const PostCard = ({
   post,
-  currentUserID,
   onDataUpdated,
   currentUserIDForDelete,
   date,

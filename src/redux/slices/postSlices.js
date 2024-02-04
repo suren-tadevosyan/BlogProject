@@ -43,15 +43,15 @@ const postSlice = createSlice({
     setPostCounts(state, action) {
       state.postCounts = action.payload;
     },
-    likePost: (state, action) => {
-      const { postId, userId } = action.payload;
+    // likePost: (state, action) => {
+    //   const { postId, userId } = action.payload;
 
-      // Find the post in state and update the likes
-      const postToUpdate = state.userPosts.find((post) => post.id === postId);
-      if (postToUpdate) {
-        postToUpdate.likes++;
-      }
-    },
+    //   // Find the post in state and update the likes
+    //   const postToUpdate = state.userPosts.find((post) => post.id === postId);
+    //   if (postToUpdate) {
+    //     postToUpdate.likes++;
+    //   }
+    // },
   },
 });
 
@@ -61,7 +61,7 @@ export const {
   getUserPostsSuccess,
   getUserPostsFailure,
   setPostCounts,
-  likePost,
+
 } = postSlice.actions;
 export const selectUserPosts = (state) => state.posts.userPosts;
 export default postSlice.reducer;

@@ -13,7 +13,6 @@ import {
 } from "firebase/firestore";
 import { auth } from "../firebase";
 import firestore from "../fireStore";
-import { getAuth, getUser, onAuthStateChanged } from "firebase/auth";
 
 const convertTimestampToDate = (timestamp) => {
   return timestamp ? timestamp.toDate() : null;
@@ -39,7 +38,6 @@ export const addPostToFirestore = async (content) => {
 
 export const getUserNameById = async (userId) => {
   const firestore = getFirestore();
-  // console.log(userId);
   try {
     const querySnapshot = await getDocs(
       collection(firestore, "users"),
@@ -48,13 +46,10 @@ export const getUserNameById = async (userId) => {
 
     const userPosts = querySnapshot.docs.map((doc) => doc.data());
 
-    // console.log("User Posts:", userPosts);
-
     if (!querySnapshot.empty) {
       const filteredPosts = userPosts.filter((elem) => elem.userId === userId);
-      // console.log(filteredPosts);
       const postDoc = querySnapshot.docs[0];
-      const username = filteredPosts[0].name;
+      const username = filteredPosts[0].name || null;
 
       return username;
     } else {
@@ -73,20 +68,30 @@ export const likePostInFirestore = async (postId, userId) => {
     const postSnapshot = await getDoc(postRef);
     const postData = postSnapshot.data();
 
-    // console.log(postData.likedBy);
-    // console.log(userId);
     if (postData && userId) {
-      await updateDoc(postRef, {
-        likes: (postData.likes || 0) + 1,
-        likedBy: [...postData.likedBy, userId],
-      });
+      // Check if the user has already liked the post
+      if (postData.likedBy.includes(userId)) {
+        // User has already liked the post, so unlike it
+        await updateDoc(postRef, {
+          likes: Math.max((postData.likes || 0) - 1, 0),
+          likedBy: postData.likedBy.filter((id) => id !== userId),
+        });
 
-      console.log("Post liked successfully!");
+        console.log("Post unliked successfully!");
+      } else {
+        // User hasn't liked the post yet, so like it
+        await updateDoc(postRef, {
+          likes: (postData.likes || 0) + 1,
+          likedBy: [...postData.likedBy, userId],
+        });
+
+        console.log("Post liked successfully!");
+      }
     } else {
       console.error("Invalid post data.");
     }
   } catch (error) {
-    console.error("Error liking post:", error);
+    console.error("Error liking or unliking post:", error);
     throw error;
   }
 };
@@ -140,7 +145,6 @@ export const deleteAllPostsForUser = async (userID) => {
     const userPostsQuery = query(postsRef, where("userID", "==", userID));
     const userPostsSnapshot = await getDocs(userPostsQuery);
 
-    // Iterate through user's posts and delete each post
     userPostsSnapshot.forEach(async (doc) => {
       await deleteDoc(doc.ref);
     });

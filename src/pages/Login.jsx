@@ -9,6 +9,7 @@ import Form from "../utils/form";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import vdeobBack from "../images/typing.mp4";
 import VideoPlayer from "../utils/videoPlayer";
+import { signOutAndUpdateStatus } from "../services/userServices";
 
 const Login = () => {
   const videoSource = vdeobBack;
@@ -36,7 +37,8 @@ const Login = () => {
     const auth = getAuth();
 
     signInWithEmailAndPassword(auth, email, pass)
-      .then(({ user }) => {
+      .then(async ({ user }) => {
+        await signOutAndUpdateStatus(user.uid , true);
         const storage = getStorage();
         const storageRef = ref(
           storage,
@@ -63,8 +65,7 @@ const Login = () => {
           })
           .catch((error) => {
             if (error.code === "storage/object-not-found") {
-            
-              const photo = userMale; 
+              const photo = userMale;
               dispatch(
                 setUser({
                   email: user.email,

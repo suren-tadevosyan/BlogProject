@@ -2,8 +2,18 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
+  signOut,
 } from "firebase/auth";
-import { collection, addDoc } from "firebase/firestore";
+import {
+  collection,
+  addDoc,
+  updateDoc,
+  doc,
+  getDocs,
+  query,
+  where,
+  getDoc,
+} from "firebase/firestore";
 import firestore from "../fireStore";
 import { loginUser, setUser } from "../redux/slices/auth";
 
@@ -45,6 +55,7 @@ const addNewUserToFirestore = async (
       email: email,
       name: formData.name,
       userId: id,
+      isActive: true,
     };
 
     await addDoc(userRef, userData);
@@ -62,5 +73,35 @@ const addNewUserToFirestore = async (
     }
   }
 };
+const getActiveUsers = async () => {
+  const userRef = collection(firestore, "users");
+  const activeUsersQuery = query(userRef, where("isActive", "==", true));
 
-export { addNewUserToFirestore };
+  const querySnapshot = await getDocs(activeUsersQuery);
+
+  const activeUsers = [];
+  querySnapshot.forEach((doc) => {
+    activeUsers.push(doc.data());
+  });
+
+  return activeUsers;
+};
+
+const signOutAndUpdateStatus = async (userId, value) => {
+  try {
+    const userRef = collection(firestore, "users");
+    const userQuery = query(userRef, where("userId", "==", userId));
+    const userSnapshot = await getDocs(userQuery);
+
+    if (userSnapshot.docs.length > 0) {
+      const userDoc = userSnapshot.docs[0].ref;
+      await updateDoc(userDoc, { isActive: value });
+      console.log("User signed out and status updated");
+    } else {
+      console.error("User document not found for userId:", userId);
+    }
+  } catch (error) {
+    console.error("Error updating user status:", error.message);
+  }
+};
+export { addNewUserToFirestore, signOutAndUpdateStatus, getActiveUsers };

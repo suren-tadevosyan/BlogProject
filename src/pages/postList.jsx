@@ -10,7 +10,7 @@ import { filterPostsByWeek, isSameDay } from "../utils/dateCheck";
 import { useDispatch } from "react-redux";
 import {
   getUserPostsSuccess,
-  likePost,
+  // likePost,
   setPostCounts,
 } from "../redux/slices/postSlices";
 
@@ -27,7 +27,7 @@ const PostList = ({
     try {
       await likePostInFirestore(postId, likeID);
 
-      dispatch(likePost({ postId, userId: currentUserID }));
+      // dispatch(likePost({ postId, userId: currentUserID }));
     } catch (error) {
       console.error("Error handling like:", error);
     }

@@ -6,17 +6,18 @@ import "./header.css";
 import { toggleTheme } from "../../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
+import { signOutAndUpdateStatus } from "../../services/userServices";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { name, isLoggedIn } = useSelector((state) => state.user);
+  const { name, isLoggedIn, id } = useSelector((state) => state.user);
+  console.log(id);
   const [showModal, setShowModal] = useState(false);
   const { mode } = useSelector((state) => state.theme);
   const [scrolling, setScrolling] = useState(false);
 
   function getRandomColor() {
-    
     const red = Math.floor(Math.random() * 256);
     const green = Math.floor(Math.random() * 256);
     const blue = Math.floor(Math.random() * 256);
@@ -75,7 +76,8 @@ const Header = ({}) => {
     );
   });
 
-  function onLogout() {
+  async function onLogout() {
+    await signOutAndUpdateStatus(id, false);
     dispatch(removeUser());
     localStorage.removeItem("userId");
     localStorage.removeItem("hasModalBeenShown");
@@ -87,7 +89,7 @@ const Header = ({}) => {
   return (
     <>
       <header className={`${mode === "dark" ? "dark mode" : "mode"} `}>
-        <div onClick={() => navigate("/home")} className="user-name">
+        <div onClick={() => navigate("/landing")} className="user-name">
           <h2>Hello, {name}!</h2>
         </div>
 
@@ -103,14 +105,17 @@ const Header = ({}) => {
           )}
         </div>
         <nav>
-          <ul>
-            <li>
+          <ul className="header-nav">
+            <li className="bn5">
+              <Link to="/home">My Page</Link>
+            </li>
+            <li className="bn5">
               <Link to="/post">Post</Link>
             </li>
-            <li>
+            <li className="bn5">
               <Link to="/blog">Blog</Link>
             </li>
-            <li>
+            <li className="bn5">
               <Link to="/contact">Contact</Link>
             </li>
           </ul>

@@ -5,14 +5,14 @@ import { loginUser } from "./redux/slices/auth";
 import Main from "./pages/mainPage";
 
 export const App = () => {
-  const dispatch = useDispatch();
+  // const dispatch = useDispatch();
 
-  useEffect(() => {
-    const val = window.localStorage.getItem("userId");
-    if (val && val === "1") {
-      dispatch(loginUser());
-    }
-  }, [dispatch]);
+  // useEffect(() => {
+  //   const val = window.localStorage.getItem("userId");
+  //   if (val && val === "1") {
+  //     dispatch(loginUser());
+  //   }
+  // }, [dispatch]);
 
   return <Main />;
 };
