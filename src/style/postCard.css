@@ -4,20 +4,35 @@
   flex-direction: column;
   align-items: center;
   justify-content: center;
-  padding: 100px 50px;
+  padding: 100px 0px;
 }
 
+.red {
+  background-color: red;
+}
 .post-cards-container {
   display: flex;
   flex-direction: column;
   justify-content: center;
   width: 80%;
   margin-top: 20px;
-  align-items: center;
+  align-items: flex-start;
+}
+.liked {
+  color: red; /* Change to whatever color you desire for the liked state */
+}
+
+.icon {
+  cursor: pointer;
+}
+.likeBtn {
+  font-size: 20px;
+  border: none;
+  background-color: rgba(0, 0, 0, 0);
 }
 .post-card {
-  width: 80%;
-
+  width: 100%;
+  border-radius: 30px;
   position: relative;
 
   padding: 16px;
@@ -25,24 +40,6 @@
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
   transition: box-shadow 0.3s ease-in-out;
-}
-
-.post-card:nth-child(odd) {
-  border-top-left-radius: 70px;
-  border-top-right-radius: 70px;
-  border-bottom-right-radius: 70px;
-  border-bottom: 2px solid #000;
-}
-
-.post-card:nth-child(even) {
-  border-top-left-radius: 70px;
-  border-top-right-radius: 70px;
-  border-bottom-left-radius: 70px;
-  border-bottom: 2px solid #000;
-}
-
-.post-cards-container .post-card:nth-child(even) {
-  align-self: flex-end;
 }
 
 .post-card:hover {
@@ -110,8 +107,8 @@
 }
 .read-more-button {
   position: absolute;
-  right: 10px;
-  bottom: 10px;
+  right: 30px;
+  bottom: 15px;
   background-color: #007bff;
   color: #fff;
   border: none;

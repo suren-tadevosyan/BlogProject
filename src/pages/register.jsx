@@ -21,6 +21,8 @@ const Register = () => {
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
   const [pass, setPass] = useState("");
+  const [showZoomInEffect, setShowZoomInEffect] = useState(false);
+
   const [name, setName] = useState("");
 
   const {
@@ -95,6 +97,8 @@ const Register = () => {
       isNumberPresent &&
       isSpecialCharPresent
     ) {
+      setShowZoomInEffect(true);
+
       addNewUserToFirestore(
         formData,
         dispatch,
@@ -112,8 +116,12 @@ const Register = () => {
 
   return (
     <div className="login-register">
-      <StarsCanvas />
-      <div className="login-container">
+      <StarsCanvas showZoomInEffect={showZoomInEffect} />
+      <div
+        className={
+          showZoomInEffect ? "login-container submitted" : "login-container"
+        }
+      >
         <h2>Creating Account</h2>
         <form className="login-form" action="#" onSubmit={submitHandler}>
           <Form

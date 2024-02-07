@@ -9,6 +9,9 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DeleteAnimation } from "./successAnim";
 import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
+import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
+import { faHeart } from "@fortawesome/free-solid-svg-icons";
+import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
@@ -33,7 +36,7 @@ const PostCard = ({
   const [deleteModal, setDeleteModal] = useState(false);
   const refer = useRef(null);
   const [likedByNames, setLikedByNames] = useState([]);
-  const { id } = useSelector((state) => state.user);
+  const { id, name } = useSelector((state) => state.user);
   const [fetchLikes, setFetchLikes] = useState(false);
 
   const handleLike = () => {
@@ -115,7 +118,7 @@ const PostCard = ({
     <motion.div
       className={isDeleting ? "post-card deleting" : "post-card"}
       style={{ backgroundColor }}
-      initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+      // initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 0 }}
       whileHover={{ scale: 1.02 }}
@@ -149,7 +152,17 @@ const PostCard = ({
               {post.content}
             </p>
           </div>
-          <button onClick={handleLike} disabled={isDeleting}>
+          <button
+            className={
+              likedByNames.includes(name) ? "liked likeBtn" : "likeBtn"
+            }
+            disabled={isDeleting}
+          >
+            <FontAwesomeIcon
+              className="icon"
+              onClick={handleLike}
+              icon={likedByNames.includes(name) ? faHeart : farHeart}
+            />{" "}
             Like ({post.likes})
           </button>
           <div>({likedByNames.join(", ")})</div>
