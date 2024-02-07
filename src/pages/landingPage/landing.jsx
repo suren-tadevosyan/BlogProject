@@ -22,7 +22,7 @@ const LandingPage = () => {
       </motion.div>
 
       <div className="right-section">
-        <motion.div
+        {/* <motion.div
           initial={{ opacity: 0, x: 100 }}
           animate={{ opacity: 1, x: 0 }}
           transition={{ duration: 1 }}
@@ -30,7 +30,7 @@ const LandingPage = () => {
         >
           <h2>Online Users</h2>
           <ActiveUsersList />
-        </motion.div>
+        </motion.div> */}
       </div>
     </div>
   );

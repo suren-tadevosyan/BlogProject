@@ -7,8 +7,8 @@ import { toggleTheme } from "../../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
 import { signOutAndUpdateStatus } from "../../services/userServices";
-import videoSource from "../../images/welcomeAni.webm";
 import { WelcomeAnimation } from "../../utils/successAnim";
+import ReactCurvedText from "react-curved-text";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
@@ -68,7 +68,11 @@ const Header = ({}) => {
 
   const modalComponents = supportedLanguages.map((lang, index) => {
     return (
-      <div key={index} className={`modal-item`} style={{ color: "wheat" }}>
+      <div
+        key={index}
+        className={`modal-item item${index}`}
+        style={{ color: "wheat" }}
+      >
         <Welcome name={name} language={lang} />
       </div>
     );

@@ -17,7 +17,8 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
-  const color = `hsl(${hash % 300}, 50%, 50% , 0.8)`;
+  const hue = (hash % 60) + 230; // Adjust hue to stay within purple range (240-299)
+  const color = `hsl(${hue}, 50%, 50% , 0.8)`; // Keep saturation and lightness constant
 
   return color;
 };
