@@ -21,8 +21,8 @@ const Welcome = ({ name, language }) => {
       {text.map((el, i) => (
         <motion.span
           key={i}
-          initial={{ opacity: 0,  }}
-          animate={{ opacity: 1, }}
+          initial={{ opacity: 0 }}
+          animate={{ opacity: 1 }}
           transition={{
             duration: 2.5,
             delay: i * 0.1,
@@ -30,7 +30,7 @@ const Welcome = ({ name, language }) => {
           style={{
             marginRight: "5px",
             fontSize: "30px",
-            fontFamily: "Dancing Script, cursive",
+            fontFamily: "Roboto, cursive",
           }}
         >
           {el}

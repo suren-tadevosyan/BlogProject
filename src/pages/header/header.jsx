@@ -7,25 +7,22 @@ import { toggleTheme } from "../../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
 import { signOutAndUpdateStatus } from "../../services/userServices";
+import videoSource from "../../images/welcomeAni.webm";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name, isLoggedIn, id } = useSelector((state) => state.user);
-  console.log(id);
-  const [showModal, setShowModal] = useState(false);
   const { mode } = useSelector((state) => state.theme);
   const [scrolling, setScrolling] = useState(false);
 
-  function getRandomColor() {
-    const red = Math.floor(Math.random() * 256);
-    const green = Math.floor(Math.random() * 256);
-    const blue = Math.floor(Math.random() * 256);
-
-    const color = `rgb(${red}, ${green}, ${blue})`;
-
-    return color;
-  }
+  const [showModal, setShowModal] = useState(() => {
+    // Check if modal has been shown before in localStorage
+    const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
+    // Return true if it hasn't been shown before, false otherwise
+    return !hasModalBeenShown;
+  });
+  // const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -39,6 +36,7 @@ const Header = ({}) => {
   }, []);
 
   useEffect(() => {
+    // If user is logged in and modal hasn't been shown before, show modal
     if (isLoggedIn) {
       const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
 
@@ -49,7 +47,7 @@ const Header = ({}) => {
 
         setTimeout(() => {
           setShowModal(false);
-        }, 5000);
+        }, 5000); // Close modal after 5 seconds
       }
     }
   }, [isLoggedIn, name]);
@@ -68,9 +66,8 @@ const Header = ({}) => {
   ];
 
   const modalComponents = supportedLanguages.map((lang, index) => {
-    const randomColor = getRandomColor();
     return (
-      <div key={index} className={`modal-item`} style={{ color: randomColor }}>
+      <div key={index} className={`modal-item`} style={{ color: "purple" }}>
         <Welcome name={name} language={lang} />
       </div>
     );
@@ -133,7 +130,13 @@ const Header = ({}) => {
           <MdExitToApp size={24} />
         </div>
       </header>
-      {showModal && <div className="modal-container">{modalComponents}</div>}
+      {/* Render modal immediately */}
+      {showModal && (
+        <div className="modal-outher">
+          <div className="modal-inner"></div>
+          <div className="modal-container">{modalComponents}</div>
+        </div>
+      )}
     </>
   );
 };

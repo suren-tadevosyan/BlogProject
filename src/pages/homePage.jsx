@@ -2,7 +2,6 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import "../style/homePage.css";
 import { useDispatch, useSelector } from "react-redux";
-import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updatePhoto } from "../redux/slices/auth";
 import userPhoto1 from "../images/userMale.png";

@@ -1,21 +1,31 @@
 .modal-container {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  justify-content: space-between;
+}
+
+.modal-outher {
   position: fixed;
-  top: 0;
-  left: 0;
   width: 100%;
-  height: 100%;
+  height: 100vh;
   background-color: black;
   color: white;
-  z-index: 2;
   display: flex;
   gap: 20px;
   z-index: 100;
-  background-repeat: no-repeat;
-  background-size: cover;
   flex-wrap: wrap;
-  justify-content: space-around;
-  align-items: center;
+  justify-content: space-between;
   backdrop-filter: blur(120px);
+}
+
+.modal-inner {
+  background-image: url(../../images/pageLogo.png);
+  background-size: cover; /* or contain, depending on your preference */
+  background-position: center; /* center the background image */
+  background-repeat: no-repeat;
+  width: 100px;
+  height: 100px; /* Set height according to your image aspect ratio */
 }
 
 .modal-item {
