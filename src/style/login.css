@@ -22,6 +22,8 @@ body {
 }
 
 .login-register {
+  position: relative;
+  z-index: 1;
   background-size: cover;
   background-repeat: no-repeat;
   background-position: center center;
@@ -34,15 +36,18 @@ body {
   left: 50%;
   transform: translate(-50%, -50%);
   position: fixed;
-  background-color: #ddbeaa;
+  background-color: rgba(84, 40, 194, 0.5);
   border-radius: 8px;
-  opacity: 0.9;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
   padding: 20px;
   width: 400px;
   text-align: center;
+  transition: opacity 2s ease-in-out;
 }
 
+.login-container.submitted {
+  opacity: 0;
+}
 .login-container h2 {
   color: #333;
 }

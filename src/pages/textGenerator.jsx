@@ -3,7 +3,6 @@ import React, { useState } from "react";
 import { sentence } from "txtgen";
 
 const TextGenerator = ({ setGeneratedText, updateContent }) => {
-  const [prompt, setPrompt] = useState("");
 
   const generateText = () => {
     let text = sentence();

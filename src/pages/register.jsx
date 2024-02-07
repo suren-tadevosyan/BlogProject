@@ -7,12 +7,8 @@ import { setPassword, validatePassword } from "../redux/slices/password";
 import PasswordStrengthIndicator from "../utils/passwordStrength";
 import { calculatePasswordStrength } from "../utils/passwordUtils";
 import Form from "../utils/form";
-import {
-  getAuth,
-  createUserWithEmailAndPassword,
-  updateProfile,
-} from "firebase/auth";
 import { addNewUserToFirestore } from "../services/userServices";
+import StarsCanvas from "../utils/starCanvas/starCanvas.tsx";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -103,8 +99,7 @@ const Register = () => {
         formData,
         dispatch,
         setErrorMessage,
-        setErrorModalVisible,
-        navigate
+        setErrorModalVisible
       );
     } else {
       console.log("edrer");
@@ -117,6 +112,7 @@ const Register = () => {
 
   return (
     <div className="login-register">
+      <StarsCanvas />
       <div className="login-container">
         <h2>Creating Account</h2>
         <form className="login-form" action="#" onSubmit={submitHandler}>

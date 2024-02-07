@@ -88,7 +88,7 @@ const Header = ({}) => {
 
   return (
     <>
-      <header className={`${mode === "dark" ? "dark mode" : "mode"} `}>
+      <header className={`${mode === "dark" ? " blur" : ""} `}>
         <div onClick={() => navigate("/landing")} className="user-name">
           <h2>Hello, {name}!</h2>
         </div>
@@ -106,17 +106,25 @@ const Header = ({}) => {
         </div>
         <nav>
           <ul className="header-nav">
-            <li className="bn5">
-              <Link to="/home">My Page</Link>
+            <li>
+              <Link to="/home" className="bn5">
+                My Page
+              </Link>
             </li>
-            <li className="bn5">
-              <Link to="/post">Post</Link>
+            <li>
+              <Link className="bn5" to="/post">
+                Post
+              </Link>
             </li>
-            <li className="bn5">
-              <Link to="/blog">Blog</Link>
+            <li>
+              <Link className="bn5" to="/blog">
+                Blog
+              </Link>
             </li>
-            <li className="bn5">
-              <Link to="/contact">Contact</Link>
+            <li>
+              <Link className="bn5" to="/contact">
+                Contact
+              </Link>
             </li>
           </ul>
         </nav>

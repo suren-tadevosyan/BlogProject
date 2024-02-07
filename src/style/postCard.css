@@ -1,11 +1,12 @@
 /* components/PostCard.css */
 .profile {
-  padding: 30px 20px;
   display: flex;
   flex-direction: column;
   align-items: center;
   justify-content: center;
+  padding: 100px 50px;
 }
+
 .post-cards-container {
   display: flex;
   flex-direction: column;

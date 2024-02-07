@@ -10,6 +10,7 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import vdeobBack from "../images/typing.mp4";
 import VideoPlayer from "../utils/videoPlayer";
 import { signOutAndUpdateStatus } from "../services/userServices";
+import StarsCanvas from "../utils/starCanvas/starCanvas.tsx";
 
 const Login = () => {
   const videoSource = vdeobBack;
@@ -20,6 +21,7 @@ const Login = () => {
   const [error, setError] = useState(null);
   const [attempts, setAttempts] = useState(1);
   const { name } = useSelector((state) => state.user);
+  const [showZoomInEffect, setShowZoomInEffect] = useState(false);
   const handleChange = (e) => {
     const { name, value } = e.target;
 
@@ -35,10 +37,11 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const auth = getAuth();
+    setShowZoomInEffect(true);
 
     signInWithEmailAndPassword(auth, email, pass)
       .then(async ({ user }) => {
-        await signOutAndUpdateStatus(user.uid , true);
+        await signOutAndUpdateStatus(user.uid, true);
         const storage = getStorage();
         const storageRef = ref(
           storage,
@@ -61,7 +64,6 @@ const Login = () => {
             setError(null);
             window.localStorage.setItem("userId", 1);
             dispatch(loginUser({ username: "username", password: "password" }));
-            navigate("/summary");
           })
           .catch((error) => {
             if (error.code === "storage/object-not-found") {
@@ -111,8 +113,13 @@ const Login = () => {
   };
   return (
     <div className="login-register">
-      <VideoPlayer videoSource={videoSource} />
-      <div className="login-container">
+      <StarsCanvas showZoomInEffect={showZoomInEffect} />
+      {/* <VideoPlayer videoSource={videoSource} /> */}
+      <div
+        className={
+          showZoomInEffect ? "login-container submitted" : "login-container"
+        }
+      >
         <h2>Login</h2>
         <form className="login-form" action="#" onSubmit={submitHandler}>
           <Form

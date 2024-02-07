@@ -61,7 +61,6 @@ const addNewUserToFirestore = async (
     await addDoc(userRef, userData);
 
     console.log("User added to Firestore collection");
-    navigate("/summary");
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
       const message = "User with this email already exists";

@@ -4,11 +4,12 @@
   left: 0;
   width: 100%;
   height: 100%;
-  background-color: wheat;
+  background-color: black;
   color: white;
   z-index: 2;
   display: flex;
   gap: 20px;
+  z-index: 100;
   background-repeat: no-repeat;
   background-size: cover;
   flex-wrap: wrap;
@@ -43,15 +44,22 @@ header {
   display: flex;
   justify-content: space-around;
   align-items: center;
+
   border-bottom: 1px solid black;
-  /* ... existing styles ... */
-  --background-color: grey;
-  --text-color: #000000;
+  width: 100%;
+  height: 65px;
+  position: fixed;
+  top: 0;
+  z-index: 50;
+  padding: 0 10px;
+  background-color: rgba(3, 0, 20, 0.09); /* Use rgba for transparency */
+  backdrop-filter: blur(10px); /* Apply backdrop blur effect */
+  box-shadow: 0 2px 5px rgba(42, 14, 97, 0.5); /* Apply shadow */
 }
 
-header.dark {
-  --background-color: #011627;
-  --text-color: #ffffff;
+.blur {
+  color: wheat;
+  background-color: rgba(3, 0, 20, 0.09) !important;
 }
 
 header {
@@ -169,7 +177,13 @@ header .logout-button {
   list-style-type: none;
 }
 
-.bn5 a {
+.header-nav li {
+  padding: 10px 10px;
+  gap: 20px;
+  list-style-type: none;
+}
+
+.bn5 {
   text-decoration: none;
 }
 
@@ -191,7 +205,7 @@ header .logout-button {
   position: absolute;
   width: 100%;
   height: 100%;
-  background: #191919;
+  /* background: #191919; */
   left: 0;
   top: 0;
   border-radius: 10px;

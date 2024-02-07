@@ -32,13 +32,20 @@ const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
   }, [text]);
 
   const handleSuggestionClick = (suggestion) => {
+    console.log(text);
+    console.log(suggestion);
     const words = text.trim().split(" ");
-    words[words.length - 1] = suggestion;
+    const lastWord = words[words.length - 1];
+    words[words.length - 1] = lastWord
+      ? lastWord + " " + suggestion
+      : suggestion;
     const newText = words.join(" ");
     onTextChange(newText);
     setSuggestions([]); // Clear suggestions after selecting one
     setSelectedSuggestion(null); // Highlight the selected suggestion
   };
+
+  
 
   return (
     <div className="auto-complete-textarea">
@@ -59,7 +66,7 @@ const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
       )}
       <textarea
         onFocus={() => setFocused(true)}
-        onBlur={() => setFocused(false)}
+        // onBlur={() => setFocused(false)}
         className={className}
         value={text}
         onChange={(e) => onTextChange(e.target.value)}

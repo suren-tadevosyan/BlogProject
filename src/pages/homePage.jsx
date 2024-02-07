@@ -5,59 +5,51 @@ import { useDispatch, useSelector } from "react-redux";
 import { getAuth, updateProfile } from "firebase/auth";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updatePhoto } from "../redux/slices/auth";
-import userPhoto1 from "../images/userMale.png"
+import userPhoto1 from "../images/userMale.png";
 import LoadingSpinner from "../utils/loading";
 
 const HomePage = () => {
   const dispatch = useDispatch();
   const { name, photo, id } = useSelector((state) => state.user);
   const { mode } = useSelector((state) => state.theme);
-  const [userPhoto,setUserPhoto] = useState(photo.photo ? photo.photo : userPhoto1)
-  const [isloading,setIsloading] = useState(true)
-  
-  
+  const [userPhoto, setUserPhoto] = useState(
+    photo.photo ? photo.photo : userPhoto1
+  );
+  const [isLoading, setIsLoading] = useState(true);
+
   const handleUpdatePhoto = async () => {
     const input = document.createElement("input");
     input.type = "file";
     input.accept = "image/*";
-    
+
     input.onchange = async (e) => {
       const file = e.target.files[0];
-      
+
       if (file) {
         try {
           const storage = getStorage();
           const storageRef = ref(storage, `user_photos/${id}/user-photo.jpg`);
           await uploadBytes(storageRef, file);
-          
+
           const downloadURL = await getDownloadURL(storageRef);
-          
-          
-          setUserPhoto(downloadURL)
-          
+
+          setUserPhoto(downloadURL);
+
           dispatch(updatePhoto(downloadURL));
-          
-          
-          
         } catch (error) {
           console.error("Error updating photo in Firebase:", error.message);
         }
       }
     };
-    
-    input.click();
-    
-  };
 
+    input.click();
+  };
 
   useEffect(() => {
     const fetchAuthorImage = async () => {
       try {
         const storage = getStorage();
-        const storageRef = ref(
-          storage,
-          `user_photos/${id}/user-photo.jpg`
-        );
+        const storageRef = ref(storage, `user_photos/${id}/user-photo.jpg`);
         const downloadURL = await getDownloadURL(storageRef);
         console.log("Download URL:", downloadURL);
         setUserPhoto(downloadURL);
@@ -67,32 +59,30 @@ const HomePage = () => {
           error
         );
         setUserPhoto(userPhoto);
-      } finally{
-        setIsloading(false)
+      } finally {
+        setIsLoading(false);
       }
     };
 
     fetchAuthorImage();
   }, [userPhoto]);
 
-
-
-
-
-
-  
   return (
-    <div className={`${mode === "dark" ? "home-page dark" : "home-page"} `}>
+    <div className={`home-page ${mode === "dark" ? "dark" : ""}`}>
       <div className="user-profile">
-      {isloading ? (
-          // Render a loader while the photo is being fetched
-          <div className="loader"><LoadingSpinner/></div>
-        ) : (
-          // Render the user photo when it is available
-          <img src={userPhoto} alt="User" className="profile-photo" />
-        )}
+        <div className="user-photo-container">
+          {isLoading ? (
+            <div className="loader">
+              <LoadingSpinner />
+            </div>
+          ) : (
+            <img src={userPhoto} alt="User" className="profile-photo" />
+          )}
+          <button onClick={handleUpdatePhoto} className="updatePhoto">
+            Update Photo
+          </button>
+        </div>
         <h1>{name}</h1>
-        <button onClick={handleUpdatePhoto}>Update Photo</button>
       </div>
 
       <div className="navigation-buttons">

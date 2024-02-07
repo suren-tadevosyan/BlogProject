@@ -7,7 +7,7 @@ import ActiveUsersList from "../../utils/activeUsersList";
 const LandingPage = () => {
   const { mode } = useSelector((state) => state.theme);
   return (
-    <div className={mode === "dark" ? "landing-page" : "landing-page"}>
+    <div className={mode === "dark" ? "landing-page dark" : "landing-page "}>
       <motion.div
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
