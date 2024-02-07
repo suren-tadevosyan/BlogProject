@@ -1,4 +1,5 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useCallback, useMemo } from "react";
+import { useDispatch } from "react-redux";
 import {
   getUserPostsFromFirestore,
   likePostInFirestore,
@@ -7,12 +8,7 @@ import PostCard from "../utils/postCard";
 import "../style/postCard.css";
 import { formatTimestamp } from "../utils/formatDate";
 import { filterPostsByWeek, isSameDay } from "../utils/dateCheck";
-import { useDispatch } from "react-redux";
-import {
-  getUserPostsSuccess,
-  // likePost,
-  setPostCounts,
-} from "../redux/slices/postSlices";
+import { getUserPostsSuccess, setPostCounts } from "../redux/slices/postSlices";
 
 const PostList = ({
   isDataUpdated,
@@ -23,63 +19,49 @@ const PostList = ({
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
 
-  const handleLike = async (postId) => {
-    try {
-      await likePostInFirestore(postId, likeID);
-
-      // dispatch(likePost({ postId, userId: currentUserID }));
-    } catch (error) {
-      console.error("Error handling like:", error);
-    }
-  };
-
-  const fetchUserPosts = async () => {
-    try {
-      const storedUserPosts =
-        JSON.parse(localStorage.getItem("userPosts")) || [];
-
-      if (storedUserPosts.length > 0) {
-        setUserPosts(storedUserPosts);
+  const handleLike = useCallback(
+    async (postId) => {
+      try {
+        await likePostInFirestore(postId, likeID);
+      } catch (error) {
+        console.error("Error handling like:", error);
       }
+    },
+    [likeID]
+  );
 
+  const fetchUserPosts = useCallback(async () => {
+    try {
       const latestPosts = await getUserPostsFromFirestore();
+      const postsWithSerializableTimestamp = latestPosts.allUserPosts.map(
+        (post) => ({
+          ...post,
+          timestamp:
+            post.timestamp instanceof Date
+              ? post.timestamp.toISOString()
+              : new Date(post.timestamp).toISOString(),
+        })
+      );
 
-      if (
-        latestPosts?.allUserPosts?.length > 0 ||
-        storedUserPosts.length === 0
-      ) {
-        const sortedPosts = latestPosts.allUserPosts.sort(
-          (a, b) => b.timestamp - a.timestamp
+      setUserPosts(postsWithSerializableTimestamp);
+      dispatch(getUserPostsSuccess(postsWithSerializableTimestamp));
+
+      // Update localStorage if necessary
+      if (latestPosts.allUserPosts.length > 0) {
+        localStorage.setItem(
+          "userPosts",
+          JSON.stringify(postsWithSerializableTimestamp)
         );
-        const postsWithSerializableTimestamp = latestPosts.allUserPosts.map(
-          (post) => ({
-            ...post,
-            timestamp:
-              post.timestamp instanceof Date
-                ? post.timestamp.toISOString()
-                : new Date(post.timestamp).toISOString(),
-          })
-        );
-
-        setUserPosts(postsWithSerializableTimestamp);
-
-        if (latestPosts?.allUserPosts) {
-          dispatch(getUserPostsSuccess(postsWithSerializableTimestamp));
-          // localStorage.setItem(
-          //   "userPosts",
-          //   JSON.stringify(latestPosts.allUserPosts)
-          // );
-        }
       }
     } catch (error) {
       console.error("Error fetching or storing user posts:", error);
     }
-  };
+  }, [dispatch]);
 
   useEffect(() => {
     fetchUserPosts();
     formatTimestamp();
-  }, [isDataUpdated]);
+  }, [isDataUpdated, fetchUserPosts]);
 
   useEffect(() => {
     const today = new Date();
@@ -96,28 +78,35 @@ const PostList = ({
         total: totalPosts,
       })
     );
-  }, [userPosts]);
+  }, [userPosts, dispatch]);
 
-  const filteredPosts = currentUserID
-    ? userPosts.filter((post) => post.userID === currentUserID)
-    : userPosts;
-  const sortedPosts = filteredPosts.sort((a, b) => b.timestamp - a.timestamp);
+  const filteredPosts = useMemo(
+    () =>
+      currentUserID
+        ? userPosts.filter((post) => post.userID === currentUserID)
+        : userPosts,
+    [userPosts, currentUserID]
+  );
+
+  const sortedPosts = useMemo(
+    () => filteredPosts.sort((a, b) => b.timestamp - a.timestamp),
+    [filteredPosts]
+  );
 
   return (
     <div className="post-cards-container">
-      {sortedPosts &&
-        sortedPosts.map((post, index) => (
-          <PostCard
-            key={post.id || `${post.username}-${post.content}`}
-            post={post}
-            date={formatTimestamp(post.timestamp)}
-            currentUserID={currentUserID}
-            currentUserIDForDelete={currentUserIDForDelete}
-            onDataUpdated={() => fetchUserPosts()}
-            index={index}
-            onLike={() => handleLike(post.id)}
-          />
-        ))}
+      {sortedPosts.map((post, index) => (
+        <PostCard
+          key={post.id || `${post.username}-${post.content}`}
+          post={post}
+          date={formatTimestamp(post.timestamp)}
+          currentUserID={currentUserID}
+          currentUserIDForDelete={currentUserIDForDelete}
+          onDataUpdated={fetchUserPosts}
+          index={index}
+          onLike={() => handleLike(post.id)}
+        />
+      ))}
     </div>
   );
 };

@@ -9,6 +9,7 @@ import { calculatePasswordStrength } from "../utils/passwordUtils";
 import Form from "../utils/form";
 import { addNewUserToFirestore } from "../services/userServices";
 import StarsCanvas from "../utils/starCanvas/starCanvas.tsx";
+import { motion } from "framer-motion";
 
 const Register = () => {
   const dispatch = useDispatch();
@@ -157,14 +158,20 @@ const Register = () => {
           />
 
           {isPasswordFocused && (
-            <PasswordStrengthIndicator
-              passwordStrength={passwordStrength}
-              isUppercasePresent={isUppercasePresent}
-              isLowercasePresent={isLowercasePresent}
-              isNumberPresent={isNumberPresent}
-              isSpecialCharPresent={isSpecialCharPresent}
+            <motion.div
+              initial={{ opacity: 0, y: -20 }}
+              animate={{ opacity: 1, y: 0 }}
+              transition={{ duration: 0.3 }}
               className={isPasswordFocused ? "visible" : ""}
-            />
+            >
+              <PasswordStrengthIndicator
+                passwordStrength={passwordStrength}
+                isUppercasePresent={isUppercasePresent}
+                isLowercasePresent={isLowercasePresent}
+                isNumberPresent={isNumberPresent}
+                isSpecialCharPresent={isSpecialCharPresent}
+              />
+            </motion.div>
           )}
 
           <Form

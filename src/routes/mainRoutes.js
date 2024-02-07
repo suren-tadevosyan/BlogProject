@@ -10,7 +10,7 @@ import Summary from "../pages/summary";
 import NotFound from "../pages/notFound";
 import Blog from "../pages/blogPage/blog.jsx";
 import Post from "../pages/post";
-import HomePage from "../pages/homePage";
+import HomePage from "../pages/homePage/homePage.jsx";
 import MyPosts from "../pages/myPosts/myPosts.jsx";
 import LandingPage from "../pages/landingPage/landing.jsx";
 

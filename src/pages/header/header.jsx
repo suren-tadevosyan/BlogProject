@@ -8,6 +8,7 @@ import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
 import { signOutAndUpdateStatus } from "../../services/userServices";
 import videoSource from "../../images/welcomeAni.webm";
+import { WelcomeAnimation } from "../../utils/successAnim";
 
 const Header = ({}) => {
   const dispatch = useDispatch();
@@ -67,7 +68,7 @@ const Header = ({}) => {
 
   const modalComponents = supportedLanguages.map((lang, index) => {
     return (
-      <div key={index} className={`modal-item`} style={{ color: "purple" }}>
+      <div key={index} className={`modal-item`} style={{ color: "wheat" }}>
         <Welcome name={name} language={lang} />
       </div>
     );
@@ -133,7 +134,9 @@ const Header = ({}) => {
       {/* Render modal immediately */}
       {showModal && (
         <div className="modal-outher">
-          <div className="modal-inner"></div>
+          <div className="modal-inner">
+            <WelcomeAnimation />
+          </div>
           <div className="modal-container">{modalComponents}</div>
         </div>
       )}

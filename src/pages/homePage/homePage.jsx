@@ -1,11 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
-import "../style/homePage.css";
+import { motion } from "framer-motion";
+import "./homePage.css";
 import { useDispatch, useSelector } from "react-redux";
 import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
-import { updatePhoto } from "../redux/slices/auth";
-import userPhoto1 from "../images/userMale.png";
-import LoadingSpinner from "../utils/loading";
+import { updatePhoto } from "../../redux/slices/auth";
+import userPhoto1 from "../../images/userMale.png";
+import LoadingSpinner from "../../utils/loading";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -67,12 +68,17 @@ const HomePage = () => {
   }, [userPhoto]);
 
   return (
-    <div className={`home-page ${mode === "dark" ? "dark" : ""}`}>
+    <motion.div
+      className={`home-page ${mode === "dark" ? "dark" : ""}`}
+      initial={{ opacity: 0 }}
+      animate={{ opacity: 1 }}
+      exit={{ opacity: 0 }}
+    >
       <div className="user-profile">
         <div className="user-photo-container">
           {isLoading ? (
-            <div className="loader">
-              <LoadingSpinner />
+            <div className="profile-photo">
+              <LoadingSpinner className={"loader"} />
             </div>
           ) : (
             <img src={userPhoto} alt="User" className="profile-photo" />
@@ -84,7 +90,12 @@ const HomePage = () => {
         <h1>{name}</h1>
       </div>
 
-      <div className="navigation-buttons">
+      <motion.div
+        className="navigation-buttons"
+        initial={{ x: "100vw" }}
+        animate={{ x: 0 }}
+        transition={{ type: "spring", stiffness: 120 }}
+      >
         <Link to="/myposts">
           <button className="button">My Posts</button>
         </Link>
@@ -94,8 +105,8 @@ const HomePage = () => {
         <Link to="/blog">
           <button className="button">Blogs</button>
         </Link>
-      </div>
-    </div>
+      </motion.div>
+    </motion.div>
   );
 };
 

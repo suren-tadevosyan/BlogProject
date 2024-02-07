@@ -1,6 +1,11 @@
 import React from "react";
-import { calculatePasswordStrength, getStrengthText, getStrengthColor } from "./passwordUtils"
-import "../style/login.css"
+import { motion } from "framer-motion"; // Import motion from Framer Motion
+import {
+  calculatePasswordStrength,
+  getStrengthText,
+  getStrengthColor,
+} from "./passwordUtils";
+import "../style/login.css";
 
 const PasswordStrengthIndicator = ({
   passwordStrength,
@@ -9,9 +14,13 @@ const PasswordStrengthIndicator = ({
   isNumberPresent,
   isSpecialCharPresent,
   className,
-  
 }) => (
-  <div className="password-feedback-popup">
+  <motion.div // Wrap the component with motion.div
+    initial={{ opacity: 0, y: -20 }} // Initial animation values
+    animate={{ opacity: 1, y: 0 }} // Animation to apply when component appears
+    transition={{ duration: 0.3 }} // Duration of the animation
+    className={`password-feedback-popup ${className}`} // Add className prop
+  >
     <div className="password-strength-indicator">
       <div
         className="strength-bar"
@@ -53,7 +62,7 @@ const PasswordStrengthIndicator = ({
         Contains at least one special character
       </li>
     </ul>
-  </div>
+  </motion.div>
 );
 
 export default PasswordStrengthIndicator;

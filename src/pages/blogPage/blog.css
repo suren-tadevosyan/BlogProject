@@ -8,11 +8,22 @@
 
 .post-count p {
   font-size: 27px;
+  color: wheat;
   font-weight: bold;
 }
 
 .post-count div {
+  color: wheat;
   display: flex;
   align-items: center;
-  
+}
+
+.fullscreen-video {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%; /* Set the video player width to 100% of its container */
+  height: 100%; /* Set the video player height to 100% of its container */
+  object-fit: cover; /* Ensure the video maintains aspect ratio while covering the container */
+  z-index: -1;
 }

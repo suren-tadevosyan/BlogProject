@@ -1,10 +1,9 @@
 .home-page {
   display: flex;
 
-  align-items: center;
-  padding: 20px;
+  padding: 100px 50px;
   height: 90vh;
-  justify-content: space-evenly;
+  justify-content: space-between;
   background-color: rgb(138, 158, 160);
 }
 
@@ -40,15 +39,10 @@
 }
 
 .profile-photo {
-  width: 300px;
-  height: 300px;
+  width: 200px;
+  height: 250px;
+  object-fit: cover;
   border-radius: 10%;
-}
-
-.user-photo {
-  width: 100px;
-  height: 100px;
-  border-radius: 50%;
 }
 
 .navigation-buttons {
@@ -57,7 +51,14 @@
   gap: 10px;
 }
 
+.navigation-buttons {
+  display: flex;
+  gap: 20px;
+  flex-direction: column;
+  align-items: flex-start;
+}
 .button {
+  width: 200px;
   padding: 10px;
   background-color: #007bff;
   color: #fff;

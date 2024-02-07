@@ -1,7 +1,9 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
+  addCommentToPost,
   deletePostFromFirestore,
+  getCommentsForPost,
   getUserNameById,
 } from "../services/postServices";
 import userPhoto from "../images/userMale.png";
@@ -15,7 +17,7 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
-  const color = `hsl(${hash % 300}, 50%, 50%)`;
+  const color = `hsl(${hash % 300}, 50%, 50% , 0.8)`;
 
   return color;
 };
@@ -114,11 +116,36 @@ const PostCard = ({
     }
   };
 
+  const [commentText, setCommentText] = useState("");
+  const [comments, setComments] = useState([]);
+  const [commentAuthor, setCommentAuthor] = useState("");
+
+  useEffect(() => {
+    const fetchComments = async () => {
+      const postComments = await getCommentsForPost(post.id);
+      console.log(postComments.username);
+      setCommentAuthor(postComments.username);
+      setComments(postComments.comments);
+    };
+    fetchComments();
+  }, [post.id]);
+
+  const handleAddComment = async () => {
+    if (commentText.trim() === "") return;
+    try {
+      await addCommentToPost(post.id, commentText);
+      setCommentText(""); // Clear comment input
+      onDataUpdated();
+    } catch (error) {
+      console.error("Error adding comment:", error);
+    }
+  };
+
   return (
     <motion.div
       className={isDeleting ? "post-card deleting" : "post-card"}
       style={{ backgroundColor }}
-      // initial={{ opacity: 0, x: index % 2 === 0 ? 50 : -50 }}
+      initial={{ opacity: 0, x: index % 2 === 0 ? 100 : -100 }}
       animate={{ opacity: 1, x: 0 }}
       exit={{ opacity: 0, x: 0 }}
       whileHover={{ scale: 1.02 }}
@@ -152,20 +179,40 @@ const PostCard = ({
               {post.content}
             </p>
           </div>
-          <button
-            className={
-              likedByNames.includes(name) ? "liked likeBtn" : "likeBtn"
-            }
-            disabled={isDeleting}
-          >
-            <FontAwesomeIcon
-              className="icon"
-              onClick={handleLike}
-              icon={likedByNames.includes(name) ? faHeart : farHeart}
-            />{" "}
-            Like ({post.likes})
-          </button>
-          <div>({likedByNames.join(", ")})</div>
+          <div>
+            <button
+              className={
+                likedByNames.includes(name) ? "liked likeBtn" : "likeBtn"
+              }
+              disabled={isDeleting}
+            >
+              <FontAwesomeIcon
+                className="icon"
+                onClick={handleLike}
+                icon={likedByNames.includes(name) ? faHeart : farHeart}
+              />{" "}
+              Like ({post.likes})
+            </button>
+            <div>({likedByNames.join(", ")})</div>
+            <div className="comments-section">
+              {comments.map((comment, index) => (
+                <div key={index} className="comment">
+                  <span>{commentAuthor}:</span>
+                  <span>{comment}</span>
+                </div>
+              ))}
+            </div>
+            {/* Add Comment Section */}
+            <div className="add-comment-section">
+              <input
+                type="text"
+                placeholder="Add a comment..."
+                value={commentText}
+                onChange={(e) => setCommentText(e.target.value)}
+              />
+              <button onClick={handleAddComment}>Comment</button>
+            </div>
+          </div>
           {showReadMoreButton && (
             <motion.button
               className="read-more-button"

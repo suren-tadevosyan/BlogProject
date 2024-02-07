@@ -3,6 +3,7 @@
   justify-content: space-between;
   padding: 100px 50px;
   height: 100vh;
+  overflow: hidden;
 }
 
 .hero-section {

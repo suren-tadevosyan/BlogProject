@@ -3,11 +3,14 @@ import React from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import ActiveUsersList from "../../utils/activeUsersList";
+import VideoPlayer from "../../utils/videoPlayer";
+import IMG from "../../images/encryption.webm";
 
 const LandingPage = () => {
   const { mode } = useSelector((state) => state.theme);
   return (
-    <div className={mode === "dark" ? "landing-page dark" : "landing-page "}>
+    <div className={mode === "dark" ? "landing-page " : "landing-page "}>
+      <VideoPlayer videoSource={IMG} />
       <motion.div
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}

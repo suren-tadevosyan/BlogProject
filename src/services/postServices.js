@@ -10,6 +10,7 @@ import {
   deleteDoc,
   getDoc,
   getFirestore,
+  arrayUnion,
 } from "firebase/firestore";
 import { auth } from "../firebase";
 import firestore from "../fireStore";
@@ -60,6 +61,8 @@ export const getUserNameById = async (userId) => {
     throw error;
   }
 };
+
+/////////LIKE POST//////////////////////////////////////////////////////////
 
 export const likePostInFirestore = async (postId, userId) => {
   const postRef = doc(firestore, "posts", postId);
@@ -127,6 +130,27 @@ export const getUserPostsFromFirestore = async () => {
     return [];
   }
 };
+
+/////////COMMENT POST//////////////////////////////////////////////////////////
+
+export const addCommentToPost = async (postId, comment) => {
+  const postRef = doc(firestore, "posts", postId);
+  await updateDoc(postRef, {
+    comments: arrayUnion(comment),
+  });
+};
+
+export const getCommentsForPost = async (postId) => {
+  const postRef = doc(firestore, "posts", postId);
+  const postSnapshot = await getDoc(postRef);
+  if (postSnapshot.exists()) {
+    const postData = postSnapshot.data();
+    return postData || [];
+  }
+  return [];
+};
+
+/////////Delet POST//////////////////////////////////////////////////////////
 
 export const deletePostFromFirestore = async (postId) => {
   try {
