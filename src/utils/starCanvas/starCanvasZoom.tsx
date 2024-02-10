@@ -1,8 +1,8 @@
 import "./star.css";
-import React, { useState, useRef, Suspense, useEffect } from "react";
-import { Canvas } from "@react-three/fiber";
+import React, { useState, useRef, useEffect } from "react";
+
 import { Points, PointMaterial } from "@react-three/drei";
-// @ts-ignore
+
 import * as random from "maath/random/dist/maath-random.esm";
 
 export const StarBackgroundZoom = (props: any) => {
@@ -12,10 +12,9 @@ export const StarBackgroundZoom = (props: any) => {
   );
 
   useEffect(() => {
-    // Update camera position to create a zoom-in effect
     const interval = setInterval(() => {
-      ref.current.position.z += 0.01; // Adjust the zoom speed as needed
-    }, 10); // Adjust the interval for smoother animation if needed
+      ref.current.position.z += 0.01;
+    }, 10);
 
     return () => clearInterval(interval);
   }, []);
@@ -34,13 +33,3 @@ export const StarBackgroundZoom = (props: any) => {
     </group>
   );
 };
-
-// const StarsCanvasZoom = () => (
-//   <div className="star" style={{ backgroundColor: "black" }}>
-//     <Canvas camera={{ position: [0, 0, 1] }}>
-//       <Suspense fallback={null}></Suspense>
-//     </Canvas>
-//   </div>
-// );
-
-// export default StarsCanvasZoom;

@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from "react-redux";
-import { loginUser, setUser } from "../redux/slices/auth";
+
 import { useNavigate } from "react-router-dom";
 import { useState } from "react";
 import { ErrorModal, ErrorMessage } from "../utils/errorModal";
@@ -21,14 +21,11 @@ const Register = () => {
   const [errorModalVisible, setErrorModalVisible] = useState(false);
   const [errorMessage, setErrorMessage] = useState("");
   const [email, setEmail] = useState("");
-  const [pass, setPass] = useState("");
-  const [showZoomInEffect, setShowZoomInEffect] = useState(false);
 
-  const [name, setName] = useState("");
+  const [showZoomInEffect, setShowZoomInEffect] = useState(false);
 
   const {
     password: {
-      password,
       isUppercasePresent,
       isLowercasePresent,
       isNumberPresent,
@@ -51,7 +48,7 @@ const Register = () => {
     setIsPasswordFocused(true);
   };
 
-  const handleBlur = (e) => {
+  const handleBlur = () => {
     setIsPasswordFocused(false);
   };
 
@@ -69,13 +66,12 @@ const Register = () => {
     }
 
     if (name === "name") {
-      setName(e.target.value);
     }
 
     if (name === "password") {
       const strength = calculatePasswordStrength(value);
       setPasswordStrength(strength);
-      setPass(e.target.value);
+
       dispatch(setPassword(e.target.value));
       dispatch(validatePassword());
     }

@@ -17,7 +17,7 @@ export const addPost = (content) => async (dispatch) => {
 export const getUserPosts = () => async (dispatch) => {
   try {
     dispatch(getUserPostsStart());
-    const { userPosts, allUserPosts } = await getUserPostsFromFirestore();
+    const {  allUserPosts } = await getUserPostsFromFirestore();
     const serializablePosts = allUserPosts.map(post => ({
       ...post,
       timestamp: post.timestamp.toISOString(), 

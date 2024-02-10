@@ -11,14 +11,13 @@ import { DeleteAnimation } from "../../utils/successAnim";
 
 const MyPosts = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
-  const [user, setUser] = useState(null);
+
   const [deleting, setDeleting] = useState(false);
   const [isLoading, setIsLoading] = useState(true);
   const { id } = useSelector((state) => state.user);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
-      setUser(user);
+    const unsubscribe = auth.onAuthStateChanged(() => {
       setIsLoading(false);
     });
 

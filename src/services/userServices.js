@@ -2,17 +2,17 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
-  signOut,
+
 } from "firebase/auth";
 import {
   collection,
   addDoc,
   updateDoc,
-  doc,
+
   getDocs,
   query,
   where,
-  getDoc,
+  
 } from "firebase/firestore";
 import firestore from "../fireStore";
 import { loginUser, setUser } from "../redux/slices/auth";
@@ -22,7 +22,7 @@ const addNewUserToFirestore = async (
   dispatch,
   setErrorMessage,
   setErrorModalVisible,
-  navigate
+
 ) => {
   try {
     const auth = getAuth();

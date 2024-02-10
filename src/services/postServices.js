@@ -49,7 +49,7 @@ export const getUserNameById = async (userId) => {
 
     if (!querySnapshot.empty) {
       const filteredPosts = userPosts.filter((elem) => elem.userId === userId);
-      const postDoc = querySnapshot.docs[0];
+  
       const username = filteredPosts[0].name || null;
 
       return username;

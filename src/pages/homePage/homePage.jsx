@@ -66,7 +66,7 @@ const HomePage = () => {
     };
 
     fetchAuthorImage();
-  }, [userPhoto]);
+  }, [userPhoto, id]);
 
   return (
     <motion.div

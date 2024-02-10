@@ -89,10 +89,12 @@ const PostList = ({
   );
 
   const sortedPosts = useMemo(
-    () => filteredPosts.sort((a, b) => b.timestamp - a.timestamp),
+    () =>
+      filteredPosts
+        .slice()
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)),
     [filteredPosts]
   );
-
   return (
     <div className="post-cards-container">
       {sortedPosts.map((post, index) => (

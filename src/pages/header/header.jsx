@@ -8,9 +8,8 @@ import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
 import { signOutAndUpdateStatus } from "../../services/userServices";
 import { ByAnimation, WelcomeAnimation } from "../../utils/successAnim";
-import ReactCurvedText from "react-curved-text";
 
-const Header = ({}) => {
+const Header = () => {
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const { name, isLoggedIn, id } = useSelector((state) => state.user);
@@ -85,7 +84,7 @@ const Header = ({}) => {
 
     dispatch(loginUser(null));
     navigate("/login");
-    setShowBy(false)
+    setShowBy(false);
   }
 
   return (

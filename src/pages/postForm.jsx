@@ -1,13 +1,13 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/actions/postActions";
-// import { toggleTheme } from "../redux/slices/theme";
+
 import "../style/post.css";
 import SuccessAnimation from "../utils/successAnim";
 import TextGenerator from "./textGenerator";
 import AutoCompleteTextarea from "../utils/autoComplete";
 
-const PostForm = ({ onDataUpdated }) => {
+const PostForm = () => {
   const dispatch = useDispatch();
   const [content, setContent] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -26,7 +26,7 @@ const PostForm = ({ onDataUpdated }) => {
     dispatch(addPost(content));
     setContent("");
     setGeneratedText("");
-    onDataUpdated();
+
     setErrorMessage("");
     setShowSuccessModal(true);
   };

@@ -19,7 +19,7 @@ function Motion({ postCount }) {
     });
 
     return () => animation.pause();
-  }, [postCount]);
+  }, [postCount, count]);
 
   return <motion.h1>{rounded}</motion.h1>;
 }

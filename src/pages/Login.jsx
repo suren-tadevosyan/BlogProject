@@ -8,12 +8,12 @@ import "../style/login.css";
 import Form from "../utils/form";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import vdeobBack from "../images/typing.mp4";
-import VideoPlayer from "../utils/videoPlayer";
+
 import { signOutAndUpdateStatus } from "../services/userServices";
 import StarsCanvas from "../utils/starCanvas/starCanvas.tsx";
 
 const Login = () => {
-  const videoSource = vdeobBack;
+
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -23,7 +23,7 @@ const Login = () => {
   const { name } = useSelector((state) => state.user);
   const [showZoomInEffect, setShowZoomInEffect] = useState(false);
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name,} = e.target;
 
     if (name === "email") {
       setEmail(e.target.value);

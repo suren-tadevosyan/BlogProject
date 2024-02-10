@@ -17,8 +17,8 @@ import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
-  const hue = (hash % 60) + 230; // Adjust hue to stay within purple range (240-299)
-  const color = `hsl(${hue}, 50%, 50% , 0.8)`; // Keep saturation and lightness constant
+  const hue = (hash % 60) + 230;
+  const color = `hsl(${hue}, 50%, 50% , 0.8)`;
 
   return color;
 };
@@ -36,10 +36,9 @@ const PostCard = ({
   const [isOpen, setIsOpen] = useState(false);
   const [showReadMoreButton, setShowReadMoreButton] = useState(false);
   const [authorImage, setAuthorImage] = useState(null);
-  const [deleteModal, setDeleteModal] = useState(false);
   const refer = useRef(null);
   const [likedByNames, setLikedByNames] = useState([]);
-  const { id, name } = useSelector((state) => state.user);
+  const {  name } = useSelector((state) => state.user);
   const [fetchLikes, setFetchLikes] = useState(false);
 
   const handleLike = () => {
@@ -108,7 +107,6 @@ const PostCard = ({
         setIsDeleting(true);
         await deletePostFromFirestore(post.id);
         onDataUpdated();
-        setDeleteModal(true);
       } else {
         console.log("You can only delete your own posts.");
       }
