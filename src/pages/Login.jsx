@@ -7,13 +7,11 @@ import userMale from "../images/userMale.png";
 import "../style/login.css";
 import Form from "../utils/form";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import vdeobBack from "../images/typing.mp4";
 
 import { signOutAndUpdateStatus } from "../services/userServices";
 import StarsCanvas from "../utils/starCanvas/starCanvas.tsx";
 
 const Login = () => {
-
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const [email, setEmail] = useState("");
@@ -23,7 +21,7 @@ const Login = () => {
   const { name } = useSelector((state) => state.user);
   const [showZoomInEffect, setShowZoomInEffect] = useState(false);
   const handleChange = (e) => {
-    const { name,} = e.target;
+    const { name, value } = e.target;
 
     if (name === "email") {
       setEmail(e.target.value);

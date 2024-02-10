@@ -14,7 +14,7 @@ const Header = () => {
   const navigate = useNavigate();
   const { name, isLoggedIn, id } = useSelector((state) => state.user);
   const { mode } = useSelector((state) => state.theme);
-  const [scrolling, setScrolling] = useState(false);
+
   const [showBy, setShowBy] = useState(false);
   const [showModal, setShowModal] = useState(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
@@ -23,9 +23,7 @@ const Header = () => {
   });
 
   useEffect(() => {
-    const handleScroll = () => {
-      setScrolling(window.scrollY > 0);
-    };
+    const handleScroll = () => {};
 
     window.addEventListener("scroll", handleScroll);
     return () => {

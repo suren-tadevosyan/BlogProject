@@ -9,7 +9,7 @@ const Post = () => {
   const [isLoading, setIsLoading] = useState(true);
 
   useEffect(() => {
-    const unsubscribe = auth.onAuthStateChanged((user) => {
+    const unsubscribe = auth.onAuthStateChanged(() => {
       setIsLoading(false);
     });
 
@@ -23,7 +23,6 @@ const Post = () => {
   return (
     <div className="post-div">
       <PostForm />
-
     </div>
   );
 };
