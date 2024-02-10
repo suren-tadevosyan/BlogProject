@@ -7,6 +7,7 @@ import { getStorage, ref, uploadBytes, getDownloadURL } from "firebase/storage";
 import { updatePhoto } from "../../redux/slices/auth";
 import userPhoto1 from "../../images/userMale.png";
 import LoadingSpinner from "../../utils/loading";
+import ActiveUsersList from "../../utils/activeUsersList";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -106,6 +107,18 @@ const HomePage = () => {
           <button className="button">Blogs</button>
         </Link>
       </motion.div>
+
+      <div>
+        <motion.div
+          initial={{ opacity: 0, x: 100 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ duration: 1 }}
+          className="online-users"
+        >
+          <h2>Online Users</h2>
+          <ActiveUsersList />
+        </motion.div>
+      </div>
     </motion.div>
   );
 };

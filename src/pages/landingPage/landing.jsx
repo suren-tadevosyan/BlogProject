@@ -21,17 +21,7 @@ const LandingPage = () => {
         <p>Explore and Connect</p>
       </motion.div>
 
-      <div className="right-section">
-        {/* <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          className="online-users"
-        >
-          <h2>Online Users</h2>
-          <ActiveUsersList />
-        </motion.div> */}
-      </div>
+   
     </div>
   );
 };

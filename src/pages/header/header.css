@@ -247,3 +247,17 @@ header .logout-button {
   top: 0;
   border-radius: 10px;
 }
+
+.byAnim {
+  overflow: hidden;
+  background-color: #000;
+  position: fixed;
+  z-index: 2000;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+}

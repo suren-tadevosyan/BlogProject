@@ -7,7 +7,7 @@ import { toggleTheme } from "../../redux/slices/theme";
 import { MdWbSunny, MdBrightness2, MdExitToApp } from "react-icons/md";
 import Welcome from "../../utils/welcome";
 import { signOutAndUpdateStatus } from "../../services/userServices";
-import { WelcomeAnimation } from "../../utils/successAnim";
+import { ByAnimation, WelcomeAnimation } from "../../utils/successAnim";
 import ReactCurvedText from "react-curved-text";
 
 const Header = ({}) => {
@@ -16,14 +16,12 @@ const Header = ({}) => {
   const { name, isLoggedIn, id } = useSelector((state) => state.user);
   const { mode } = useSelector((state) => state.theme);
   const [scrolling, setScrolling] = useState(false);
-
+  const [showBy, setShowBy] = useState(false);
   const [showModal, setShowModal] = useState(() => {
-    // Check if modal has been shown before in localStorage
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
-    // Return true if it hasn't been shown before, false otherwise
+
     return !hasModalBeenShown;
   });
-  // const [showModal, setShowModal] = useState(true);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -79,6 +77,7 @@ const Header = ({}) => {
   });
 
   async function onLogout() {
+    setShowBy(true);
     await signOutAndUpdateStatus(id, false);
     dispatch(removeUser());
     localStorage.removeItem("userId");
@@ -86,6 +85,7 @@ const Header = ({}) => {
 
     dispatch(loginUser(null));
     navigate("/login");
+    setShowBy(false)
   }
 
   return (
@@ -135,13 +135,18 @@ const Header = ({}) => {
           <MdExitToApp size={24} />
         </div>
       </header>
-      {/* Render modal immediately */}
       {showModal && (
         <div className="modal-outher">
           <div className="modal-inner">
             <WelcomeAnimation />
           </div>
           <div className="modal-container">{modalComponents}</div>
+        </div>
+      )}
+
+      {showBy && (
+        <div className="byAnim">
+          <ByAnimation />
         </div>
       )}
     </>

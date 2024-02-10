@@ -1,6 +1,6 @@
 .home-page {
   display: flex;
-
+  overflow: hidden;
   padding: 100px 50px;
   height: 90vh;
   justify-content: space-between;
