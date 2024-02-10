@@ -21,7 +21,7 @@ const Login = () => {
   const { name } = useSelector((state) => state.user);
   const [showZoomInEffect, setShowZoomInEffect] = useState(false);
   const handleChange = (e) => {
-    const { name, value } = e.target;
+    const { name } = e.target;
 
     if (name === "email") {
       setEmail(e.target.value);
