@@ -3,21 +3,22 @@ import { motion } from "framer-motion";
 import {
   addCommentToPost,
   deletePostFromFirestore,
-  getCommentsForPost,
   getUserNameById,
-} from "../services/postServices";
-import userPhoto from "../images/userMale.png";
+} from "../../services/postServices";
+import "./postCard.css";
+import userPhoto from "../../images/userMale.png";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
-import { DeleteAnimation } from "./successAnim";
+import { DeleteAnimation } from "../successAnim";
 import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faHeart } from "@fortawesome/free-solid-svg-icons";
 import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
+import LikeButton from "../likeAndComment/likeButton";
+import CommentSection from "../likeAndComment/commentSection";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
-  const hue = (hash % 60) + 230;
+  const hue = (hash % 60) + 210;
   const color = `hsl(${hue}, 50%, 50% , 0.8)`;
 
   return color;
@@ -38,7 +39,7 @@ const PostCard = ({
   const [authorImage, setAuthorImage] = useState(null);
   const refer = useRef(null);
   const [likedByNames, setLikedByNames] = useState([]);
-  const {  name } = useSelector((state) => state.user);
+  const { name } = useSelector((state) => state.user);
   const [fetchLikes, setFetchLikes] = useState(false);
 
   const handleLike = () => {
@@ -115,31 +116,6 @@ const PostCard = ({
     }
   };
 
-  const [commentText, setCommentText] = useState("");
-  const [comments, setComments] = useState([]);
-  const [commentAuthor, setCommentAuthor] = useState("");
-
-  useEffect(() => {
-    const fetchComments = async () => {
-      const postComments = await getCommentsForPost(post.id);
-      console.log(postComments.username);
-      setCommentAuthor(postComments.username);
-      setComments(postComments.comments);
-    };
-    fetchComments();
-  }, [post.id]);
-
-  const handleAddComment = async () => {
-    if (commentText.trim() === "") return;
-    try {
-      await addCommentToPost(post.id, commentText);
-      setCommentText(""); // Clear comment input
-      onDataUpdated();
-    } catch (error) {
-      console.error("Error adding comment:", error);
-    }
-  };
-
   return (
     <motion.div
       className={isDeleting ? "post-card deleting" : "post-card"}
@@ -178,43 +154,21 @@ const PostCard = ({
               {post.content}
             </p>
           </div>
-          <div>
-            <button
-              className={
-                likedByNames.includes(name) ? "liked likeBtn" : "likeBtn"
-              }
-              disabled={isDeleting}
-            >
-              <FontAwesomeIcon
-                className="icon"
-                onClick={handleLike}
-                icon={likedByNames.includes(name) ? faHeart : farHeart}
-              />{" "}
-              Like ({post.likes})
-            </button>
-            <div>({likedByNames.join(", ")})</div>
-            <div className="comments-section">
-              {comments.map((comment, index) => (
-                <div key={index} className="comment">
-                  <span>{commentAuthor}:</span>
-                  <span>{comment}</span>
-                </div>
-              ))}
-            </div>
-            {/* Add Comment Section */}
-            <div className="add-comment-section">
-              <input
-                type="text"
-                placeholder="Add a comment..."
-                value={commentText}
-                onChange={(e) => setCommentText(e.target.value)}
-              />
-              <button onClick={handleAddComment}>Comment</button>
-            </div>
+          <div className="like-section">
+            {" "}
+            <LikeButton
+              likedByNames={likedByNames}
+              name={name}
+              post={post}
+              handleLike={handleLike}
+              isDeleting={isDeleting}
+            />
+            {/* <div>({likedByNames.join(", ")})</div> */}
+            <CommentSection post={post} onDataUpdated={onDataUpdated} />
           </div>
           {showReadMoreButton && (
             <motion.button
-              className="read-more-button"
+              className="read-more-button bn5"
               onClick={() => setIsOpen(!isOpen)}
               whileHover={{ scale: 1.1 }}
             >

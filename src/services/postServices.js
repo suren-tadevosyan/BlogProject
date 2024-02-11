@@ -49,7 +49,7 @@ export const getUserNameById = async (userId) => {
 
     if (!querySnapshot.empty) {
       const filteredPosts = userPosts.filter((elem) => elem.userId === userId);
-  
+
       const username = filteredPosts[0].name || null;
 
       return username;
@@ -133,10 +133,10 @@ export const getUserPostsFromFirestore = async () => {
 
 /////////COMMENT POST//////////////////////////////////////////////////////////
 
-export const addCommentToPost = async (postId, comment) => {
+export const addCommentToPost = async (postId, comment, commentAuthor) => {
   const postRef = doc(firestore, "posts", postId);
   await updateDoc(postRef, {
-    comments: arrayUnion(comment),
+    comments: arrayUnion({ text: comment, author: commentAuthor }),
   });
 };
 

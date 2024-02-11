@@ -1,14 +1,44 @@
+import IMG from "../../images/encryption.webm";
 import "./landing.css";
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import VideoPlayer from "../../utils/videoPlayer";
-import IMG from "../../images/encryption.webm";
-
+import { selectUserPosts } from "../../redux/slices/postSlices";
+import { Grid, Paper, Typography } from "@mui/material";
+import "./landing.css";
 const LandingPage = () => {
   const { mode } = useSelector((state) => state.theme);
+  const userPosts = useSelector(selectUserPosts);
+  const [displayedPosts, setDisplayedPosts] = useState([]);
+  const [currentIndex, setCurrentIndex] = useState(0);
+
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setCurrentIndex((prevIndex) => (prevIndex + 1) % userPosts.length);
+    }, 3000);
+    return () => clearInterval(interval);
+  }, [userPosts.length]);
+
+  useEffect(() => {
+    const updateDisplayedPosts = () => {
+      if (userPosts.length === 0) {
+        setDisplayedPosts([]);
+        return;
+      }
+      const nextPosts = [
+        userPosts[currentIndex],
+        userPosts[(currentIndex + 1) % userPosts.length],
+        userPosts[(currentIndex + 2) % userPosts.length],
+      ];
+      setDisplayedPosts(nextPosts);
+      console.log(displayedPosts);
+    };
+    updateDisplayedPosts();
+  }, [currentIndex, userPosts]);
+
   return (
-    <div className={mode === "dark" ? "landing-page " : "landing-page "}>
+    <div className={mode === "dark" ? "landing-page" : "landing-page "}>
       <VideoPlayer videoSource={IMG} />
       <motion.div
         initial={{ opacity: 0, y: -100 }}
@@ -16,11 +46,37 @@ const LandingPage = () => {
         transition={{ duration: 1 }}
         className="hero-section"
       >
-        <h1>Welcome to My App</h1>
+        <h1>Welcome to AstroAdventures</h1>
         <p>Explore and Connect</p>
       </motion.div>
 
-   
+      <div className="post-view">
+        <Grid container spacing={3} className="latest-posts">
+          {displayedPosts.map((post, index) => (
+            <Grid item xs={12} md={4} key={index}>
+              <motion.div
+                key={index}
+                initial={{ opacity: 0 }}
+                animate={{ opacity: 1 }}
+                exit={{ opacity: 0 }}
+                transition={{ duration: 0.5 }}
+                style={{ width: "100%" }}
+              >
+                <Typography variant="h5" component="h2" className="post-title">
+                  {post.username}
+                </Typography>
+                <Typography
+                  variant="body1"
+                  component="p"
+                  className="post-content-landing"
+                >
+                  {post.content}
+                </Typography>
+              </motion.div>
+            </Grid>
+          ))}
+        </Grid>
+      </div>
     </div>
   );
 };

@@ -2,7 +2,8 @@
   display: flex;
   overflow: hidden;
   padding: 100px 50px;
-  height: 90vh;
+  height: 100vh;
+
   justify-content: space-between;
   background-color: rgb(138, 158, 160);
 }
@@ -67,4 +68,34 @@
   cursor: pointer;
   text-decoration: none;
   text-align: center;
+}
+
+.onlineUsers {
+  height: 50vh;
+  background: linear-gradient(
+    to right,
+    rgba(168, 192, 255, 0.2),
+    rgba(63, 43, 150, 0.2)
+  );
+}
+
+.online-users {
+
+  padding: 20px;
+  border-radius: 10px;
+}
+
+.online-users h2 {
+  font-size: 1.5em;
+  margin-bottom: 10px;
+}
+
+.online-users ul {
+  list-style: none;
+  padding: 0;
+}
+
+.online-users li {
+  margin-bottom: 8px;
+  font-size: 1.2em;
 }

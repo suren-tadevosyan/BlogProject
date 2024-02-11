@@ -1,5 +1,4 @@
-import { Navigate, Route, Routes,  } from "react-router-dom";
-
+import { Navigate, Route, Routes } from "react-router-dom";
 import React from "react";
 import { ProtectedRoute } from "./ProtectedRoute";
 import Login from "../pages/Login";
@@ -7,7 +6,7 @@ import { useSelector } from "react-redux";
 import Header from "../pages/header/header.jsx";
 import Register from "../pages/register";
 import Summary from "../pages/summary";
-import NotFound from "../pages/notFound";
+import NotFound from "../pages/notFound/notFound.jsx";
 import Blog from "../pages/blogPage/blog.jsx";
 import Post from "../pages/post";
 import HomePage from "../pages/homePage/homePage.jsx";
@@ -23,11 +22,11 @@ const AppRoutes = () => {
       <Routes>
         <Route
           path="/login"
-          element={isLoggedIn ? <Navigate to="/home" /> : <Login />}
+          element={isLoggedIn ? <Navigate to="/landing" /> : <Login />}
         />
         <Route
           path="/registration"
-          element={isLoggedIn ? <Navigate to="/home" /> : <Register />}
+          element={isLoggedIn ? <Navigate to="/landing" /> : <Register />}
         />
         <Route path="/" element={<ProtectedRoute />}>
           <Route path="/summary" element={<Summary />} />

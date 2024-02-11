@@ -1,13 +1,16 @@
 .landing-page {
   display: flex;
-  justify-content: space-between;
+  flex-direction: column;
   padding: 100px 50px;
   height: 100vh;
   overflow: hidden;
+  align-items: center;
 }
 
 .hero-section {
   flex: 1;
+  color: wheat;
+  max-height: 200px;
 }
 
 .hero-section h1 {
@@ -19,25 +22,55 @@
   flex: 1;
 }
 
-.online-users {
-  background-color: #f0f0f0;
-  padding: 20px;
-  border-radius: 10px;
+.latest-posts {
+  margin-top: 40px;
 }
 
-.online-users h2 {
-  font-size: 1.5em;
+.post-view {
+  max-height: 600px; /* Set a maximum height for the posts */
+  overflow-y: auto; /* Add vertical scrollbar if content exceeds the maximum height */
+  overflow: hidden;
+}
+
+.post-landing {
+  background-image: linear-gradient(
+    135deg,
+    rgba(75, 108, 183, 0.5),
+    rgba(24, 40, 72, 0.5)
+  );
+  overflow: hidden;
+  height: 100%;
+  padding: 20px;
+
+  transition: transform 0.2s;
+  overflow: hidden;
+}
+
+.post-title {
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  background: linear-gradient(
+    to right,
+    rgba(40, 48, 72, 0.5),
+    rgba(133, 147, 152, 0.5)
+  );
   margin-bottom: 10px;
 }
 
-.online-users ul {
-  list-style: none;
-  padding: 0;
+.post-content-landing {
+  background-image: linear-gradient(
+    135deg,
+    rgba(75, 108, 183, 0.5),
+    rgba(24, 40, 72, 0.5)
+  );
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 20px;
+  color: wheat;
+  height: 300px;
+  overflow: hidden;
+  text-overflow: ellipsis;
 }
-
-.online-users li {
-  margin-bottom: 8px;
-  font-size: 1.2em;
-}
-
-/* Add your desired styles for animations */

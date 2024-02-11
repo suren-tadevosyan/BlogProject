@@ -4,8 +4,7 @@ import {
   getUserPostsFromFirestore,
   likePostInFirestore,
 } from "../services/postServices";
-import PostCard from "../utils/postCard";
-import "../style/postCard.css";
+import PostCard from "../utils/postCard/postCard";
 import { formatTimestamp } from "../utils/formatDate";
 import { filterPostsByWeek, isSameDay } from "../utils/dateCheck";
 import { getUserPostsSuccess, setPostCounts } from "../redux/slices/postSlices";
