@@ -1,7 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import { motion } from "framer-motion";
 import {
-  addCommentToPost,
   deletePostFromFirestore,
   getUserNameById,
 } from "../../services/postServices";
@@ -11,8 +10,6 @@ import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import { DeleteAnimation } from "../successAnim";
 import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
-import { faHeart } from "@fortawesome/free-solid-svg-icons";
-import { faHeart as farHeart } from "@fortawesome/free-regular-svg-icons";
 import LikeButton from "../likeAndComment/likeButton";
 import CommentSection from "../likeAndComment/commentSection";
 
@@ -41,7 +38,7 @@ const PostCard = ({
   const [likedByNames, setLikedByNames] = useState([]);
   const { name } = useSelector((state) => state.user);
   const [fetchLikes, setFetchLikes] = useState(false);
-
+  console.log(post);
   const handleLike = () => {
     onLike();
     onDataUpdated();
@@ -81,13 +78,8 @@ const PostCard = ({
           `user_photos/${post.userID}/user-photo.jpg`
         );
         const downloadURL = await getDownloadURL(storageRef);
-        // console.log("Download URL:", downloadURL);
         setAuthorImage(downloadURL);
       } catch (error) {
-        console.error(
-          "Error fetching author's image from Firebase storage:",
-          error
-        );
         setAuthorImage(userPhoto);
       }
     };

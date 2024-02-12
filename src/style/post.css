@@ -67,7 +67,7 @@
 .post-area form button {
   background-color: #4caf50;
   color: white;
-  padding: 10px;
+  padding: 15px;
   border-radius: 4px;
   border: none;
   cursor: pointer;
@@ -103,6 +103,7 @@
 /* AutoCompleteTextarea.css */
 .auto-complete-textarea {
   position: relative;
+  margin-top: 150px;
   width: 100%;
 }
 
@@ -138,4 +139,28 @@ textarea {
   width: 100%;
   padding: 10px;
   box-sizing: border-box;
+}
+
+.imgInp {
+  display: inline-block;
+  padding: 10px 20px;
+  background-color: #4caf50;
+  color: white;
+  appearance: none;
+  border-radius: 4px;
+  border: none;
+  cursor: pointer;
+  margin-top: 20px;
+  margin-right: 20px;
+}
+
+.user-post-image {
+  max-height: 200px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+}
+
+.user-post-image img {
+  max-height: 200px;
 }

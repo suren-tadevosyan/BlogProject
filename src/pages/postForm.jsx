@@ -6,6 +6,7 @@ import "../style/post.css";
 import SuccessAnimation from "../utils/successAnim";
 import TextGenerator from "./textGenerator";
 import AutoCompleteTextarea from "../utils/autoComplete";
+import { getDownloadURL, getStorage, ref, uploadBytes } from "firebase/storage";
 
 const PostForm = () => {
   const dispatch = useDispatch();
@@ -14,18 +15,28 @@ const PostForm = () => {
   const [showSuccessModal, setShowSuccessModal] = useState(false);
   const { mode } = useSelector((state) => state.theme);
   const [generatedText, setGeneratedText] = useState("");
+  const [imageUrl, setImageUrl] = useState("");
+  const [imageFile, setImageFile] = useState(null);
 
-  const handleSubmit = (e) => {
+  const handleSubmit = async (e) => {
     e.preventDefault();
-
     if (content.trim() === "") {
       setErrorMessage("Post content cannot be empty");
       return;
     }
+    let imageUrl = "";
+    if (imageFile) {
+      const storage = getStorage();
+      const storageRef = ref(storage, `images/${imageFile.name}`);
+      await uploadBytes(storageRef, imageFile);
+      imageUrl = await getDownloadURL(storageRef);
+      console.log(imageUrl);
+    }
 
-    dispatch(addPost(content));
+    dispatch(addPost(content, imageUrl));
     setContent("");
     setGeneratedText("");
+    setImageUrl(""); // Reset image URL
 
     setErrorMessage("");
     setShowSuccessModal(true);
@@ -53,6 +64,12 @@ const PostForm = () => {
     setContent(newContent);
   };
 
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    setImageUrl(URL.createObjectURL(file)); // Set image URL for preview
+    setImageFile(file); // Set image file
+  };
+
   return (
     <div className={postAreaClasses}>
       <form onSubmit={handleSubmit}>
@@ -61,15 +78,24 @@ const PostForm = () => {
           text={content || generatedText}
           onTextChange={updateContent}
         />
-        {/* <textarea
-          className={mode === "dark" ? "text dtext" : "text"}
-          value={content || generatedText}
-          onChange={(e) => {
-            setContent(e.target.value);
-            updateContent(e.target.value);
-          }}
-        /> */}
+        {imageUrl && (
+          <div className="user-post-image">
+            <img
+              src={imageUrl}
+              alt="Uploaded Image"
+              style={{ maxWidth: "100%" }}
+            />
+          </div>
+        )}
+
         {errorMessage && <p>{errorMessage}</p>}
+        <input
+          type="file"
+          className="imgInp"
+          accept="image/*"
+          onChange={handleImageUpload}
+        />
+
         <button type="submit">Add Post</button>
         <TextGenerator
           setGeneratedText={setGeneratedText}

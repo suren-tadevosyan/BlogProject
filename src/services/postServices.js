@@ -18,13 +18,15 @@ import firestore from "../fireStore";
 const convertTimestampToDate = (timestamp) => {
   return timestamp ? timestamp.toDate() : null;
 };
-export const addPostToFirestore = async (content) => {
+export const addPostToFirestore = async (content, imageUrl) => {
   const user = auth.currentUser;
 
   if (user) {
     const username = user.displayName;
     const postsCollection = collection(firestore, "posts");
-    await addDoc(postsCollection, {
+
+    // Create a document data object
+    const postData = {
       content: content,
       timestamp: serverTimestamp(),
       userID: user.uid,
@@ -32,7 +34,15 @@ export const addPostToFirestore = async (content) => {
       likes: 0,
       likedBy: [],
       comments: [],
-    });
+    };
+
+    // Add imageUrl field if it is defined
+    if (imageUrl) {
+      postData.imageUrl = imageUrl;
+    }
+
+    // Add the document to Firestore
+    await addDoc(postsCollection, postData);
   } else {
   }
 };
