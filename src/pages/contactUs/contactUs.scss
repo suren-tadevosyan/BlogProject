@@ -8,6 +8,15 @@ $orange: #ff7a01;
 $orange-light: #ff7c01c1;
 $white: #ffffff;
 
+.contactUsContainer {
+  height: 100vh;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  background-color: #013747;
+}
+
 .orange {
   color: $orange;
 }
@@ -29,7 +38,7 @@ $white: #ffffff;
   background-color: #001925;
   padding: 30px 30px 30px 0px;
   display: flex;
-  border-left: 5px solid $orange;
+
   clip-path: polygon(
     0 0,
     100% 0,
@@ -58,10 +67,12 @@ $white: #ffffff;
   .form-image {
     display: flex;
     flex-direction: column;
+    align-items: center;
     gap: 30px;
+    margin-left: 20px;
+
     margin-right: 10px;
     h1 {
-      margin-left: 30px;
       color: white;
       font-weight: 800;
 
@@ -77,6 +88,7 @@ $white: #ffffff;
   }
 
   .form {
+    margin-left: 20px;
     flex-basis: 50%;
     input {
       color: $light-color;
@@ -119,6 +131,7 @@ $white: #ffffff;
       gap: 10px;
 
       .send-button {
+        cursor: pointer;
         flex-basis: 70%;
         background: $orange;
         padding: 10px;
@@ -135,29 +148,26 @@ $white: #ffffff;
         }
       }
 
-      .reset-button-container {
-        filter: drop-shadow(1px 1px 0px $orange);
-        flex-basis: 30%;
-        .reset-button {
-          position: relative;
-          text-align: center;
-          padding: 10px;
-          color: $orange;
-          font-weight: bold;
-          background: $dark-color;
-          clip-path: polygon(
-            0 0,
-            100% 0,
-            100% calc(100% - 10px),
-            calc(100% - 10px) 100%,
-            0 100%
-          );
-          transition: all 0.2s ease-in-out;
+      .reset-button {
+        cursor: pointer;
+        position: relative;
+        text-align: center;
+        padding: 10px;
+        color: $orange;
+        font-weight: bold;
+        background: $dark-color;
+        clip-path: polygon(
+          0 0,
+          100% 0,
+          100% calc(100% - 10px),
+          calc(100% - 10px) 100%,
+          0 100%
+        );
+        transition: all 0.2s ease-in-out;
 
-          &:hover {
-            background: $orange;
-            color: $dark-color;
-          }
+        &:hover {
+          background: $orange;
+          color: $dark-color;
         }
       }
     }

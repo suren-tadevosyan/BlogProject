@@ -101,7 +101,7 @@ header {
 
 header {
   background-color: var(--background-color);
-  color: var(--text-color);
+  color: #002bff;
 }
 
 header h2 {

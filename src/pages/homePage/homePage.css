@@ -13,7 +13,8 @@
 }
 
 .dark {
-  background-color: #011627 !important;
+  background: linear-gradient(90deg, #000428, #004e92);
+
   color: wheat;
 }
 
@@ -71,6 +72,7 @@
 }
 
 .onlineUsers {
+  border-radius: 20px;
   height: 50vh;
   background: linear-gradient(
     to right,
@@ -80,7 +82,6 @@
 }
 
 .online-users {
-
   padding: 20px;
   border-radius: 10px;
 }

@@ -32,7 +32,6 @@ const LandingPage = () => {
         userPosts[(currentIndex + 2) % userPosts.length],
       ];
       setDisplayedPosts(nextPosts);
-      console.log(displayedPosts);
     };
     updateDisplayedPosts();
   }, [currentIndex, userPosts]);
@@ -70,11 +69,10 @@ const LandingPage = () => {
                   component="p"
                   className="post-content-landing"
                 >
-                  <p>
-                    {post.content.length > 60
-                      ? `${post.content.slice(0, 60)}...`
-                      : post.content}
-                  </p>
+                  {post.content.length > 60
+                    ? `${post.content.slice(0, 60)}...`
+                    : post.content}
+
                   {post.imageUrl && <img src={post.imageUrl} alt="" />}
                 </Typography>
               </motion.div>

@@ -32,7 +32,7 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    // If user is logged in and modal hasn't been shown before, show modal
+    
     if (isLoggedIn) {
       const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
 
@@ -43,7 +43,7 @@ const Header = () => {
 
         setTimeout(() => {
           setShowModal(false);
-        }, 5000); // Close modal after 5 seconds
+        }, 5000); 
       }
     }
   }, [isLoggedIn, name]);

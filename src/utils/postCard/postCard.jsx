@@ -112,9 +112,7 @@ const PostCard = ({
     display: "-webkit-box",
   };
 
-  const smooth = {
-    transition: "height 0.3s ease-in-out",
-  };
+
   const handleDelete = async () => {
     try {
       if (post.userID === currentUserIDForDelete) {
@@ -163,16 +161,18 @@ const PostCard = ({
                 </span>
               </div>
             </div>
-            <p
+            <div
+              className="post-paragraph"
               style={isOpen ? null : paragraphsStyles}
               ref={refer}
-              className="post-paragraph"
             >
               {post.content}
-              <div>
+            </div>
+            {postIMG && (
+              <div className="imgDiv">
                 <img src={postIMG} alt="" />
               </div>
-            </p>
+            )}
           </div>
           <div className="like-section">
             <div

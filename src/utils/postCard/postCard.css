@@ -37,7 +37,7 @@
   border-radius: 30px;
   position: relative;
 
-  padding: 16px;  
+  padding: 16px;
   margin-bottom: 20px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
   background-color: #fff;
@@ -167,7 +167,6 @@
   max-height: 200px;
 }
 
-
 .post-card-container .lazy-loading-post-card {
   opacity: 0;
   transition: opacity 1s ease-in-out;
@@ -196,4 +195,13 @@
 
 .like-button-container {
   position: relative;
+}
+
+.imgDiv {
+  max-width: 400px;
+  margin-top: 10px;
+}
+
+.imgDiv img {
+  width: 100%;
 }

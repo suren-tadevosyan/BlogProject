@@ -35,10 +35,10 @@ const Login = () => {
   const submitHandler = (e) => {
     e.preventDefault();
     const auth = getAuth();
-    setShowZoomInEffect(true);
 
     signInWithEmailAndPassword(auth, email, pass)
       .then(async ({ user }) => {
+        setShowZoomInEffect(true);
         await signOutAndUpdateStatus(user.uid, true);
         const storage = getStorage();
         const storageRef = ref(
@@ -80,7 +80,6 @@ const Login = () => {
               dispatch(
                 loginUser({ username: "username", password: "password" })
               );
-              navigate("/summary");
             } else {
               console.error(
                 "Error fetching user's photo from Firebase storage:",

@@ -12,6 +12,7 @@ import Post from "../pages/post";
 import HomePage from "../pages/homePage/homePage.jsx";
 import MyPosts from "../pages/myPosts/myPosts.jsx";
 import LandingPage from "../pages/landingPage/landing.jsx";
+import ContactUs from "../pages/contactUs/contactUs.jsx";
 
 const AppRoutes = () => {
   const { isLoggedIn } = useSelector((state) => state.user);
@@ -35,8 +36,10 @@ const AppRoutes = () => {
           <Route path="/post" element={<Post />} />
           <Route path="/myposts" element={<MyPosts />} />
           <Route path="/landing" element={<LandingPage />} />
+          <Route path="/contact" element={<ContactUs />} />
           <Route path="/blog" element={<Blog />} />
           <Route path="/*" element={<NotFound />} />
+
           <Route path="" element={<Navigate to="/home" />} />
         </Route>
       </Routes>
