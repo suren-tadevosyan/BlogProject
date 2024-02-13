@@ -46,7 +46,7 @@ const LandingPage = () => {
         transition={{ duration: 1 }}
         className="hero-section"
       >
-        <h1>Welcome to AstroAdventures</h1>
+        <h1>Welcome to Space Blog</h1>
         <p>Explore and Connect</p>
       </motion.div>
 
@@ -70,7 +70,12 @@ const LandingPage = () => {
                   component="p"
                   className="post-content-landing"
                 >
-                  {post.content}
+                  <p>
+                    {post.content.length > 60
+                      ? `${post.content.slice(0, 60)}...`
+                      : post.content}
+                  </p>
+                  {post.imageUrl && <img src={post.imageUrl} alt="" />}
                 </Typography>
               </motion.div>
             </Grid>

@@ -38,7 +38,9 @@ const PostCard = ({
   const [likedByNames, setLikedByNames] = useState([]);
   const { name } = useSelector((state) => state.user);
   const [fetchLikes, setFetchLikes] = useState(false);
-  console.log(post);
+  const [postIMG, setPostIMG] = useState(null);
+  const [showTooltip, setShowTooltip] = useState(false);
+
   const handleLike = () => {
     onLike();
     onDataUpdated();
@@ -87,6 +89,22 @@ const PostCard = ({
     fetchAuthorImage();
   }, [post.userID]);
 
+  useEffect(() => {
+    const fetchPostImage = async () => {
+      try {
+        if (post.imageUrl) {
+          const downloadURL = post.imageUrl;
+          setPostIMG(downloadURL);
+          console.log(downloadURL);
+        }
+      } catch (error) {
+        console.error("Error fetching post image:", error);
+      }
+    };
+
+    fetchPostImage();
+  }, [post.imageUrl]);
+
   const paragraphsStyles = {
     WebkitLineClamp: 3,
     WebkitBoxOrient: "vertical",
@@ -94,6 +112,9 @@ const PostCard = ({
     display: "-webkit-box",
   };
 
+  const smooth = {
+    transition: "height 0.3s ease-in-out",
+  };
   const handleDelete = async () => {
     try {
       if (post.userID === currentUserIDForDelete) {
@@ -142,20 +163,40 @@ const PostCard = ({
                 </span>
               </div>
             </div>
-            <p style={isOpen ? null : paragraphsStyles} ref={refer}>
+            <p
+              style={isOpen ? null : paragraphsStyles}
+              ref={refer}
+              className="post-paragraph"
+            >
               {post.content}
+              <div>
+                <img src={postIMG} alt="" />
+              </div>
             </p>
           </div>
           <div className="like-section">
-            {" "}
-            <LikeButton
-              likedByNames={likedByNames}
-              name={name}
-              post={post}
-              handleLike={handleLike}
-              isDeleting={isDeleting}
-            />
-            {/* <div>({likedByNames.join(", ")})</div> */}
+            <div
+              className="like-button-container"
+              onMouseEnter={() => setShowTooltip(true)}
+              onMouseLeave={() => setShowTooltip(false)}
+            >
+              <LikeButton
+                likedByNames={likedByNames}
+                name={name}
+                post={post}
+                handleLike={handleLike}
+                isDeleting={isDeleting}
+              />
+              {showTooltip && (
+                <div className="tooltip">
+                  {likedByNames.length > 0 ? (
+                    <p>{likedByNames.join(",")}</p>
+                  ) : (
+                    <p>"No likes yet"</p>
+                  )}
+                </div>
+              )}
+            </div>
             <CommentSection post={post} onDataUpdated={onDataUpdated} />
           </div>
           {showReadMoreButton && (

@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { addPost } from "../redux/actions/postActions";
-
 import "../style/post.css";
 import SuccessAnimation from "../utils/successAnim";
 import TextGenerator from "./textGenerator";
@@ -36,8 +35,7 @@ const PostForm = () => {
     dispatch(addPost(content, imageUrl));
     setContent("");
     setGeneratedText("");
-    setImageUrl(""); // Reset image URL
-
+    setImageUrl(""); 
     setErrorMessage("");
     setShowSuccessModal(true);
   };
@@ -66,8 +64,8 @@ const PostForm = () => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImageUrl(URL.createObjectURL(file)); // Set image URL for preview
-    setImageFile(file); // Set image file
+    setImageUrl(URL.createObjectURL(file)); 
+    setImageFile(file);
   };
 
   return (

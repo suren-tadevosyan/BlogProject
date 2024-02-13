@@ -25,7 +25,7 @@ export const addPostToFirestore = async (content, imageUrl) => {
     const username = user.displayName;
     const postsCollection = collection(firestore, "posts");
 
-    // Create a document data object
+    
     const postData = {
       content: content,
       timestamp: serverTimestamp(),
@@ -36,12 +36,12 @@ export const addPostToFirestore = async (content, imageUrl) => {
       comments: [],
     };
 
-    // Add imageUrl field if it is defined
+    
     if (imageUrl) {
       postData.imageUrl = imageUrl;
     }
 
-    // Add the document to Firestore
+   
     await addDoc(postsCollection, postData);
   } else {
   }

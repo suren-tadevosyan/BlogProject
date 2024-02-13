@@ -1,4 +1,4 @@
-// CommentSection.js
+
 import React, { useState, useEffect } from "react";
 import {
   addCommentToPost,
@@ -7,15 +7,14 @@ import {
 import { useSelector } from "react-redux";
 
 const CommentSection = ({ post, onDataUpdated }) => {
-  const [commentText, setCommentText] = useState(""); // Define commentText state
+  const [commentText, setCommentText] = useState(""); 
   const [comments, setComments] = useState([]);
-  const { name } = useSelector((state) => state.user); // Define name using useSelector
-
+  const { name } = useSelector((state) => state.user); 
   useEffect(() => {
     const fetchComments = async () => {
       const postComments = await getCommentsForPost(post.id);
-      console.log(postComments.username);
-      // You might want to handle the case when postComments.username is undefined/null
+   
+
       setComments(postComments.comments);
     };
     fetchComments();
@@ -24,9 +23,8 @@ const CommentSection = ({ post, onDataUpdated }) => {
   const handleAddComment = async () => {
     if (commentText.trim() === "") return;
     try {
-      await addCommentToPost(post.id, commentText, name); // pass name instead of 'name'
-      setCommentText(""); // Clear comment input
-      onDataUpdated();
+      await addCommentToPost(post.id, commentText, name); 
+      setCommentText("");
     } catch (error) {
       console.error("Error adding comment:", error);
     }

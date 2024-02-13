@@ -18,6 +18,8 @@ const PostList = ({
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
 
+  const [endIndex, setEndIndex] = useState(3);
+
   const handleLike = useCallback(
     async (postId) => {
       try {
@@ -45,7 +47,7 @@ const PostList = ({
       setUserPosts(postsWithSerializableTimestamp);
       dispatch(getUserPostsSuccess(postsWithSerializableTimestamp));
 
-      // Update localStorage if necessary
+
       if (latestPosts.allUserPosts.length > 0) {
         localStorage.setItem(
           "userPosts",
@@ -90,10 +92,28 @@ const PostList = ({
   const sortedPosts = useMemo(
     () =>
       filteredPosts
-        .slice()
-        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp)),
-    [filteredPosts]
+        .sort((a, b) => new Date(b.timestamp) - new Date(a.timestamp))
+        .slice(0, endIndex),
+    [filteredPosts, endIndex]
   );
+
+  const handleScroll = useCallback(() => {
+    if (
+      window.innerHeight + document.documentElement.scrollTop ===
+      document.documentElement.offsetHeight
+    ) {
+   
+      setEndIndex(endIndex + 1); 
+    }
+  }, [endIndex]);
+
+  useEffect(() => {
+    window.addEventListener("scroll", handleScroll);
+    return () => {
+      window.removeEventListener("scroll", handleScroll);
+    };
+  }, [handleScroll]);
+
   return (
     <div className="post-cards-container">
       {sortedPosts.map((post, index) => (
