@@ -47,7 +47,6 @@ const PostList = ({
       setUserPosts(postsWithSerializableTimestamp);
       dispatch(getUserPostsSuccess(postsWithSerializableTimestamp));
 
-
       if (latestPosts.allUserPosts.length > 0) {
         localStorage.setItem(
           "userPosts",
@@ -102,8 +101,8 @@ const PostList = ({
       window.innerHeight + document.documentElement.scrollTop ===
       document.documentElement.offsetHeight
     ) {
-   
-      setEndIndex(endIndex + 1); 
+      setEndIndex((prevIndex) => prevIndex + 1);
+      console.log(endIndex);
     }
   }, [endIndex]);
 

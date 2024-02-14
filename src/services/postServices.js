@@ -25,7 +25,6 @@ export const addPostToFirestore = async (content, imageUrl) => {
     const username = user.displayName;
     const postsCollection = collection(firestore, "posts");
 
-    
     const postData = {
       content: content,
       timestamp: serverTimestamp(),
@@ -36,12 +35,10 @@ export const addPostToFirestore = async (content, imageUrl) => {
       comments: [],
     };
 
-    
     if (imageUrl) {
       postData.imageUrl = imageUrl;
     }
 
-   
     await addDoc(postsCollection, postData);
   } else {
   }
@@ -82,9 +79,7 @@ export const likePostInFirestore = async (postId, userId) => {
     const postData = postSnapshot.data();
 
     if (postData && userId) {
-      // Check if the user has already liked the post
       if (postData.likedBy.includes(userId)) {
-        // User has already liked the post, so unlike it
         await updateDoc(postRef, {
           likes: Math.max((postData.likes || 0) - 1, 0),
           likedBy: postData.likedBy.filter((id) => id !== userId),
@@ -92,7 +87,6 @@ export const likePostInFirestore = async (postId, userId) => {
 
         console.log("Post unliked successfully!");
       } else {
-        // User hasn't liked the post yet, so like it
         await updateDoc(postRef, {
           likes: (postData.likes || 0) + 1,
           likedBy: [...postData.likedBy, userId],
@@ -146,7 +140,11 @@ export const getUserPostsFromFirestore = async () => {
 export const addCommentToPost = async (postId, comment, commentAuthor) => {
   const postRef = doc(firestore, "posts", postId);
   await updateDoc(postRef, {
-    comments: arrayUnion({ text: comment, author: commentAuthor }),
+    comments: arrayUnion({
+      id: new Date().getTime().toString(),
+      text: comment,
+      author: commentAuthor,
+    }),
   });
 };
 
@@ -158,6 +156,22 @@ export const getCommentsForPost = async (postId) => {
     return postData || [];
   }
   return [];
+};
+
+export const deleteCommentFromPost = async (postId, commentId) => {
+  const postRef = doc(firestore, "posts", postId);
+  const postSnapshot = await getDoc(postRef);
+
+  if (postSnapshot.exists()) {
+    const postData = postSnapshot.data();
+    const updatedComments = postData.comments.filter(
+      (comment) => comment.id !== commentId
+    );
+
+    await updateDoc(postRef, {
+      comments: updatedComments,
+    });
+  }
 };
 
 /////////Delet POST//////////////////////////////////////////////////////////

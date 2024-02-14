@@ -11,7 +11,7 @@ import { DeleteAnimation } from "../successAnim";
 import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
 import LikeButton from "../likeAndComment/likeButton";
-import CommentSection from "../likeAndComment/commentSection";
+import CommentSection, { CommentList } from "../likeAndComment/commentSection";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
@@ -40,6 +40,12 @@ const PostCard = ({
   const [fetchLikes, setFetchLikes] = useState(false);
   const [postIMG, setPostIMG] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
+  const [showComments, setShowComments] = useState(false);
+
+  const toggleComments = () => {
+    setShowComments(!showComments);
+    console.log(showComments);
+  };
 
   const handleLike = () => {
     onLike();
@@ -111,7 +117,6 @@ const PostCard = ({
     overflow: "hidden",
     display: "-webkit-box",
   };
-
 
   const handleDelete = async () => {
     try {
@@ -197,7 +202,7 @@ const PostCard = ({
                 </div>
               )}
             </div>
-            <CommentSection post={post} onDataUpdated={onDataUpdated} />
+            <CommentSection post={post} toggleComments={toggleComments} />
           </div>
           {showReadMoreButton && (
             <motion.button
@@ -221,6 +226,13 @@ const PostCard = ({
           </div>
         </div>
       </motion.div>
+      {showComments && (
+        <div
+          className={`post-user ${isDeleting ? "blur" : ".comment-section"}`}
+        >
+          <CommentList post={post} toggleComments={toggleComments} />
+        </div>
+      )}
       {isDeleting && (
         <div className="delete-animation-container">
           <DeleteAnimation />

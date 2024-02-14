@@ -46,10 +46,13 @@ const LandingPage = () => {
         className="hero-section"
       >
         <h1>Welcome to Space Blog</h1>
-        <p>Explore and Connect</p>
+        <p> Safeguarding Your Information Beyond Earth</p>
       </motion.div>
 
       <div className="post-view">
+        <p className="title">
+          Stay Connected: Check Out Our Latest Space Security Updates!
+        </p>
         <Grid container spacing={3} className="latest-posts">
           {displayedPosts.map((post, index) => (
             <Grid item xs={12} md={4} key={index}>
