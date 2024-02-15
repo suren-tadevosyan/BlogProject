@@ -2,6 +2,8 @@ import React, { useState, useRef } from "react";
 import "./contactUs.scss";
 import { ContactAnimation } from "../../utils/successAnim";
 import * as emailjs from "@emailjs/browser";
+import IMG from "../../images/encryption.webm";
+import VideoPlayer from "../../utils/videoPlayer";
 
 const ContactUs = () => {
   emailjs.init({
@@ -26,8 +28,8 @@ const ContactUs = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
     var templateParams = {
-      to_name: "SpaceBlog", // Replace with actual recipient name
-      from_name: name, // Replace with actual sender name
+      to_name: "SpaceBlog", 
+      from_name: name, 
       message: message,
     };
     console.log("Submitting form:", { name, email, message });
@@ -66,6 +68,8 @@ const ContactUs = () => {
 
   return (
     <div className=" contactUsContainer">
+      <VideoPlayer videoSource={IMG} />
+
       <div className="form-container-main">
         <div className="form-container">
           <div className="form-image">

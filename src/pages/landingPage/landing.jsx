@@ -1,4 +1,4 @@
-import IMG from "../../images/encryption.webm";
+import IMG from "../../images/stars.mp4";
 import "./landing.css";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";

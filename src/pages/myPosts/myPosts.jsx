@@ -1,13 +1,13 @@
-// MyPosts.js
-
 import React, { useEffect, useState } from "react";
 import PostList from "../postList";
 import { auth } from "../../firebase";
 import LoadingSpinner from "../../utils/loading";
-import { deleteAllPostsForUser } from "../../services/postServices"; // Import the new function
+import { deleteAllPostsForUser } from "../../services/postServices";
 import { useSelector } from "react-redux";
 import "./myPosts.css";
 import { DeleteAnimation } from "../../utils/successAnim";
+import VideoPlayer from "../../utils/videoPlayer";
+import IMG from "../../images/welcomeAni.webm";
 
 const MyPosts = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
@@ -36,9 +36,6 @@ const MyPosts = () => {
     };
   }, [deleting]);
 
-  // console.log(user?.uid);
-  // console.log(id);
-
   const handleDataUpdate = () => {
     console.log("Data updated");
     setIsDataUpdated((prev) => !prev);
@@ -60,7 +57,8 @@ const MyPosts = () => {
 
   return (
     <div className="posts-div">
-      <button onClick={handleDeleteAll} className="delete-all">
+      <VideoPlayer videoSource={IMG} />
+      <button onClick={handleDeleteAll} className="delete-all bn5">
         Delete All Posts
       </button>
       <PostList

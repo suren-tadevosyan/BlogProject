@@ -14,6 +14,8 @@ const PostList = ({
   currentUserID,
   currentUserIDForDelete,
   likeID,
+  setCount,
+  setName,
 }) => {
   const dispatch = useDispatch();
   const [userPosts, setUserPosts] = useState([]);
@@ -102,7 +104,6 @@ const PostList = ({
       document.documentElement.offsetHeight
     ) {
       setEndIndex((prevIndex) => prevIndex + 1);
-      console.log(endIndex);
     }
   }, [endIndex]);
 
@@ -112,6 +113,15 @@ const PostList = ({
       window.removeEventListener("scroll", handleScroll);
     };
   }, [handleScroll]);
+
+  {
+    setCount && setCount(filteredPosts.length);
+  }
+
+  {
+    setName &&
+      (filteredPosts[0] ? setName(filteredPosts[0].username) : setName(""));
+  }
 
   return (
     <div className="post-cards-container">

@@ -4,7 +4,7 @@ $main-color: #002733;
 $dark-color: #001925;
 $light-color: #87a4b6;
 $medium-light-color: #013747;
-$orange: #ff7a01;
+$orange: #1f4037;
 $orange-light: #ff7c01c1;
 $white: #ffffff;
 
@@ -14,7 +14,6 @@ $white: #ffffff;
   display: flex;
   justify-content: center;
   align-items: center;
-  background-color: #013747;
 }
 
 .orange {
@@ -35,7 +34,12 @@ $white: #ffffff;
 
 .form-container {
   width: 50%;
-  background-color: #001925;
+  background: linear-gradient(
+    135deg,
+    rgba(15, 12, 41, 0.7),
+    rgba(48, 43, 99, 0.7),
+    rgba(36, 36, 62, 0.7)
+  );
   padding: 30px 30px 30px 0px;
   display: flex;
 

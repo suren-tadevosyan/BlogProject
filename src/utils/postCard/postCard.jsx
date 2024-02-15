@@ -12,6 +12,7 @@ import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
 import LikeButton from "../likeAndComment/likeButton";
 import CommentSection, { CommentList } from "../likeAndComment/commentSection";
+import { useNavigate } from "react-router-dom";
 
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
@@ -41,12 +42,20 @@ const PostCard = ({
   const [postIMG, setPostIMG] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const navigate = useNavigate();
 
   const toggleComments = () => {
     setShowComments(!showComments);
     console.log(showComments);
   };
 
+  const handleNavigate = () => {
+    if (post.userID) {
+      navigate(`/selectedPosts/${post.userID}`);
+    } else {
+      console.error("post.userID is not available yet.");
+    }
+  };
   const handleLike = () => {
     onLike();
     onDataUpdated();
@@ -85,6 +94,7 @@ const PostCard = ({
           storage,
           `user_photos/${post.userID}/user-photo.jpg`
         );
+
         const downloadURL = await getDownloadURL(storageRef);
         setAuthorImage(downloadURL);
       } catch (error) {
@@ -155,6 +165,7 @@ const PostCard = ({
                 className="user-photo"
                 initial={{ scale: 0.8 }}
                 animate={{ scale: 1 }}
+                onClick={handleNavigate}
               />
               <div>
                 {" "}
@@ -179,40 +190,44 @@ const PostCard = ({
               </div>
             )}
           </div>
-          <div className="like-section">
-            <div
-              className="like-button-container"
-              onMouseEnter={() => setShowTooltip(true)}
-              onMouseLeave={() => setShowTooltip(false)}
-            >
-              <LikeButton
-                likedByNames={likedByNames}
-                name={name}
-                post={post}
-                handleLike={handleLike}
-                isDeleting={isDeleting}
-              />
-              {showTooltip && (
-                <div className="tooltip">
-                  {likedByNames.length > 0 ? (
-                    <p>{likedByNames.join(",")}</p>
-                  ) : (
-                    <p>"No likes yet"</p>
-                  )}
-                </div>
-              )}
+          <div className="like-section-all">
+            <div className="like-section">
+              {" "}
+              <div
+                className="like-button-container"
+                onMouseEnter={() => setShowTooltip(true)}
+                onMouseLeave={() => setShowTooltip(false)}
+              >
+                <LikeButton
+                  likedByNames={likedByNames}
+                  name={name}
+                  post={post}
+                  handleLike={handleLike}
+                  isDeleting={isDeleting}
+                />
+                {showTooltip && (
+                  <div className="tooltip">
+                    {likedByNames.length > 0 ? (
+                      <p>{likedByNames.join(",")}</p>
+                    ) : (
+                      <p>"No likes yet"</p>
+                    )}
+                  </div>
+                )}
+              </div>
+              <CommentSection post={post} toggleComments={toggleComments} />
             </div>
-            <CommentSection post={post} toggleComments={toggleComments} />
+            {showReadMoreButton && (
+              <motion.button
+                className="read-more-button bn5"
+                onClick={() => setIsOpen(!isOpen)}
+                whileHover={{ scale: 1.1 }}
+              >
+                {isOpen ? "read less..." : "read more..."}
+              </motion.button>
+            )}
           </div>
-          {showReadMoreButton && (
-            <motion.button
-              className="read-more-button bn5"
-              onClick={() => setIsOpen(!isOpen)}
-              whileHover={{ scale: 1.1 }}
-            >
-              {isOpen ? "read less..." : "read more..."}
-            </motion.button>
-          )}
+
           <div className="delete-button">
             {post.userID === currentUserIDForDelete && (
               <motion.button

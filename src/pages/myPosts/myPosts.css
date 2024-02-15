@@ -6,11 +6,17 @@
   align-items: center;
 }
 
+.posts-div h1 {
+  color: wheat;
+}
+
 .delete-all {
   padding: 5px;
   border-radius: 20px;
   background-color: red;
   cursor: pointer;
+  border: none;
+  padding: 10px;
 }
 
 .modal-overlay {
