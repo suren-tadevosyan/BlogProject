@@ -167,7 +167,7 @@
 }
 
 .add-comment-section input:focus {
-  width: 650px; /* Width when active */
+  width: 550px; /* Width when active */
 }
 
 .post-paragraph {
@@ -218,6 +218,24 @@
   width: 100%;
 }
 
+.commentPart {
+  display: flex;
+  justify-content: space-between;
+}
+.commentPart {
+  position: relative;
+}
+
+.commentPart button {
+  position: absolute;
+  right: 10px;
+  margin-right: 10px;
+  cursor: pointer;
+  border-radius: 4px;
+  height: 1px;
+  background-color: rgba(0, 0, 0, 0);
+  border: none;
+}
 .comment-section {
   width: 100%;
 

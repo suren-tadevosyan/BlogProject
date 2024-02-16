@@ -9,7 +9,8 @@
   position: fixed;
   width: 100%;
   height: 100vh;
-  background: linear-gradient(to right, #0f0c29, #302b63, #030303, black);
+  background: linear-gradient(to left, #0f0c29, #302b63, #030303, black);
+
   color: white;
   display: flex;
   gap: 20px;
@@ -26,40 +27,11 @@
 }
 
 .modal-item {
+  display: flex;
+  align-items: center;
   margin: 20px 20px; /* Adjust the margin between items */
   text-align: center;
   font-size: 18px;
-}
-
-.item0 {
-  margin-left: 20px;
-}
-.item1 {
-  margin-left: 40px;
-}
-.item2 {
-  margin-left: 60px;
-}
-.item3 {
-  margin-left: 80px;
-}
-.item4 {
-  margin-left: 100px;
-}
-.item5 {
-  margin-left: 100px;
-}
-.item6 {
-  margin-left: 80px;
-}
-.item7 {
-  margin-left: 60px;
-}
-.item8 {
-  margin-left: 40px;
-}
-.item9 {
-  margin-left: 20px;
 }
 
 .summary {
@@ -260,4 +232,18 @@ header .logout-button {
   left: 0;
   width: 100%;
   height: 100%;
+}
+
+.onlineList {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+.onlineList ul {
+  display: flex;
+  flex-direction: column;
+}
+.onlineList ul li {
+  display: flex;
+  align-items: center;
 }

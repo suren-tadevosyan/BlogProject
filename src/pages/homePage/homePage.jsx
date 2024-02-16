@@ -115,7 +115,6 @@ const HomePage = () => {
           transition={{ duration: 1 }}
           className="online-users"
         >
-          <h2>Online Users</h2>
           <ActiveUsersList />
         </motion.div>
       </div>

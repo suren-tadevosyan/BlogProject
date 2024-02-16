@@ -2,16 +2,16 @@ import { motion } from "framer-motion";
 
 const Welcome = ({ name, language }) => {
   const greetings = {
-    english: `Welcome to the website, ${name}!!`,
-    spanish: `¡Bienvenido al sitio web, ${name}!!`,
-    russian: `Добро пожаловать на сайт, ${name}!!`,
-    armenian: `Բարի գալուստ, ${name}!!`,
-    french: `Bienvenue sur le site, ${name}!!`,
-    german: `Willkommen auf der Website, ${name}!!`,
-    italian: `Benvenuto nel sito, ${name}!!`,
-    chinese: `欢迎来到网站, ${name}!!`,
-    japanese: `ウェブサイトへようこそ, ${name}!!`,
-    korean: `웹 사이트에 오신 것을 환영합니다, ${name}!!`,
+    english: `Welcome to the website,`,
+    spanish: `¡Bienvenido al sitio web,`,
+    russian: `Добро пожаловать на сайт,`,
+    armenian: `Բարի գալուստ,`,
+    french: `Bienvenue sur le site,`,
+    german: `Willkommen auf der Website,`,
+    italian: `Benvenuto nel sito,`,
+    chinese: `欢迎来到网站,`,
+    japanese: `ウェブサイトへようこそ,`,
+    korean: `웹 사이트에 오신 것을 환영합니다,`,
   };
 
   const text = greetings[language] ? greetings[language].split(" ") : [];
@@ -31,9 +31,13 @@ const Welcome = ({ name, language }) => {
             marginRight: "5px",
             fontSize: "30px",
             fontFamily: "Roboto, cursive",
+            color: "#666666",
           }}
         >
           {el}
+          {i === text.length - 1 && name && (
+            <span style={{ color: " #ff6f61" }}> {name}</span>
+          )}
         </motion.span>
       ))}
     </div>

@@ -6,6 +6,7 @@ import {
 } from "../../services/postServices";
 import { useSelector } from "react-redux";
 import { motion } from "framer-motion";
+import { Trash2 } from "react-feather";
 
 export const CommentList = ({ post }) => {
   const [comments, setComments] = useState([]);
@@ -16,15 +17,16 @@ export const CommentList = ({ post }) => {
     const postComments = await getCommentsForPost(post.id);
     setComments(postComments.comments);
 
-    setContainerHeight(postComments.comments.length * 50);
+    postComments.comments &&
+      setContainerHeight(postComments.comments.length * 60);
   };
 
-  const fetchCommentsWithInterval = () => {
-    fetchComments();
-    setInterval(fetchComments, 1000);
-  };
+  // const fetchCommentsWithInterval = () => {
+  //   fetchComments();
+  //   setInterval(fetchComments, 2000);
+  // };
 
-  fetchCommentsWithInterval();
+  // fetchCommentsWithInterval();
 
   useEffect(() => {
     fetchComments();
@@ -47,25 +49,33 @@ export const CommentList = ({ post }) => {
       animate={{ height: containerHeight }}
       className="comment"
     >
-      {comments.map((comment, index) => (
-        <div
-          key={index}
-          style={{
-            marginTop: "10px",
-            padding: "10px",
-            background: "#4b79a1",
-            borderRadius: "5px",
-          }}
-        >
-          <span style={{ fontWeight: "bold" }}>{comment.author}:</span>
-          <span style={{ marginLeft: "5px" }}>{comment.text}</span>
-          {comment.author === name && (
-            <button onClick={() => handleDeleteComment(comment.id)}>
-              Delete
-            </button>
-          )}
-        </div>
-      ))}
+      {comments &&
+        comments.map((comment, index) => (
+          <div
+            key={index}
+            style={{
+              marginTop: "10px",
+              padding: "10px",
+              background: "#4b79a1",
+              borderRadius: "5px",
+            }}
+            className="commentPart"
+          >
+            <div>
+              <span style={{ fontWeight: "bold" }}>{comment.author}:</span>
+              <span style={{ marginLeft: "5px", wordWrap: "break-word" }}>
+                {comment.text.length > 100
+                  ? comment.text.slice(1, 100) + "..."
+                  : comment.text}
+              </span>
+            </div>
+            {comment.author === name && (
+              <button onClick={() => handleDeleteComment(comment.id)}>
+                <Trash2 />
+              </button>
+            )}
+          </div>
+        ))}
     </motion.div>
   );
 };
@@ -92,12 +102,12 @@ const CommentSection = ({ post, toggleComments }) => {
     setComments(postComments.comments);
   };
 
-  const fetchCommentsWithInterval = () => {
-    fetchComments();
-    setInterval(fetchComments, 1000);
-  };
+  // const fetchCommentsWithInterval = () => {
+  //   fetchComments();
+  //   setInterval(fetchComments, 2000);
+  // };
 
-  fetchCommentsWithInterval();
+  // fetchCommentsWithInterval();
   useEffect(() => {
     fetchComments();
   }, [post.id]);
@@ -105,7 +115,8 @@ const CommentSection = ({ post, toggleComments }) => {
   return (
     <div className="comments-section">
       <div className="comment-count" onClick={toggleComments}>
-        {comments.length === 1 ? "Comment" : "Comments"} ({comments.length})
+        {comments && comments.length === 1 ? "Comment" : "Comments"} (
+        {comments && comments.length})
       </div>
 
       <div className="add-comment-section">

@@ -16,6 +16,7 @@ const Header = () => {
   const { mode } = useSelector((state) => state.theme);
 
   const [showBy, setShowBy] = useState(false);
+
   const [showModal, setShowModal] = useState(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
 
@@ -32,7 +33,6 @@ const Header = () => {
   }, []);
 
   useEffect(() => {
-    
     if (isLoggedIn) {
       const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
 
@@ -43,7 +43,7 @@ const Header = () => {
 
         setTimeout(() => {
           setShowModal(false);
-        }, 5000); 
+        }, 5000);
       }
     }
   }, [isLoggedIn, name]);
@@ -63,11 +63,7 @@ const Header = () => {
 
   const modalComponents = supportedLanguages.map((lang, index) => {
     return (
-      <div
-        key={index}
-        className={`modal-item item${index}`}
-        style={{ color: "wheat" }}
-      >
+      <div key={index} className={`modal-item `} style={{ color: "wheat" }}>
         <Welcome name={name} language={lang} />
       </div>
     );
@@ -134,10 +130,10 @@ const Header = () => {
       </header>
       {showModal && (
         <div className="modal-outher">
+          <div className="modal-container">{modalComponents}</div>
           <div className="modal-inner">
             <WelcomeAnimation />
           </div>
-          <div className="modal-container">{modalComponents}</div>
         </div>
       )}
 
