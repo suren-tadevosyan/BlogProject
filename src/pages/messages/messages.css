@@ -4,13 +4,14 @@
   align-items: center;
   justify-content: center;
   height: 100vh;
-  background: linear-gradient(to right, #a8c0ff, #3f2b96);
+  background-image: url(../../images/img1.jpg);
+  background-size: cover ;
 }
 .messageBox {
   display: flex;
   border-radius: 10px;
 
-  background-color: #3d3c61;
+  background-color: rgba(46, 45, 81, 0.9);
 }
 
 .chat {
@@ -21,10 +22,9 @@
   border-top-left-radius: 10px;
   height: 20px;
   padding: 15px;
-  background-color: #2e2d51;
+  background-color: rgba(46, 45, 81, 0.7); 
   font-size: 12px;
 }
-
 
 .active-users-container {
   display: flex;

@@ -34,10 +34,10 @@ const ChatBox = ({ selectedUser }) => {
     const filteredData = sorted.filter((item) => {
       const timestamp = item.timestamp;
       if (seenTimestamps.has(timestamp)) {
-        return false; 
+        return false;
       } else {
         seenTimestamps.add(timestamp);
-        return true; 
+        return true;
       }
     });
 
@@ -45,11 +45,13 @@ const ChatBox = ({ selectedUser }) => {
   }, [messages]);
 
   const handleMessageSend = () => {
-    sendMessage(selectedUser.userId, id, newMessage);
-    setNewMessage("");
-    const unsubscribe = fetchMessages(selectedUser?.userId, id, setMessages);
+    if (newMessage) {
+      sendMessage(selectedUser.userId, id, newMessage);
+      setNewMessage("");
+      const unsubscribe = fetchMessages(selectedUser?.userId, id, setMessages);
 
-    return () => unsubscribe();
+      return () => unsubscribe();
+    }
   };
 
   return (
@@ -72,6 +74,12 @@ const ChatBox = ({ selectedUser }) => {
           placeholder="Type a message..."
           value={newMessage}
           onChange={(e) => setNewMessage(e.target.value)}
+          onKeyPress={(e) => {
+            if (e.key === "Enter") {
+              e.preventDefault(); // Prevents adding a new line
+              handleMessageSend();
+            }
+          }}
         />
         <button onClick={handleMessageSend}>Send</button>
       </div>

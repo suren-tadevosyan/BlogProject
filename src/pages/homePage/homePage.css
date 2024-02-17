@@ -4,7 +4,7 @@
   height: 100vh;
   width: 100%;
 
-  background: linear-gradient(to right, #0f2027, #203a43, #2c5364);
+  background-image: url(../../images/img3.jpg);
 }
 
 .homeContent {
@@ -20,7 +20,7 @@
 }
 
 .dark {
-  background: linear-gradient(to right, #2980b9, #2c3e50);
+  background-image: url(../../images/img3.jpg);
 
   color: wheat;
 }
@@ -81,11 +81,7 @@
 .onlineUsers {
   border-radius: 20px;
   height: 50vh;
-  background: linear-gradient(
-    to right,
-    rgba(168, 192, 255, 0.2),
-    rgba(63, 43, 150, 0.2)
-  );
+  background: linear-gradient(to top, #000428, #004e92);
 }
 
 .online-users {

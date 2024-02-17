@@ -5,7 +5,8 @@
 }
 
 .chat-header {
-  background-color: #5e5b8e;
+  background-color: rgba(46, 45, 81, 0.8);
+
   padding: 15px;
   display: flex;
   height: 20px;
