@@ -7,7 +7,7 @@ import IMG from "../../images/welcomeAni.webm";
 import { useSelector } from "react-redux";
 
 const SelectedPosts = () => {
-  const [isDataUpdated, setIsDataUpdated] = useState(false);
+ 
   const { id } = useSelector((state) => state.user);
   const [name, setName] = useState("");
   const [count, setCount] = useState(null);
@@ -23,7 +23,7 @@ const SelectedPosts = () => {
         <PostList
           likeID={id}
           currentUserID={selectId}
-          isDataUpdated={isDataUpdated}
+        
           setCount={setCount}
           setName={setName}
         />

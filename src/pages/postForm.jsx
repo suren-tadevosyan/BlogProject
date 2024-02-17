@@ -35,7 +35,7 @@ const PostForm = () => {
     dispatch(addPost(content, imageUrl));
     setContent("");
     setGeneratedText("");
-    setImageUrl(""); 
+    setImageUrl("");
     setErrorMessage("");
     setShowSuccessModal(true);
   };
@@ -64,7 +64,7 @@ const PostForm = () => {
 
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
-    setImageUrl(URL.createObjectURL(file)); 
+    setImageUrl(URL.createObjectURL(file));
     setImageFile(file);
   };
 
@@ -78,11 +78,7 @@ const PostForm = () => {
         />
         {imageUrl && (
           <div className="user-post-image">
-            <img
-              src={imageUrl}
-              alt="Uploaded Image"
-              style={{ maxWidth: "100%" }}
-            />
+            <img src={imageUrl} style={{ maxWidth: "100%" }} />
           </div>
         )}
 

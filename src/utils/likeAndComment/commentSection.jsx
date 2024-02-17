@@ -30,7 +30,7 @@ export const CommentList = ({ post }) => {
 
   useEffect(() => {
     fetchComments();
-  }, [post.id]);
+  }, [post.id, fetchComments]);
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -110,7 +110,7 @@ const CommentSection = ({ post, toggleComments }) => {
   // fetchCommentsWithInterval();
   useEffect(() => {
     fetchComments();
-  }, [post.id]);
+  }, [post.id, fetchComments]);
 
   return (
     <div className="comments-section">

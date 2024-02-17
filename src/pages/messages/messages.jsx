@@ -26,7 +26,7 @@ const MessageComponent = () => {
 
   useEffect(() => {
     fetchActiveUsers();
-  }, []);
+  }, [fetchActiveUsers]);
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -53,14 +53,13 @@ const MessageComponent = () => {
 
   useEffect(() => {
     activeUsers.forEach((user) => fetchUserImage(user.userId));
-  }, [activeUsers]);
+  }, [activeUsers, fetchUserImage]);
 
   return (
     <div className="message-container">
       <div className="messageBox">
         <div className="active-users-container">
           <div className="h2title">
-    
             <h2>Users</h2>
           </div>
           <ul className="active-users-list">

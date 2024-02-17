@@ -113,14 +113,10 @@ const PostList = ({
     };
   }, [handleScroll]);
 
-  {
-    setCount && setCount(filteredPosts.length);
-  }
+  setCount && setCount(filteredPosts.length);
 
-  {
-    setName &&
-      (filteredPosts[0] ? setName(filteredPosts[0].username) : setName(""));
-  }
+  setName &&
+    (filteredPosts[0] ? setName(filteredPosts[0].username) : setName(""));
 
   return (
     <div className="post-cards-container">
