@@ -252,15 +252,17 @@ const PostCard = ({
       </motion.div>
       {showComments && (
         <div
-          className={`post-user ${isDeleting || showAsk ? "blur" : ".comment-section"}`}
+          className={`post-user ${
+            isDeleting || showAsk ? "blur" : ".comment-section"
+          }`}
         >
           <CommentList post={post} toggleComments={toggleComments} />
         </div>
       )}
       {showAsk && (
         <div className="delete-animation-container">
-          <div className="question">
-            <p>Are you sure you want to delete this Post</p>
+          <div className="question"> 
+            <p>Are you sure you want to delete this post ?</p>
             <div>
               <button onClick={() => handleConfirmation(true)}>Yes</button>
               <button onClick={() => handleConfirmation(false)}>No</button>

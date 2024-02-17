@@ -45,12 +45,30 @@ const ChatBox = ({ selectedUser }) => {
   }, [messages]);
 
   const handleMessageSend = () => {
-    if (newMessage) {
+    if (newMessage && selectedUser) {
       sendMessage(selectedUser.userId, id, newMessage);
       setNewMessage("");
       const unsubscribe = fetchMessages(selectedUser?.userId, id, setMessages);
 
       return () => unsubscribe();
+    }
+  };
+
+  const formatTime = (timestamp) => {
+    const messageDate = new Date(timestamp);
+    const today = new Date();
+
+    if (
+      messageDate.getDate() === today.getDate() &&
+      messageDate.getMonth() === today.getMonth() &&
+      messageDate.getFullYear() === today.getFullYear()
+    ) {
+      const hours = messageDate.getHours();
+      const minutes = messageDate.getMinutes();
+      return `${hours}:${minutes < 10 ? "0" + minutes : minutes}`;
+    } else {
+      const options = { day: "numeric", month: "short" };
+      return messageDate.toLocaleDateString(undefined, options);
     }
   };
 
@@ -63,7 +81,8 @@ const ChatBox = ({ selectedUser }) => {
             key={index}
             className={`message ${message.sender === id ? "sent" : "received"}`}
           >
-            <p> {message.content}</p>
+            <p> {message.content} </p>
+            <span>{formatTime(message.timestamp)}</span>
           </div>
         ))}
         <div ref={messagesEndRef} />
@@ -76,7 +95,7 @@ const ChatBox = ({ selectedUser }) => {
           onChange={(e) => setNewMessage(e.target.value)}
           onKeyPress={(e) => {
             if (e.key === "Enter") {
-              e.preventDefault(); // Prevents adding a new line
+              e.preventDefault();
               handleMessageSend();
             }
           }}
