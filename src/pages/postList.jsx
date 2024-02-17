@@ -99,11 +99,10 @@ const PostList = ({
   );
 
   const handleScroll = useCallback(() => {
-    if (
-      window.innerHeight + document.documentElement.scrollTop ===
-      document.documentElement.offsetHeight
-    ) {
+    const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
+    if (scrollTop + clientHeight >= scrollHeight - 4) {
       setEndIndex((prevIndex) => prevIndex + 1);
+      console.log(endIndex);
     }
   }, [endIndex]);
 

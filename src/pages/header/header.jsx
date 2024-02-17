@@ -107,8 +107,8 @@ const Header = () => {
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/post">
-                Post
+              <Link className="bn5" to="/messages">
+               Messges
               </Link>
             </li>
             <li>

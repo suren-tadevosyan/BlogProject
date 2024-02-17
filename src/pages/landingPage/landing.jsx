@@ -5,7 +5,7 @@ import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
 import VideoPlayer from "../../utils/videoPlayer";
 import { selectUserPosts } from "../../redux/slices/postSlices";
-import { Grid, Paper, Typography } from "@mui/material";
+import { Grid,  Typography } from "@mui/material";
 import "./landing.css";
 const LandingPage = () => {
   const { mode } = useSelector((state) => state.theme);
@@ -51,7 +51,7 @@ const LandingPage = () => {
 
       <div className="post-view">
         <p className="title">
-          Stay Connected: Check Out Our Latest Space Security Updates!
+          Stay Connected: Check Out Our Latest Updates!
         </p>
         <Grid container spacing={3} className="latest-posts">
           {displayedPosts.map((post, index) => (

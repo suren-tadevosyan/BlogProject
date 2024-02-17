@@ -17,7 +17,7 @@ import { useNavigate } from "react-router-dom";
 const getRandomColor = (str) => {
   const hash = str.split("").reduce((acc, char) => char.charCodeAt(0) + acc, 1);
   const hue = (hash % 60) + 210;
-  const color = `hsl(${hue}, 50%, 50% , 0.8)`;
+  const color = `hsl(${hue}, 50%, 50% , 0.97)`;
 
   return color;
 };

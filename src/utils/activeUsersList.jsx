@@ -12,7 +12,7 @@ const ActiveUsersList = () => {
       const users = await getActiveUsers();
       setActiveUsers(users);
     };
-
+    fetchActiveUsers();
     const intervalId = setInterval(fetchActiveUsers, 15000);
 
     return () => clearInterval(intervalId);

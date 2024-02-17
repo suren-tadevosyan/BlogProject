@@ -75,48 +75,51 @@ const HomePage = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
-      <div className="user-profile">
-        <div className="user-photo-container">
-          {isLoading ? (
-            <div className="profile-photo">
-              <LoadingSpinner className={"loader"} />
-            </div>
-          ) : (
-            <img src={userPhoto} alt="User" className="profile-photo" />
-          )}
-          <button onClick={handleUpdatePhoto} className="updatePhoto">
-            Update Photo
-          </button>
-        </div>
-        <h1>{name}</h1>
-      </div>
-
-      <motion.div
-        className="navigation-buttons"
-        initial={{ x: "100vw" }}
-        animate={{ x: 0 }}
-        transition={{ type: "spring", stiffness: 120 }}
-      >
-        <Link to="/myposts">
-          <button className="button">My Posts</button>
-        </Link>
-        <Link to="/post">
-          <button className="button">Add post</button>
-        </Link>
-        <Link to="/blog">
-          <button className="button">Blogs</button>
-        </Link>
-      </motion.div>
-
-      <div className="onlineUsers">
-        <motion.div
-          initial={{ opacity: 0, x: 100 }}
-          animate={{ opacity: 1, x: 0 }}
-          transition={{ duration: 1 }}
-          className="online-users"
+      <div className="homeContent">
+        <div className="user-profile">
+          <div className="user-photo-container">
+            {isLoading ? (
+              <div className="profile-photo">
+                <LoadingSpinner className={"loader"} />
+              </div>
+            ) : (
+              <img src={userPhoto} alt="User" className="profile-photo" />
+            )}
+            <button onClick={handleUpdatePhoto} className="updatePhoto">
+              Update Photo
+            </button>
+          </div>
+          <h1>{name}</h1>
+          <motion.div
+          className="navigation-buttons"
+          initial={{ x: "100vw" }}
+          animate={{ x: 0 }}
+          transition={{ type: "spring", stiffness: 120 }}
         >
-          <ActiveUsersList />
+          <Link to="/myposts">
+            <button className="button bn5">My Posts</button>
+          </Link>
+          <Link to="/post">
+            <button className="button bn5">Add post</button>
+          </Link>
+          <Link to="/blog">
+            <button className="button bn5">Blogs</button>
+          </Link>
         </motion.div>
+
+        </div>
+
+    
+        <div className="onlineUsers">
+          <motion.div
+            initial={{ opacity: 0, x: 100 }}
+            animate={{ opacity: 1, x: 0 }}
+            transition={{ duration: 1 }}
+            className="online-users"
+          >
+            <ActiveUsersList />
+          </motion.div>
+        </div>
       </div>
     </motion.div>
   );

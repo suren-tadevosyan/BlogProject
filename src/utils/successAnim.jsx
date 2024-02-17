@@ -7,6 +7,7 @@ import byAnim from "../images/goodby.json";
 import contactAnim from "../images/contactAnim.json";
 import NotFound from "../images/notFound.json";
 import onlineAnim from "../images/online.json";
+import sendAnim from "../images/messageSend.json";
 
 const SuccessAnimation = () => {
   const defaultOptions = {
@@ -97,6 +98,20 @@ export const OnlineAnimation = () => {
   };
 
   return <Lottie options={defaultOptions} height={30} width={30} />;
+};
+
+
+export const SendAnimation = () => {
+  const defaultOptions = {
+    loop: true,
+    autoplay: true,
+    animationData: sendAnim,
+    rendererSettings: {
+      preserveAspectRatio: "xMidYMid slice",
+    },
+  };
+
+  return <Lottie options={defaultOptions} height={150} width={150} />;
 };
 
 export default SuccessAnimation;

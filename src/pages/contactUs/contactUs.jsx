@@ -4,6 +4,7 @@ import { ContactAnimation } from "../../utils/successAnim";
 import * as emailjs from "@emailjs/browser";
 import IMG from "../../images/encryption.webm";
 import VideoPlayer from "../../utils/videoPlayer";
+import MessageSend from "./messageSend";
 
 const ContactUs = () => {
   emailjs.init({
@@ -22,22 +23,29 @@ const ContactUs = () => {
   const [name, setName] = useState("");
   const [email, setEmail] = useState("");
   const [message, setMessage] = useState("");
+  const [showModal, setShowModal] = useState(false);
 
   const formRef = useRef(null);
 
   const handleSubmit = (event) => {
     event.preventDefault();
+
+    // Check if any of the fields are empty
+    if (!name || !email || !message) {
+      alert("Please fill in all fields.");
+      return;
+    }
+
+    setShowModal(true);
     var templateParams = {
-      to_name: "SpaceBlog", 
-      from_name: name, 
+      to_name: "SpaceBlog",
+      from_name: name,
       message: message,
     };
-    console.log("Submitting form:", { name, email, message });
 
     emailjs.send("service_e70w192", "template_4lrq7hk", templateParams).then(
       (result) => {
         console.log("Email sent successfully:", result.text);
-
         setName("");
         setEmail("");
         setMessage("");
@@ -64,6 +72,10 @@ const ContactUs = () => {
     setName("");
     setEmail("");
     setMessage("");
+  };
+
+  const closeModal = () => {
+    setShowModal(false);
   };
 
   return (
@@ -119,6 +131,12 @@ const ContactUs = () => {
           </div>
         </div>
       </div>
+
+      {showModal && (
+        <div className="modalSend">
+          <MessageSend closeModal={closeModal} />
+        </div>
+      )}
     </div>
   );
 };

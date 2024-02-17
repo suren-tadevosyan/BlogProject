@@ -8,7 +8,6 @@ body {
   margin: 0;
   padding: 0;
   overflow-y: scroll;
-
 }
 
 .login-register {
@@ -238,10 +237,11 @@ body {
   width: 100%;
   height: 100%;
   z-index: 999; /* Place the backdrop behind the modal */
-  background: linear-gradient(
-    45deg,
-    rgba(0, 128, 0, 0.2),
-    rgba(0, 255, 0, 0.4)
+  background-image: linear-gradient(
+    to top,
+    rgba(15, 12, 41, 0.5),
+    rgba(48, 43, 99, 0.5),
+    rgba(36, 36, 62, 0.5)
   ); /* Green gradient with transparency */
   backdrop-filter: blur(5px); /* Apply a blur effect to the backdrop */
 }
@@ -268,4 +268,8 @@ body {
 /* Hover effect for the close button */
 .error-modal button:hover {
   background-color: #2980b9;
+}
+
+.redChar {
+  color: rgb(92, 0, 0);
 }

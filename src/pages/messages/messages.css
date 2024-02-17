@@ -1,0 +1,93 @@
+.message-container {
+  display: flex;
+
+  align-items: center;
+  justify-content: center;
+  height: 100vh;
+  background: linear-gradient(to right, #a8c0ff, #3f2b96);
+}
+.messageBox {
+  display: flex;
+  border-radius: 10px;
+
+  background-color: #3d3c61;
+}
+
+.chat {
+  width: 100%;
+}
+
+.h2title {
+  border-top-left-radius: 10px;
+  height: 20px;
+  padding: 15px;
+  background-color: #2e2d51;
+  font-size: 12px;
+}
+
+
+.active-users-container {
+  display: flex;
+  flex-direction: column;
+  align-content: center;
+  border-radius: 10px;
+  min-width: 200px;
+  max-width: 300px; /* Adjust as needed */
+
+  border-radius: 10px;
+}
+
+.active-users-container h2 {
+  display: flex;
+  color: #d7d6f8;
+}
+.active-users-list {
+  border-top: 3px solid grey;
+  width: 200px;
+  display: flex;
+  flex-direction: column;
+
+  margin-top: 40px;
+  list-style-type: none;
+  padding: 0;
+}
+
+.active-users-list li {
+  display: flex;
+  justify-content: flex-start;
+  padding-left: 10px;
+  color: #e9e9f9;
+}
+
+.active-user {
+  display: flex;
+  align-items: center;
+  padding: 8px;
+
+  cursor: pointer;
+}
+
+.active-user img {
+  object-fit: cover;
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  margin-right: 10px;
+}
+
+.active-user-name {
+  font-weight: bold;
+}
+
+.active-user-status {
+  font-size: 12px;
+  color: #777;
+}
+
+.active-user:hover {
+  background-color: #2e2d51; /* Change to desired hover background color */
+}
+
+.active-user.active {
+  background-color: #2e2d51; /* Change to desired active background color */
+}

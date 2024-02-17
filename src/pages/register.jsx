@@ -94,7 +94,9 @@ const Register = () => {
       isNumberPresent &&
       isSpecialCharPresent
     ) {
-      setShowZoomInEffect(true);
+      if (!setErrorModalVisible) {
+        setShowZoomInEffect(true);
+      }
 
       addNewUserToFirestore(
         formData,

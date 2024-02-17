@@ -1,10 +1,6 @@
 import React from "react";
-import { motion } from "framer-motion"; 
-import {
-
-  getStrengthText,
-  getStrengthColor,
-} from "./passwordUtils";
+import { motion } from "framer-motion";
+import { getStrengthText, getStrengthColor } from "./passwordUtils";
 import "../style/login.css";
 
 const PasswordStrengthIndicator = ({
@@ -45,19 +41,19 @@ const PasswordStrengthIndicator = ({
     </p>
 
     <ul className="password-requirements">
-      <li>
-        <input type="checkbox" checked={!!isUppercasePresent} readOnly />
+      <li className={isUppercasePresent ? "" : "redChar"}>
+        <input type="checkbox" checked={isUppercasePresent} readOnly />
         Contains at least one uppercase letter
       </li>
-      <li>
+      <li className={isLowercasePresent ? "" : "redChar"}>
         <input type="checkbox" checked={isLowercasePresent} readOnly />
         Contains at least one lowercase letter
       </li>
-      <li>
+      <li className={isNumberPresent ? "" : "redChar"}>
         <input type="checkbox" checked={isNumberPresent} readOnly />
         Contains at least one number
       </li>
-      <li>
+      <li className={isSpecialCharPresent ? "" : "redChar"}>
         <input type="checkbox" checked={isSpecialCharPresent} readOnly />
         Contains at least one special character
       </li>
