@@ -246,3 +246,44 @@
 .comment {
   margin-top: 20px;
 }
+
+.question {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  align-items: center;
+  padding: 20px;
+  border-radius: 8px;
+  background: linear-gradient(
+    to right,
+    rgba(15, 12, 41, 0.9),
+    rgba(48, 43, 99, 0.9),
+    rgba(36, 36, 62, 0.9)
+  );
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.2);
+  z-index: 1000; /* Make sure it's above the backdrop */
+}
+
+.question p {
+  font-size: 25px;
+  color: wheat;
+}
+
+.question div {
+  display: flex;
+  width: 100%;
+
+  justify-content: center;
+}
+
+.question div button {
+  cursor: pointer;
+  padding: 15px;
+  margin-left: 20px;
+  border-radius: 20px;
+  border: none;
+}
+
+.question div button:hover {
+  background-color: purple;
+}

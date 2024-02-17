@@ -49,10 +49,10 @@ const Blog = () => {
       <VideoPlayer videoSource={IMG} />
       <div className="post-count">
         <div>
-          <p>Today Posts- </p> <Motion postCount={postCounts.today} />
+          <p>Today's Posts -  </p> <Motion postCount={postCounts.today} />
         </div>
         <div>
-          <p>This Week Posts- </p> <Motion postCount={postCounts.thisWeek} />
+          <p>This Week's Posts - </p> <Motion postCount={postCounts.thisWeek} />
         </div>
         <div>
           <p>Total Posts- </p> <Motion postCount={postCounts.total} />

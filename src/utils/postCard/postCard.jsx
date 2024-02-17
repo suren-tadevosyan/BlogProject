@@ -42,7 +42,17 @@ const PostCard = ({
   const [postIMG, setPostIMG] = useState(null);
   const [showTooltip, setShowTooltip] = useState(false);
   const [showComments, setShowComments] = useState(false);
+  const [showAsk, setShowAsk] = useState(false);
   const navigate = useNavigate();
+
+  const handleConfirmation = (confirmed) => {
+    if (confirmed) {
+      setShowAsk(false);
+      handleDelete();
+    } else {
+      setShowAsk(false);
+    }
+  };
 
   const toggleComments = () => {
     setShowComments(!showComments);
@@ -110,7 +120,6 @@ const PostCard = ({
         if (post.imageUrl) {
           const downloadURL = post.imageUrl;
           setPostIMG(downloadURL);
-        
         }
       } catch (error) {
         console.error("Error fetching post image:", error);
@@ -151,7 +160,7 @@ const PostCard = ({
       whileHover={{ scale: 1.02 }}
     >
       <motion.div
-        className={`post-user ${isDeleting ? "blur" : ""}`}
+        className={`post-user ${isDeleting || showAsk ? "blur" : ""}`}
         initial={{ opacity: 0 }}
         animate={{ opacity: 1 }}
       >
@@ -230,7 +239,8 @@ const PostCard = ({
           <div className="delete-button">
             {post.userID === currentUserIDForDelete && (
               <motion.button
-                onClick={handleDelete}
+                // onClick={handleDelete}
+                onClick={() => setShowAsk(true)}
                 disabled={isDeleting}
                 whileHover={{ scale: 1.1 }}
               >
@@ -242,11 +252,23 @@ const PostCard = ({
       </motion.div>
       {showComments && (
         <div
-          className={`post-user ${isDeleting ? "blur" : ".comment-section"}`}
+          className={`post-user ${isDeleting || showAsk ? "blur" : ".comment-section"}`}
         >
           <CommentList post={post} toggleComments={toggleComments} />
         </div>
       )}
+      {showAsk && (
+        <div className="delete-animation-container">
+          <div className="question">
+            <p>Are you sure you want to delete this Post</p>
+            <div>
+              <button onClick={() => handleConfirmation(true)}>Yes</button>
+              <button onClick={() => handleConfirmation(false)}>No</button>
+            </div>
+          </div>
+        </div>
+      )}
+
       {isDeleting && (
         <div className="delete-animation-container">
           <DeleteAnimation />

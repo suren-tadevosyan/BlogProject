@@ -113,7 +113,7 @@ const Header = () => {
             </li>
             <li>
               <Link className="bn5" to="/blog">
-                Blog
+                Blogs
               </Link>
             </li>
             <li>

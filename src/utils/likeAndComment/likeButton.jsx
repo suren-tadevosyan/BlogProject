@@ -13,7 +13,7 @@ const LikeButton = ({ likedByNames, name, post, handleLike, isDeleting }) => (
       onClick={handleLike}
       icon={likedByNames.includes(name) ? faHeart : farHeart}
     />{" "}
-    Like ({post.likes})
+    {post.likes && post.likes <= 1 ? "Like" : "Likes "}({post.likes})
   </button>
 );
 

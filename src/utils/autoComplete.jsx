@@ -1,14 +1,22 @@
-
-
 import React, { useState, useEffect } from "react";
 
-const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
+const AutoCompleteTextarea = ({
+  text,
+  onTextChange,
+  className,
+  handleSubmit,
+}) => {
   const [suggestions, setSuggestions] = useState([]);
   const [selectedSuggestion, setSelectedSuggestion] = useState(null);
   const [focused, setFocused] = useState(false);
 
+  const handleKeyPress = (e) => {
+    if (e.key === "Enter") {
+      e.preventDefault(); // Prevent default form submission behavior
+      handleSubmit(e); // Pass the event object to handleSubmit
+    }
+  };
   useEffect(() => {
-    // Fetch suggestions from Datamuse API based on the last word in the text
     const fetchSuggestions = async () => {
       const words = text.trim().split(" ");
       const lastWord = words[words.length - 1];
@@ -27,7 +35,7 @@ const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
     if (text.trim() !== "") {
       fetchSuggestions();
     } else {
-      setSuggestions([]); // Clear suggestions when text is empty
+      setSuggestions([]);
     }
   }, [text]);
 
@@ -41,11 +49,9 @@ const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
       : suggestion;
     const newText = words.join(" ");
     onTextChange(newText);
-    setSuggestions([]); // Clear suggestions after selecting one
-    setSelectedSuggestion(null); // Highlight the selected suggestion
+    setSuggestions([]);
+    setSelectedSuggestion(null);
   };
-
-  
 
   return (
     <div className="auto-complete-textarea">
@@ -65,8 +71,8 @@ const AutoCompleteTextarea = ({ text, onTextChange, className }) => {
         </ul>
       )}
       <textarea
+        onKeyPress={handleKeyPress}
         onFocus={() => setFocused(true)}
-        // onBlur={() => setFocused(false)}
         className={className}
         value={text}
         onChange={(e) => onTextChange(e.target.value)}

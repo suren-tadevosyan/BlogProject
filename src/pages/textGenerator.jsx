@@ -11,7 +11,7 @@ const TextGenerator = ({ setGeneratedText, updateContent }) => {
   };
   return (
     <div>
-      <button type="button" onClick={generateText}>
+      <button type="button" className="bn5" onClick={generateText}>
         Generate Text
       </button>
     </div>

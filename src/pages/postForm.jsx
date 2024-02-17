@@ -75,33 +75,31 @@ const PostForm = () => {
           className={mode === "dark" ? "text dtext" : "text"}
           text={content || generatedText}
           onTextChange={updateContent}
+          handleSubmit={handleSubmit}
         />
         {imageUrl && (
           <div className="user-post-image">
-            <img
-              src={imageUrl}
-              style={{ maxWidth: "100%" }}
-              alt="UserPost"
-            />
+            <img src={imageUrl} style={{ maxWidth: "100%" }} alt="UserPost" />
           </div>
         )}
 
         {errorMessage && <p>{errorMessage}</p>}
         <input
           type="file"
-          className="imgInp"
+          className="imgInp bn5"
           accept="image/*"
           onChange={handleImageUpload}
         />
 
-        <button type="submit">Add Post</button>
+        <button type="submit" className="bn5">
+          Add Post
+        </button>
         <TextGenerator
           setGeneratedText={setGeneratedText}
           updateContent={updateContent}
         />
       </form>
 
-      {/* Conditional rendering of the success modal */}
       {showSuccessModal && (
         <div className="success-modal">
           <SuccessAnimation />
