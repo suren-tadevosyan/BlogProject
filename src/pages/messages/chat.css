@@ -47,7 +47,7 @@
 
 .received {
   width: auto;
-
+  border-top-left-radius: 0px !important;
   align-self: flex-start;
   background-color: #85b7c8;
 }

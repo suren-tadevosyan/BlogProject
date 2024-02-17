@@ -30,7 +30,6 @@ const ContactUs = () => {
   const handleSubmit = (event) => {
     event.preventDefault();
 
-    // Check if any of the fields are empty
     if (!name || !email || !message) {
       alert("Please fill in all fields.");
       return;
@@ -44,8 +43,7 @@ const ContactUs = () => {
     };
 
     emailjs.send("service_e70w192", "template_4lrq7hk", templateParams).then(
-      (result) => {
-        console.log("Email sent successfully:", result.text);
+      () => {
         setName("");
         setEmail("");
         setMessage("");

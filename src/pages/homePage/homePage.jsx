@@ -52,7 +52,6 @@ const HomePage = () => {
         const storage = getStorage();
         const storageRef = ref(storage, `user_photos/${id}/user-photo.jpg`);
         const downloadURL = await getDownloadURL(storageRef);
-        console.log("Download URL:", downloadURL);
         setUserPhoto(downloadURL);
       } catch (error) {
         console.error(

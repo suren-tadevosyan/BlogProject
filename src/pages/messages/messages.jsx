@@ -33,10 +33,6 @@ const MessageComponent = () => {
     setSelectedUserId(user.userId === selectedUserId ? null : user.userId);
   };
 
-  useEffect(() => {
-    console.log(activeUsers);
-  }, [activeUsers]);
-
   const fetchUserImage = useCallback(
     async (userId) => {
       try {
@@ -48,10 +44,9 @@ const MessageComponent = () => {
           ...prevUserImages,
           [userId]: downloadURL,
         }));
-    
       } catch (error) {}
     },
-    [setUserImages,]
+    [setUserImages]
   );
 
   useEffect(() => {

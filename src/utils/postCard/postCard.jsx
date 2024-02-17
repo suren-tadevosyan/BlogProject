@@ -46,7 +46,6 @@ const PostCard = ({
 
   const toggleComments = () => {
     setShowComments(!showComments);
-    console.log(showComments);
   };
 
   const handleNavigate = () => {
@@ -111,7 +110,7 @@ const PostCard = ({
         if (post.imageUrl) {
           const downloadURL = post.imageUrl;
           setPostIMG(downloadURL);
-          console.log(downloadURL);
+        
         }
       } catch (error) {
         console.error("Error fetching post image:", error);
