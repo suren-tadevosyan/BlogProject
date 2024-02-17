@@ -26,7 +26,7 @@ const MessageComponent = () => {
     };
 
     fetchActiveUsers();
-  }, []);
+  }, [id]);
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -37,20 +37,23 @@ const MessageComponent = () => {
     console.log(activeUsers);
   }, [activeUsers]);
 
-  const fetchUserImage = useCallback(async (userId) => {
-    try {
-      const storage = getStorage();
-      const storageRef = ref(storage, `user_photos/${userId}/user-photo.jpg`);
-  
-      const downloadURL = await getDownloadURL(storageRef);
-      setUserImages((prevUserImages) => ({
-        ...prevUserImages,
-        [userId]: downloadURL,
-      }));
-      console.log(userImages);
-    } catch (error) {}
-  }, [getStorage, getDownloadURL, setUserImages, userImages]);
-  
+  const fetchUserImage = useCallback(
+    async (userId) => {
+      try {
+        const storage = getStorage();
+        const storageRef = ref(storage, `user_photos/${userId}/user-photo.jpg`);
+
+        const downloadURL = await getDownloadURL(storageRef);
+        setUserImages((prevUserImages) => ({
+          ...prevUserImages,
+          [userId]: downloadURL,
+        }));
+        console.log(userImages);
+      } catch (error) {}
+    },
+    [setUserImages, userImages]
+  );
+
   useEffect(() => {
     activeUsers.forEach((user) => fetchUserImage(user.userId));
   }, [activeUsers, fetchUserImage]);
