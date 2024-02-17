@@ -34,10 +34,10 @@ const ChatBox = ({ selectedUser }) => {
     const filteredData = sorted.filter((item) => {
       const timestamp = item.timestamp;
       if (seenTimestamps.has(timestamp)) {
-        return false; // Skip duplicate timestamp
+        return false; 
       } else {
         seenTimestamps.add(timestamp);
-        return true; // Keep unique timestamp
+        return true; 
       }
     });
 

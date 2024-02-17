@@ -1,5 +1,5 @@
 import "./selectedUserPosts.css";
-import React, { useState, useEffect } from "react";
+import React, { useState, } from "react";
 import { useParams } from "react-router-dom";
 import PostList from "../postList";
 import VideoPlayer from "../../utils/videoPlayer";
