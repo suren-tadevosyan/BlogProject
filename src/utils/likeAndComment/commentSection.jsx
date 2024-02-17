@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import React, { useState, useEffect, useCallback } from "react";
 import {
   addCommentToPost,
   deleteCommentFromPost,
@@ -13,13 +13,17 @@ export const CommentList = ({ post }) => {
   const [containerHeight, setContainerHeight] = useState(0);
   const { name } = useSelector((state) => state.user);
 
-  const fetchComments = async () => {
+  const fetchComments = useCallback(async () => {
     const postComments = await getCommentsForPost(post.id);
     setComments(postComments.comments);
 
     postComments.comments &&
       setContainerHeight(postComments.comments.length * 60);
-  };
+  }, [post.id]);
+
+  useEffect(() => {
+    fetchComments();
+  }, [fetchComments]);
 
   // const fetchCommentsWithInterval = () => {
   //   fetchComments();
@@ -28,9 +32,6 @@ export const CommentList = ({ post }) => {
 
   // fetchCommentsWithInterval();
 
-  useEffect(() => {
-    fetchComments();
-  }, [post.id, fetchComments]);
 
   const handleDeleteComment = async (commentId) => {
     try {
@@ -97,10 +98,14 @@ const CommentSection = ({ post, toggleComments }) => {
     }
   };
 
-  const fetchComments = async () => {
+const fetchComments = useCallback(async () => {
     const postComments = await getCommentsForPost(post.id);
     setComments(postComments.comments);
-  };
+}, [post.id]); 
+
+useEffect(() => {
+    fetchComments();
+}, [fetchComments]);
 
   // const fetchCommentsWithInterval = () => {
   //   fetchComments();
@@ -108,9 +113,6 @@ const CommentSection = ({ post, toggleComments }) => {
   // };
 
   // fetchCommentsWithInterval();
-  useEffect(() => {
-    fetchComments();
-  }, [post.id, fetchComments]);
 
   return (
     <div className="comments-section">

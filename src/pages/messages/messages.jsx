@@ -2,7 +2,7 @@ import { useSelector } from "react-redux";
 import { getActiveUsers } from "../../services/userServices";
 import ChatBox from "./chat";
 import "./messages.css";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useCallback } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import userPhoto from "../../images/userMale.png";
 
@@ -15,18 +15,18 @@ const MessageComponent = () => {
 
   const { id } = useSelector((state) => state.user);
 
-  const fetchActiveUsers = async () => {
-    try {
-      const users = await getActiveUsers();
-      setActiveUsers(users.filter((user) => user.userId !== id));
-    } catch (error) {
-      console.error("Error fetching active users:", error);
-    }
-  };
-
   useEffect(() => {
+    const fetchActiveUsers = async () => {
+      try {
+        const users = await getActiveUsers();
+        setActiveUsers(users.filter((user) => user.userId !== id));
+      } catch (error) {
+        console.error("Error fetching active users:", error);
+      }
+    };
+
     fetchActiveUsers();
-  }, [fetchActiveUsers]);
+  }, []);
 
   const handleUserClick = (user) => {
     setSelectedUser(user);
@@ -37,11 +37,11 @@ const MessageComponent = () => {
     console.log(activeUsers);
   }, [activeUsers]);
 
-  const fetchUserImage = async (userId) => {
+  const fetchUserImage = useCallback(async (userId) => {
     try {
       const storage = getStorage();
       const storageRef = ref(storage, `user_photos/${userId}/user-photo.jpg`);
-
+  
       const downloadURL = await getDownloadURL(storageRef);
       setUserImages((prevUserImages) => ({
         ...prevUserImages,
@@ -49,8 +49,8 @@ const MessageComponent = () => {
       }));
       console.log(userImages);
     } catch (error) {}
-  };
-
+  }, [getStorage, getDownloadURL, setUserImages, userImages]);
+  
   useEffect(() => {
     activeUsers.forEach((user) => fetchUserImage(user.userId));
   }, [activeUsers, fetchUserImage]);

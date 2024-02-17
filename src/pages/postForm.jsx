@@ -78,7 +78,11 @@ const PostForm = () => {
         />
         {imageUrl && (
           <div className="user-post-image">
-            <img src={imageUrl} style={{ maxWidth: "100%" }} />
+            <img
+              src={imageUrl}
+              style={{ maxWidth: "100%" }}
+              alt="UserPost"
+            />
           </div>
         )}
 
