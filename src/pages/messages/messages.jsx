@@ -48,10 +48,10 @@ const MessageComponent = () => {
           ...prevUserImages,
           [userId]: downloadURL,
         }));
-        console.log(userImages);
+    
       } catch (error) {}
     },
-    [setUserImages, userImages]
+    [setUserImages,]
   );
 
   useEffect(() => {
