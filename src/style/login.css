@@ -101,7 +101,7 @@ body {
 }
 .toggle-button {
   position: absolute;
-  right: 5px; /* Adjust the right position as needed */
+  right: 5px;
   top: 50%;
   transform: translateY(-50%);
   background-color: transparent;
@@ -127,18 +127,13 @@ body {
   text-align: left;
 
   width: 100%;
-  /* position: absolute; */
 
-  background: linear-gradient(
-    to right,
-    #4e54c8,
-    rgba(143, 148, 251, 0.5)
-  ); /* Medium grey for medium */
+  background: linear-gradient(to right, #4e54c8, rgba(143, 148, 251, 0.5));
 
   color: white;
   border-radius: 10px;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
-  z-index: 1; /* Ensure it's above other elements */
+  z-index: 1;
   visibility: visible;
   opacity: 1;
   transition: visibility 0.2s, opacity 0.2s;
@@ -178,15 +173,15 @@ body {
   margin-right: 8px;
   width: 15px;
   height: 15px;
-  border: 1px solid #00ab72; /* Border color */
+  border: 1px solid #00ab72;
   color: white;
-  border-radius: 50%; /* Make it round */
+  border-radius: 50%;
 }
 .password-requirements input:checked {
   content: "\2713";
-  background-color: #00ab72; /* Background color when checked */
-  border-color: #00ab72; /* Border color when checked */
-  color: #00ab72; /* Text color when checked */
+  background-color: #00ab72;
+  border-color: #00ab72;
+  color: #00ab72;
   transition: 1s;
 }
 
@@ -207,14 +202,11 @@ body {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  border-radius: 8px; /* Add border radius for a rounded appearance */
-  max-width: 300px; /* Set a maximum width for the modal */
-  width: 100%; /* Make the modal responsive */
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
 }
 
-/* Add a backdrop for the blur effect */
-/* Add your styles for the modal here */
-/* Add your styles for the modal here */
 .error-modal {
   position: fixed;
   top: 50%;
@@ -224,35 +216,32 @@ body {
   background-color: #fff;
   box-shadow: 0 0 10px rgba(0, 0, 0, 0.3);
   z-index: 1000;
-  border-radius: 8px; /* Add border radius for a rounded appearance */
-  max-width: 300px; /* Set a maximum width for the modal */
-  width: 100%; /* Make the modal responsive */
+  border-radius: 8px;
+  max-width: 300px;
+  width: 100%;
 }
 
-/* Add a backdrop for the blur effect */
 .backdrop {
   position: fixed;
   top: 0;
   left: 0;
   width: 100%;
   height: 100%;
-  z-index: 999; /* Place the backdrop behind the modal */
+  z-index: 999;
   background-image: linear-gradient(
     to top,
     rgba(15, 12, 41, 0.5),
     rgba(48, 43, 99, 0.5),
     rgba(36, 36, 62, 0.5)
-  ); /* Green gradient with transparency */
-  backdrop-filter: blur(5px); /* Apply a blur effect to the backdrop */
+  );
+  backdrop-filter: blur(5px);
 }
 
-/* Style the modal content */
 .error-modal p {
   margin: 0;
   font-size: 16px;
 }
 
-/* Style the close button */
 .error-modal button {
   margin-top: 10px;
   margin-right: 20px;
@@ -265,11 +254,20 @@ body {
   font-size: 14px;
 }
 
-/* Hover effect for the close button */
 .error-modal button:hover {
   background-color: #2980b9;
 }
 
 .redChar {
   color: rgb(92, 0, 0);
+}
+
+@media only screen and (max-width: 480px) {
+  .login-container {
+    width: 80%; /* Adjust width for smaller screens */
+  }
+  .form-group input[type="submit"],
+  .form-group input[type="button"] {
+    font-size: 0.8em; /* Adjust font size for smaller screens */
+  }
 }

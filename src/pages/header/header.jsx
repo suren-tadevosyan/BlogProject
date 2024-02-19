@@ -16,6 +16,11 @@ const Header = () => {
   const { mode } = useSelector((state) => state.theme);
 
   const [showBy, setShowBy] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
+
+  const toggleMenu = () => {
+    setMenuOpen(!menuOpen);
+  };
 
   const [showModal, setShowModal] = useState(() => {
     const hasModalBeenShown = localStorage.getItem("hasModalBeenShown");
@@ -87,6 +92,14 @@ const Header = () => {
         <div onClick={() => navigate("/landing")} className="user-name">
           <h2>Hello, {name}!</h2>
         </div>
+        <div
+          className={`burger-menu ${menuOpen ? "open" : ""}`}
+          onClick={() => toggleMenu()}
+        >
+          <div className="bar"></div>
+          <div className="bar"></div>
+          <div className="bar"></div>
+        </div>
 
         <div
           className="theme-toggle-button"
@@ -100,24 +113,24 @@ const Header = () => {
           )}
         </div>
         <nav>
-          <ul className="header-nav">
+          <ul className={`header-nav ${menuOpen ? "open" : ""}`}>
             <li>
-              <Link to="/home" className="bn5">
+              <Link to="/home" className="bn5" onClick={() => toggleMenu()}>
                 My Page
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/messages">
-               Messages
+              <Link className="bn5" to="/messages" onClick={() => toggleMenu()}>
+                Messages
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/blog">
+              <Link className="bn5" to="/blog" onClick={() => toggleMenu()}>
                 Blogs
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/contact">
+              <Link className="bn5" to="/contact" onClick={() => toggleMenu()}>
                 Contact
               </Link>
             </li>
