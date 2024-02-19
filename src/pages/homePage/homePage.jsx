@@ -8,6 +8,7 @@ import { updatePhoto } from "../../redux/slices/auth";
 import userPhoto1 from "../../images/userMale.png";
 import LoadingSpinner from "../../utils/loading";
 import ActiveUsersList from "../../utils/activeUsersList";
+import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 
 const HomePage = () => {
   const dispatch = useDispatch();
@@ -74,6 +75,9 @@ const HomePage = () => {
       animate={{ opacity: 1 }}
       exit={{ opacity: 0 }}
     >
+      <div className="starAnim">
+        <StarsCanvas />
+      </div>
       <div className="homeContent">
         <div className="user-profile">
           <div className="user-photo-container">
@@ -90,25 +94,23 @@ const HomePage = () => {
           </div>
           <h1>{name}</h1>
           <motion.div
-          className="navigation-buttons"
-          initial={{ x: "100vw" }}
-          animate={{ x: 0 }}
-          transition={{ type: "spring", stiffness: 120 }}
-        >
-          <Link to="/myposts">
-            <button className="button bn5">My Posts</button>
-          </Link>
-          <Link to="/post">
-            <button className="button bn5">Add post</button>
-          </Link>
-          <Link to="/blog">
-            <button className="button bn5">Blogs</button>
-          </Link>
-        </motion.div>
-
+            className="navigation-buttons"
+            initial={{ x: "100vw" }}
+            animate={{ x: 0 }}
+            transition={{ type: "spring", stiffness: 120 }}
+          >
+            <Link to="/myposts">
+              <button className="button bn5">My Posts</button>
+            </Link>
+            <Link to="/post">
+              <button className="button bn5">Add post</button>
+            </Link>
+            <Link to="/blog">
+              <button className="button bn5">Blogs</button>
+            </Link>
+          </motion.div>
         </div>
 
-    
         <div className="onlineUsers">
           <motion.div
             initial={{ opacity: 0, x: 100 }}

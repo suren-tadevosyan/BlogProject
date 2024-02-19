@@ -6,8 +6,8 @@ import { deleteAllPostsForUser } from "../../services/postServices";
 import { useSelector } from "react-redux";
 import "./myPosts.css";
 import { DeleteAnimation } from "../../utils/successAnim";
-import VideoPlayer from "../../utils/videoPlayer";
-import IMG from "../../images/welcomeAni.webm";
+
+import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 
 const MyPosts = () => {
   const [isDataUpdated, setIsDataUpdated] = useState(false);
@@ -57,7 +57,9 @@ const MyPosts = () => {
 
   return (
     <div className="posts-div">
-      <VideoPlayer videoSource={IMG} />
+      <div className="starAnim">
+        <StarsCanvas />
+      </div>
       <button onClick={handleDeleteAll} className="delete-all bn5">
         Delete All Posts
       </button>

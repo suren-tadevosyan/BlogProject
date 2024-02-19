@@ -18,10 +18,7 @@ const postSlice = createSlice({
     setUserPosts: (state, action) => {
       state.userPosts = action.payload;
     },
-    getUserPostsStart: (state) => {
-      state.loading = true;
-      state.error = null;
-    },
+   
     getUserPostsSuccess: (state, action) => {
       state.loading = false;
       const serializedUserPosts = action.payload.map((post) => ({

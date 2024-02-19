@@ -6,8 +6,8 @@ import { useSelector } from "react-redux";
 import { motion, useMotionValue, useTransform, animate } from "framer-motion";
 import "./blog.css";
 import ScrollToTopButton from "../../utils/scrollTop";
-import IMG from "../../images/blackhole.webm";
-import VideoPlayer from "../../utils/videoPlayer";
+
+import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 
 function Motion({ postCount }) {
   const count = useMotionValue(0);
@@ -46,10 +46,13 @@ const Blog = () => {
 
   return (
     <div className={mode === "dark" ? "profile " : "profile"}>
-      <VideoPlayer videoSource={IMG} />
+      <div className="starAnim">
+        <StarsCanvas />
+      </div>
+
       <div className="post-count">
         <div>
-          <p>Today's Posts -  </p> <Motion postCount={postCounts.today} />
+          <p>Today's Posts - </p> <Motion postCount={postCounts.today} />
         </div>
         <div>
           <p>This Week's Posts - </p> <Motion postCount={postCounts.thisWeek} />

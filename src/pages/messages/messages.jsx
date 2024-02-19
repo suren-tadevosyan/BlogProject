@@ -1,10 +1,11 @@
 import { useSelector } from "react-redux";
-import { getActiveUsers } from "../../services/userServices";
+import { getAllUsers } from "../../services/userServices";
 import ChatBox from "./chat";
 import "./messages.css";
 import { useState, useEffect, useCallback } from "react";
 import { getStorage, ref, getDownloadURL } from "firebase/storage";
 import userPhoto from "../../images/userMale.png";
+import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 
 const MessageComponent = () => {
   const [activeUsers, setActiveUsers] = useState([]);
@@ -18,7 +19,7 @@ const MessageComponent = () => {
   useEffect(() => {
     const fetchActiveUsers = async () => {
       try {
-        const users = await getActiveUsers();
+        const users = await getAllUsers();
         setActiveUsers(users.filter((user) => user.userId !== id));
       } catch (error) {
         console.error("Error fetching active users:", error);
@@ -55,6 +56,9 @@ const MessageComponent = () => {
 
   return (
     <div className="message-container">
+      <div className="starAnim">
+        <StarsCanvas />
+      </div>
       <div className="messageBox">
         <div className="active-users-container">
           <div className="h2title">

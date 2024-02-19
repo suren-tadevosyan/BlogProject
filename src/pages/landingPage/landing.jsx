@@ -1,12 +1,13 @@
-import IMG from "../../images/stars.mp4";
+
 import "./landing.css";
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
 import { useSelector } from "react-redux";
-import VideoPlayer from "../../utils/videoPlayer";
+
 import { selectUserPosts } from "../../redux/slices/postSlices";
-import { Grid,  Typography } from "@mui/material";
+import { Grid, Typography } from "@mui/material";
 import "./landing.css";
+import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 const LandingPage = () => {
   const { mode } = useSelector((state) => state.theme);
   const userPosts = useSelector(selectUserPosts);
@@ -38,7 +39,9 @@ const LandingPage = () => {
 
   return (
     <div className={mode === "dark" ? "landing-page" : "landing-page "}>
-      <VideoPlayer videoSource={IMG} />
+      <div className="starAnim">
+        <StarsCanvas />
+      </div>
       <motion.div
         initial={{ opacity: 0, y: -100 }}
         animate={{ opacity: 1, y: 0 }}
@@ -50,9 +53,7 @@ const LandingPage = () => {
       </motion.div>
 
       <div className="post-view">
-        <p className="title">
-          Stay Connected: Check Out Our Latest Updates!
-        </p>
+        <p className="title">Stay Connected: Check Out Our Latest Updates!</p>
         <Grid container spacing={3} className="latest-posts">
           {displayedPosts.map((post, index) => (
             <Grid item xs={12} md={4} key={index}>

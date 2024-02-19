@@ -9,7 +9,7 @@ import { StarBackgroundZoom } from "./starCanvasZoom.tsx";
 const StarBackground = (props: any) => {
   const ref: any = useRef();
   const [sphere] = useState(() =>
-    random.inSphere(new Float32Array(10000), { radius: 1.2 })
+    random.inSphere(new Float32Array(15000), { radius: 1.2 })
   );
 
   useFrame((state, delta) => {

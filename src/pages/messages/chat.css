@@ -23,7 +23,7 @@
   flex-grow: 1;
   overflow-y: auto;
   width: 900px;
-  background-color: #ddddf5;
+  background-color: rgba(221, 221, 245, 0.7);
   min-height: 400px;
   max-height: 400px;
   padding: 10px;

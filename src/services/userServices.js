@@ -2,17 +2,14 @@ import {
   getAuth,
   createUserWithEmailAndPassword,
   updateProfile,
-
 } from "firebase/auth";
 import {
   collection,
   addDoc,
   updateDoc,
-
   getDocs,
   query,
   where,
-  
 } from "firebase/firestore";
 import firestore from "../fireStore";
 import { loginUser, setUser } from "../redux/slices/auth";
@@ -21,8 +18,7 @@ const addNewUserToFirestore = async (
   formData,
   dispatch,
   setErrorMessage,
-  setErrorModalVisible,
-
+  setErrorModalVisible
 ) => {
   try {
     const auth = getAuth();
@@ -86,6 +82,20 @@ const getActiveUsers = async () => {
   return activeUsers;
 };
 
+const getAllUsers = async () => {
+  const userRef = collection(firestore, "users");
+  const allUsersQuery = query(userRef);
+
+  const querySnapshot = await getDocs(allUsersQuery);
+
+  const allUsers = [];
+  querySnapshot.forEach((doc) => {
+    allUsers.push(doc.data());
+  });
+
+  return allUsers;
+};
+
 const signOutAndUpdateStatus = async (userId, value) => {
   try {
     const userRef = collection(firestore, "users");
@@ -103,4 +113,9 @@ const signOutAndUpdateStatus = async (userId, value) => {
     console.error("Error updating user status:", error.message);
   }
 };
-export { addNewUserToFirestore, signOutAndUpdateStatus, getActiveUsers };
+export {
+  addNewUserToFirestore,
+  signOutAndUpdateStatus,
+  getActiveUsers,
+  getAllUsers,
+};

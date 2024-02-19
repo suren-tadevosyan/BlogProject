@@ -2,14 +2,22 @@
   display: flex;
   flex-direction: column;
   padding: 0 50px;
-  padding-top: 200px;
-
+  height: 100vh;
+  position: relative;
   overflow: hidden;
   align-items: center;
 }
 
+.starAnim {
+  position: absolute;
+  width: 100%;
+  height: 100vh;
+  z-index: -1;
+  position: fixed;
+}
 .hero-section {
   flex: 1;
+  margin-top: 100px;
   color: wheat;
   max-height: 200px;
   display: flex;

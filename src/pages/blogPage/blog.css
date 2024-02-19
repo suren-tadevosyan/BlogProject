@@ -3,6 +3,7 @@
   justify-content: center;
   align-items: center;
   width: 100%;
+  margin-top: 100px;
   justify-content: space-around;
 }
 
@@ -22,8 +23,8 @@
   position: fixed;
   top: 0;
   left: 0;
-  width: 100%; /* Set the video player width to 100% of its container */
-  height: 100%; /* Set the video player height to 100% of its container */
-  object-fit: cover; /* Ensure the video maintains aspect ratio while covering the container */
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
   z-index: -1;
 }
