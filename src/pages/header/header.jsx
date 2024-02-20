@@ -115,22 +115,38 @@ const Header = () => {
         <nav>
           <ul className={`header-nav ${menuOpen ? "open" : ""}`}>
             <li>
-              <Link to="/home" className="bn5" onClick={() => toggleMenu()}>
+              <Link
+                to="/home"
+                className="bn5 mobBtn"
+                onClick={() => toggleMenu()}
+              >
                 My Page
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/messages" onClick={() => toggleMenu()}>
+              <Link
+                className="bn5 mobBtn"
+                to="/messages"
+                onClick={() => toggleMenu()}
+              >
                 Messages
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/blog" onClick={() => toggleMenu()}>
+              <Link
+                className="bn5 mobBtn"
+                to="/blog"
+                onClick={() => toggleMenu()}
+              >
                 Blogs
               </Link>
             </li>
             <li>
-              <Link className="bn5" to="/contact" onClick={() => toggleMenu()}>
+              <Link
+                className="bn5 mobBtn"
+                to="/contact"
+                onClick={() => toggleMenu()}
+              >
                 Contact
               </Link>
             </li>

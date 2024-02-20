@@ -167,14 +167,16 @@ header .logout-button {
     transform: rotate(45deg) translate(-4px, -4px);
   }
   .header-nav {
-    position: absolute;
     display: none;
+    position: absolute;
     top: 65px;
-    right: 370px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
     padding-top: 10px;
-    background-color: rgba(41, 6, 240, 0.7);
+    background-color: rgba(2, 2, 2, 0.9);
     border-radius: 20px;
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -194,14 +196,16 @@ header .logout-button {
 
 @media only screen and (max-width: 400px) {
   .header-nav {
-    position: absolute;
     display: none;
+    position: absolute;
     top: 65px;
-    right: 170px;
+    left: 0;
+    width: 100%;
+    height: 100vh;
     flex-direction: column;
     align-items: center;
-    padding-top: 10px;
-    background-color: rgba(41, 6, 240, 0.7);
+    padding-top: 50px;
+    background-color: rgba(2, 2, 2, 0.9);
     border-radius: 20px;
 
     box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
@@ -212,6 +216,12 @@ header .logout-button {
   .header-nav.open {
     opacity: 1;
     display: flex;
+  }
+  .mobBtn {
+    display: flex !important;
+    width: 100px !important;
+    justify-content: center !important;
+    align-items: center;
   }
 }
 

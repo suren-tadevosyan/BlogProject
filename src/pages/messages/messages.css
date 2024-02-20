@@ -35,7 +35,6 @@
   max-width: 300px;
   max-height: 528px;
   border-radius: 10px;
-
 }
 
 .active-users-container h2 {
@@ -46,7 +45,7 @@
   border-top: 3px solid grey;
   width: 200px;
   display: flex;
-  
+
   overflow-y: scroll;
   flex-direction: column;
 
@@ -93,4 +92,35 @@
 
 .active-user.active {
   background-color: #2e2d51;
+}
+
+@media only screen and (max-width: 768px) {
+  .message-container {
+    padding: 20px;
+  }
+  .active-users-list {
+    width: 150px;
+  }
+  .active-users-container {
+    min-width: 150px;
+  }
+
+  .messages {
+    width: 90%;
+    min-height: 300px;
+    max-height: none;
+  }
+
+  .message {
+    width: 20px;
+  }
+
+  .message p {
+    font-size: 13px;
+  }
+
+  .message span {
+    font-size: 8px;
+    color: black;
+  }
 }
