@@ -52,6 +52,22 @@
   margin-top: 40px;
   list-style-type: none;
   padding: 0;
+  scrollbar-width: thin; /* Enable custom styling */
+  scrollbar-color: rgba(0, 0, 0, 0.8) rgba(0, 0, 0, 0); /* Track color and transparent thumb */
+
+  /* Optional finer styling, adjust to your preferences */
+  &::-webkit-scrollbar {
+    width: 8px; /* Adjust scrollbar width */
+  }
+
+  &::-webkit-scrollbar-track {
+    background: rgba(0, 0, 0, 0.1); /* Track background color */
+  }
+
+  &::-webkit-scrollbar-thumb {
+    background-color: rgba(0, 0, 0, 0.3); /* Thumb color */
+    border-radius: 5px; /* Rounded corners for smooth appearance */
+  }
 }
 
 .active-users-list li {
@@ -96,7 +112,11 @@
 
 @media only screen and (max-width: 768px) {
   .message-container {
-    padding: 20px;
+    justify-content: flex-start;
+  }
+
+  .messageBox {
+    width: 100%;
   }
   .active-users-list {
     width: 150px;
@@ -106,9 +126,8 @@
   }
 
   .messages {
-    width: 90%;
-    min-height: 300px;
-    max-height: none;
+    max-width: 220px;
+    word-wrap: break-word;
   }
 
   .message {
