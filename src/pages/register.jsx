@@ -102,7 +102,8 @@ const Register = () => {
         formData,
         dispatch,
         setErrorMessage,
-        setErrorModalVisible
+        setErrorModalVisible,
+        false
       );
     } else {
       console.log("edrer");

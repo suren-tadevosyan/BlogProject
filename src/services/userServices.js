@@ -18,45 +18,72 @@ const addNewUserToFirestore = async (
   formData,
   dispatch,
   setErrorMessage,
-  setErrorModalVisible
+  setErrorModalVisible,
+  google
 ) => {
   try {
-    const auth = getAuth();
+    console.log(formData);
 
-    const { user } = await createUserWithEmailAndPassword(
-      auth,
-      formData.email,
-      formData.password
-    );
+    if (google) {
+      const userRef = collection(firestore, "users");
+      const querySnapshot = await getDocs(
+        query(userRef, where("email", "==", formData.email))
+      );
 
-    await updateProfile(user, { displayName: formData.name });
+      if (!querySnapshot.empty) {
+        // User with this email already exists
+        console.log("User with this email already exists");
+        // You can handle this case as per your requirements
+        // For example, you might want to return an error or update the existing user
+      } else {
+        // No user with this email exists, proceed to create a new one
+        const userData = {
+          email: formData.email,
+          name: formData.name,
+          userId: formData.googleId,
+          isActive: true,
+        };
 
-    const { email, uid: id, accessToken: token } = user;
+        await addDoc(userRef, userData);
+        console.log("New user created successfully");
+      }
+    } else {
+      const auth = getAuth();
+      const { user } = await createUserWithEmailAndPassword(
+        auth,
+        formData.email,
+        formData.password
+      );
 
-    dispatch(
-      setUser({
-        email,
-        id,
-        token,
+      await updateProfile(user, { displayName: formData.name });
+
+      const { email, uid: id, accessToken: token } = user;
+
+      dispatch(
+        setUser({
+          email,
+          id,
+          token,
+          name: formData.name,
+        })
+      );
+
+      window.localStorage.setItem("userId", id);
+
+      dispatch(loginUser({ username: "username", password: "password" }));
+
+      const userRef = collection(firestore, "users");
+      const userData = {
+        email: email,
         name: formData.name,
-      })
-    );
+        userId: id,
+        isActive: true,
+      };
 
-    window.localStorage.setItem("userId", id);
+      await addDoc(userRef, userData);
 
-    dispatch(loginUser({ username: "username", password: "password" }));
-
-    const userRef = collection(firestore, "users");
-    const userData = {
-      email: email,
-      name: formData.name,
-      userId: id,
-      isActive: true,
-    };
-
-    await addDoc(userRef, userData);
-
-    console.log("User added to Firestore collection");
+      console.log("User added to Firestore collection");
+    }
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
       const message = "User with this email already exists";
@@ -68,6 +95,7 @@ const addNewUserToFirestore = async (
     }
   }
 };
+
 const getActiveUsers = async () => {
   const userRef = collection(firestore, "users");
   const activeUsersQuery = query(userRef, where("isActive", "==", true));

@@ -65,6 +65,31 @@ body {
   margin-bottom: 5px;
 }
 
+.googleLogin {
+  display: flex;
+}
+.googleLogin button {
+  width: 20%;
+  background-color: #242734;
+  color: #fff;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  cursor: pointer;
+  padding: 5px;
+  margin-left: 5px;
+  transition: background 0.3s ease-in-out;
+}
+
+.googleLogin button:hover {
+  background-color: #1b1f26;
+}
+.googleLogin button img {
+  background-color: #242734;
+
+  width: 30px; /* Adjust the width of the image */
+  height: auto; /* Maintain aspect ratio */
+}
+
 .form-group input {
   width: 100%;
   padding: 8px;

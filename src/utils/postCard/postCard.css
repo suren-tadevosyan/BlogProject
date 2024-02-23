@@ -188,7 +188,7 @@
   position: absolute;
   display: flex;
   flex-wrap: nowrap;
-  top: 100%;
+  top: 80%;
   left: 50%;
   transform: translateX(-50%);
   background-color: #fff;
@@ -197,6 +197,7 @@
   margin-top: 5px;
   border-radius: 4px;
   min-width: 100px;
+  z-index: 5000;
   box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
 }
 
