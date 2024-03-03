@@ -11,7 +11,7 @@ import {
 const sendMessage = async (receiverId, senderId, newMessage) => {
   try {
     if (!receiverId || !senderId || !newMessage) {
-      console.error("Invalid data for sending message.");
+      // console.error("Invalid data for sending message.");
       return;
     }
 
@@ -24,7 +24,7 @@ const sendMessage = async (receiverId, senderId, newMessage) => {
     };
 
     await addDoc(messagesRef, messageData);
-    console.log("Message sent successfully");
+    // console.log("Message sent successfully");
   } catch (error) {
     console.error("Error sending message:", error.message);
   }

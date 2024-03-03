@@ -22,7 +22,7 @@ const addNewUserToFirestore = async (
   google
 ) => {
   try {
-    console.log(formData);
+
 
     if (google) {
       const userRef = collection(firestore, "users");
@@ -31,12 +31,11 @@ const addNewUserToFirestore = async (
       );
 
       if (!querySnapshot.empty) {
-        // User with this email already exists
-        console.log("User with this email already exists");
-        // You can handle this case as per your requirements
-        // For example, you might want to return an error or update the existing user
+       
+        // console.log("User with this email already exists");
+
       } else {
-        // No user with this email exists, proceed to create a new one
+      
         const userData = {
           email: formData.email,
           name: formData.name,
@@ -45,7 +44,7 @@ const addNewUserToFirestore = async (
         };
 
         await addDoc(userRef, userData);
-        console.log("New user created successfully");
+        // console.log("New user created successfully");
       }
     } else {
       const auth = getAuth();
@@ -82,14 +81,14 @@ const addNewUserToFirestore = async (
 
       await addDoc(userRef, userData);
 
-      console.log("User added to Firestore collection");
+      // console.log("User added to Firestore collection");
     }
   } catch (error) {
     if (error.code === "auth/email-already-in-use") {
       const message = "User with this email already exists";
       setErrorMessage(message);
       setErrorModalVisible(true);
-      console.log("User with this email already exists");
+      // console.log("User with this email already exists");
     } else {
       console.error("Error creating user:", error.message);
     }
@@ -133,7 +132,7 @@ const signOutAndUpdateStatus = async (userId, value) => {
     if (userSnapshot.docs.length > 0) {
       const userDoc = userSnapshot.docs[0].ref;
       await updateDoc(userDoc, { isActive: value });
-      console.log("User signed out and status updated");
+      // console.log("User signed out and status updated");
     } else {
       console.error("User document not found for userId:", userId);
     }

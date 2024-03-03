@@ -3,7 +3,7 @@ import { getAllUsers } from "../../services/userServices";
 import ChatBox from "./chat";
 import "./messages.css";
 import { useState, useEffect, useCallback } from "react";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import userPhoto from "../../images/userMale.png";
 import StarsCanvas from "../../utils/starCanvas/starCanvas.tsx";
 
@@ -39,12 +39,22 @@ const MessageComponent = () => {
       try {
         const storage = getStorage();
         const storageRef = ref(storage, `user_photos/${userId}/user-photo.jpg`);
+        const fbStorageListRef = ref(storage, `user_photos/${userId}`);
 
-        const downloadURL = await getDownloadURL(storageRef);
-        setUserImages((prevUserImages) => ({
-          ...prevUserImages,
-          [userId]: downloadURL,
-        }));
+        listAll(fbStorageListRef).then((list) => {
+          if (list.items.length > 0) {
+            getDownloadURL(storageRef)
+              .then((downloadURL) => {
+                setUserImages((prevUserImages) => ({
+                  ...prevUserImages,
+                  [userId]: downloadURL,
+                }));
+              })
+              .catch((error) => {});
+          }
+        });
+
+      
       } catch (error) {}
     },
     [setUserImages]

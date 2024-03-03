@@ -6,7 +6,7 @@ import {
 } from "../../services/postServices";
 import "./postCard.css";
 import userPhoto from "../../images/userMale.png";
-import { getStorage, ref, getDownloadURL } from "firebase/storage";
+import { getStorage, ref, getDownloadURL, listAll } from "firebase/storage";
 import { DeleteAnimation } from "../successAnim";
 import { Trash2 } from "react-feather";
 import { useSelector } from "react-redux";
@@ -103,9 +103,16 @@ const PostCard = ({
           storage,
           `user_photos/${post.userID}/user-photo.jpg`
         );
-
-        const downloadURL = await getDownloadURL(storageRef);
-        setAuthorImage(downloadURL);
+        const fbStorageListRef = ref(storage, `user_photos/${post.userID}`);
+        listAll(fbStorageListRef).then((list) => {
+          if (list.items.length > 0) {
+            getDownloadURL(storageRef)
+              .then((downloadURL) => {
+                setAuthorImage(downloadURL);
+              })
+              .catch((error) => {});
+          }
+        });
       } catch (error) {
         setAuthorImage(userPhoto);
       }
@@ -261,7 +268,7 @@ const PostCard = ({
       )}
       {showAsk && (
         <div className="delete-animation-container">
-          <div className="question"> 
+          <div className="question">
             <p>Are you sure you want to delete this post ?</p>
             <div>
               <button onClick={() => handleConfirmation(true)}>Yes</button>

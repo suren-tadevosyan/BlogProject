@@ -85,14 +85,14 @@ export const likePostInFirestore = async (postId, userId) => {
           likedBy: postData.likedBy.filter((id) => id !== userId),
         });
 
-        console.log("Post unliked successfully!");
+        // console.log("Post unliked successfully!");
       } else {
         await updateDoc(postRef, {
           likes: (postData.likes || 0) + 1,
           likedBy: [...postData.likedBy, userId],
         });
 
-        console.log("Post liked successfully!");
+        // console.log("Post liked successfully!");
       }
     } else {
       console.error("Invalid post data.");
@@ -180,7 +180,7 @@ export const deletePostFromFirestore = async (postId) => {
   try {
     const postRef = doc(collection(firestore, "posts"), postId);
     await deleteDoc(postRef);
-    console.log("Post deleted successfully!");
+    // console.log("Post deleted successfully!");
   } catch (error) {
     console.error("Error deleting post:", error);
     throw error;
@@ -197,7 +197,7 @@ export const deleteAllPostsForUser = async (userID) => {
       await deleteDoc(doc.ref);
     });
 
-    console.log("All posts deleted successfully!");
+    // console.log("All posts deleted successfully!");
   } catch (error) {
     console.error("Error deleting all posts for user:", error);
     throw error;
