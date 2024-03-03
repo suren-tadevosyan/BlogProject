@@ -100,11 +100,11 @@ const PostList = ({
 
   const handleScroll = useCallback(() => {
     const { scrollTop, scrollHeight, clientHeight } = document.documentElement;
-    if (scrollTop + clientHeight >= scrollHeight - 4) {
+    if (scrollTop + clientHeight >= scrollHeight - 5) {
       setEndIndex((prevIndex) => prevIndex + 1);
 
     }
-  }, [endIndex]);
+  }, []);
 
   useEffect(() => {
     window.addEventListener("scroll", handleScroll);
