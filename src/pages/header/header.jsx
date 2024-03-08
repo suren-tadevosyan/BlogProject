@@ -157,7 +157,7 @@ const Header = () => {
           <MdExitToApp size={24} />
         </div>
       </header>
-      {showModal && (
+      {!showModal && (
         <div className="modal-outher">
           <div className="modal-container">{modalComponents}</div>
           <div className="modal-inner">

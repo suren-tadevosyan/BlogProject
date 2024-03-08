@@ -5,6 +5,12 @@
   justify-content: space-between;
 }
 
+@media screen and (max-width: 1199px) {
+  .modal-container {
+    display: none;
+  }
+}
+
 .modal-outher {
   position: fixed;
   width: 100%;

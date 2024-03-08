@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Lottie from "react-lottie";
 import animationData from "../images/success.json";
 import deletAnim from "../images/delete.json";
@@ -31,8 +31,22 @@ export const WelcomeAnimation = () => {
       preserveAspectRatio: "xMidYMid slice",
     },
   };
+  const [windowWidth, setWindowWidth] = useState(window.innerWidth);
 
-  return <Lottie options={defaultOptions} height={500} width={500} />;
+  useEffect(() => {
+    const handleResize = () => setWindowWidth(window.innerWidth);
+
+    window.addEventListener("resize", handleResize);
+
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
+
+  const responsiveDimensions = {
+    height: windowWidth < 500 ? 300 : 500,
+    width: windowWidth < 500 ? 400 : 500,
+  };
+
+  return <Lottie options={defaultOptions} {...responsiveDimensions} />;
 };
 
 export const ByAnimation = () => {
@@ -99,7 +113,6 @@ export const OnlineAnimation = () => {
 
   return <Lottie options={defaultOptions} height={30} width={30} />;
 };
-
 
 export const SendAnimation = () => {
   const defaultOptions = {
